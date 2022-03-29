@@ -75,6 +75,8 @@ in
         pkgs.signal-desktop
         pkgs.libreoffice
         pkgs.keepassxc
+        pkgs.teams
+        pkgs.jetbrains.pycharm-professional
       ];
 
     };

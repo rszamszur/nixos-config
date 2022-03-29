@@ -1,4 +1,4 @@
-{ config, ... }:
+{ ... }:
 
 let
   home-manager = builtins.fetchTarball

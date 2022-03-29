@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ pkgs, ... }:
 
 let
   passHash = "$6$5UsMsT9nvv3Xy3Tl$wO/sQaNSqOUxjymXDYEeuWCsH0lZYwJhXh3sbBucUmr./CWNeWXRmJ5yqEj9pMC/jye9Vha7G5/YD1gH9dLpP1";
