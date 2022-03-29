@@ -1,8 +1,8 @@
-
 { config, lib, pkgs, ... }:
 
 {
-  imports = [ # Include the results of the hardware scan.
+  imports = [
+    # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ../../modules
   ];
@@ -21,7 +21,7 @@
   networking.interfaces.enp6s0.useDHCP = true;
   networking.interfaces.enp7s0.useDHCP = true;
   networking.interfaces.wlp5s0.useDHCP = true;
-  
+
   my.laptop.enable = true;
   my.chrome.enable = true;
   my.vim.enable = true;

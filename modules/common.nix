@@ -6,18 +6,18 @@ let
 in
 {
   environment.systemPackages = [
-        pkgs.vim
-        pkgs.wget
-        pkgs.curl
-        pkgs.firefox
-        pkgs.git
-        pkgs.vlc
-        pkgs.okular
-        pkgs.htop
-        pkgs.tmux
-        pkgs.jq
-        pkgs.dnsutils
-        pkgs.cryptsetup
+    pkgs.vim
+    pkgs.wget
+    pkgs.curl
+    pkgs.firefox
+    pkgs.git
+    pkgs.vlc
+    pkgs.okular
+    pkgs.htop
+    pkgs.tmux
+    pkgs.jq
+    pkgs.dnsutils
+    pkgs.cryptsetup
   ];
 
   networking.networkmanager.enable = true;
