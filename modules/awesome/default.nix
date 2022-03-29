@@ -11,6 +11,7 @@ in
     services.xserver.enable = true;
     services.xserver.windowManager.awesome.enable = true;
     services.udev.packages = [ pkgs.gnome3.gnome-settings-daemon ];
+    services.gvfs.enable = true;
     programs.dconf.enable = true;
 
     environment.systemPackages = [
