@@ -97,11 +97,9 @@ end}, {"manual", terminal .. " -e man awesome"}, {"edit config", editor_cmd .. "
 end}}
 
 mymainmenu = awful.menu({
-    items = {{"awesome", myawesomemenu, beautiful.awesome_icon}, {"open terminal", terminal},
-             {"Firefox", "${pkgs.firefox}/bin/firefox"}, {"Chrome", "${pkgs.chromium}/bin/chromium"},
-             {"PyCharm", "${jetbrains.pycharm-professional}/bin/pycharm.sh"},
-             {"KeePass", "${pkgs.keepassxc}/bin/keepassxc"}, {"VSCode", "${pkgs.vscode}/bin/code"},
-             {"Teams", "${pkgs.teams}/binteams"}, {"Files", "${pkgs.nautilus}/bin/nautilus"}}
+    items = {{"awesome", myawesomemenu, beautiful.awesome_icon}, {"open terminal", terminal}, {"Firefox", "firefox"},
+             {"Chrome", "chromium"}, {"PyCharm", "pycharm-professional"}, {"KeePass", "keepassxc"}, {"VSCode", "code"},
+             {"Teams", "teams"}, {"Files", "nautilus"}}
 })
 
 mylauncher = awful.widget.launcher({
