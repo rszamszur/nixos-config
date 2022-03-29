@@ -16,6 +16,8 @@ in
     ];
 
     services.acpid.enable = true;
+    services.hardware.bolt.enable = true;
+    services.xserver.libinput.enable = true;
 
     home-manager.users.rszamszur = { ... }: {
 
