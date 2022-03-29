@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ ... }:
 
 {
   imports = [
@@ -26,6 +26,7 @@
   my.chrome.enable = true;
   my.vim.enable = true;
   my.podman.enable = true;
+  my.vscode.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
