@@ -76,6 +76,7 @@ in
         pkgs.flameshot
         pkgs.spotify
         pkgs.signal-desktop
+        pkgs.openconnect
         pkgs.libreoffice
         pkgs.keepassxc
         pkgs.teams
