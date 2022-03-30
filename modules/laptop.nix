@@ -16,8 +16,11 @@ in
     ];
 
     services.acpid.enable = true;
+    # A userspace daemon to enable security levels for Thunderbolt 3
     services.hardware.bolt.enable = true;
+    # Enable touchpad
     services.xserver.libinput.enable = true;
+    # A keyboard shortcut daemon
     services.actkbd.enable = true;
 
     home-manager.users.rszamszur = { ... }: {
