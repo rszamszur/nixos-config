@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   cfg = config.my.sound;
@@ -9,7 +9,12 @@ in
 
   config = lib.mkIf cfg.enable {
     sound.enable = true;
+    # sound.mediaKeys.enable = true;
     hardware.pulseaudio.enable = true;
+
+    environment.systemPackages = [
+      pkgs.pavucontrol
+    ];
     # hardware.bluetooth.hsphfpd.enable = true;
   };
 

@@ -26,7 +26,7 @@ local volume_control = require("volume-control")
 
 -- define your volume control, using default settings:
 volumecfg = volume_control({
-    device = "pulse"
+    device = 'default'
 })
 
 -- {{{ Error handling
