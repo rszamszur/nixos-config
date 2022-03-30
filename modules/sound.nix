@@ -9,7 +9,6 @@ in
 
   config = lib.mkIf cfg.enable {
     sound.enable = true;
-    # sound.mediaKeys.enable = true;
     hardware.pulseaudio.enable = true;
 
     environment.systemPackages = [
