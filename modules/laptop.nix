@@ -16,6 +16,7 @@ in
     ];
 
     services.acpid.enable = true;
+    services.tlp.enable = true;
     # A userspace daemon to enable security levels for Thunderbolt 3
     services.hardware.bolt.enable = true;
     # Enable touchpad
@@ -73,6 +74,8 @@ in
         pkgs.unzip
         pkgs.gnumake
         pkgs.gcc
+        pkgs.nix-linter
+        pkgs.nixpkgs-fmt
         pkgs.vagrant
         pkgs.openvpn
         pkgs.gimp
