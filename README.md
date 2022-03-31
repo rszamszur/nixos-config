@@ -129,7 +129,7 @@ to generate a new nixos config.
 
 ### Installation with git
 
-Clone my nixos config to `/var/nix` and then symlink it to `/etc/nixos/configuration.nix` so that nixos will pick it up and use it.
+Clone my nixos config to `/var` and then symlink it to `/etc/nixos/configuration.nix` so that nixos will pick it up and use it.
 
 Note that you need to clone the repo to `/mnt` because that’s where we the root os partition is mounted:
 
@@ -145,7 +145,7 @@ To create the symlink, it’s important to create one with a relative path - nix
 cd /mnt/etc/nixos
 mv configuration.nix configuration.generated.nix
 # Choose host to build
-ln -s ../../var/nix/nixos-config/hosts/hades/configuration.nix configuration.nix
+ln -s ../../var/nixos-config/hosts/hades/configuration.nix configuration.nix
 ```
 
 Usually, it’s a good idea to take a look at the auto generated `hardware-configuration.nix` and add it to the already existing config because it has all disks and everything else detected by `nixos-generate-config`.
@@ -214,6 +214,13 @@ Depending on your configuration, internet speed and hardware, this will take a w
 
 Once nixos-install has finished, reboot your system. If everything went well, it should greet you with a login screen.
 
+## Secrets
+
+Users passwords:
+
+```bash
+mkpasswd -m sha-512
+```
 
 ## Similar repos:
 
