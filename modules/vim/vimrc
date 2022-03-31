@@ -1,0 +1,38 @@
+set fileencoding=utf-8
+set encoding=utf-8
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+set expandtab
+set autoindent
+set smarttab
+set nu
+set background=dark
+colorscheme gruvbox
+
+au BufNewFile,BufRead *.py
+    \ set tabstop=4 |
+    \ set softtabstop=4 |
+    \ set shiftwidth=4 |
+    \ set foldmethod=indent |
+    \ set foldlevel=5 |
+    \ let python_highlight_all=1 |
+    \ set colorcolumn=80 |
+
+" Syntastic settings
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" NERDTree settings
+map <C-n> :NERDTreeToggle<CR>
+
+nnoremap <C-K> <C-W><C-J>
+nnoremap <C-I> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-J> <C-W><C-H>
