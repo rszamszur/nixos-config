@@ -12,6 +12,7 @@ in
 
       programs.vim = {
         enable = true;
+        extraConfig = builtins.readFile ./vimrc;
         plugins = [
           pkgs.vimPlugins.YouCompleteMe
           pkgs.vimPlugins.syntastic
@@ -19,6 +20,7 @@ in
           pkgs.vimPlugins.nerdtree
           pkgs.vimPlugins.vim-airline
           pkgs.vimPlugins.gruvbox
+          pkgs.vimPlugins.vim-nix
         ];
       };
 

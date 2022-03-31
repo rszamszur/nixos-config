@@ -16,8 +16,13 @@ in
     ];
 
     services.acpid.enable = true;
+    services.tlp.enable = true;
+    # A userspace daemon to enable security levels for Thunderbolt 3
     services.hardware.bolt.enable = true;
+    # Enable touchpad
     services.xserver.libinput.enable = true;
+    # A keyboard shortcut daemon
+    services.actkbd.enable = true;
 
     home-manager.users.rszamszur = { ... }: {
 
@@ -38,6 +43,14 @@ in
         };
 
         ".config/awesome/rc.lua".source = awesome/rc.lua;
+
+        ".bashrc".source =  pkgs.writeText "bashrc" ''
+          parse_git_branch() {
+              git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)$ /'
+          }
+          PS1+="\[\033[33m\]\$(parse_git_branch)\[\033[00m\]"
+          export PS1
+        '';
 
       };
 
@@ -60,6 +73,14 @@ in
         enable = true;
         userName = "Radosław Szamszur";
         userEmail = "radoslawszamszur@gmail.com";
+        extraConfig = {
+          init = {
+            defaultBranch = "master";
+          };
+          core = {
+            editor = "vim";
+          };
+        };
       };
 
       home.packages = [
@@ -69,12 +90,15 @@ in
         pkgs.unzip
         pkgs.gnumake
         pkgs.gcc
+        pkgs.nix-linter
+        pkgs.nixpkgs-fmt
         pkgs.vagrant
         pkgs.openvpn
         pkgs.gimp
         pkgs.flameshot
         pkgs.spotify
         pkgs.signal-desktop
+        pkgs.openconnect
         pkgs.libreoffice
         pkgs.keepassxc
         pkgs.teams

@@ -9,10 +9,13 @@ in
   config = lib.mkIf cfg.enable {
 
     services.xserver.enable = true;
+    services.xserver.layout = "pl";
     services.xserver.windowManager.awesome.enable = true;
+    # Necessary config to run awesome without desktop
     services.udev.packages = [ pkgs.gnome3.gnome-settings-daemon ];
-    services.gvfs.enable = true;
     programs.dconf.enable = true;
+    # Needed for nautilus USB devices discovery and mount
+    services.gvfs.enable = true;
 
     environment.systemPackages = [
       pkgs.gnome3.adwaita-icon-theme
