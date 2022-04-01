@@ -50,6 +50,7 @@ in
           }
           PS1+="\[\033[33m\]\$(parse_git_branch)\[\033[00m\]"
           export PS1
+          eval "$(direnv hook bash)"
         '';
 
       };
@@ -68,6 +69,9 @@ in
           ];
         };
       };
+
+      programs.direnv.enable = true;
+      programs.direnv.nix-direnv.enable = true;
 
       programs.git = {
         enable = true;
