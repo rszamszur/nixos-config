@@ -22,6 +22,8 @@ local logout_menu_widget = require("awesome-wm-widgets.logout-menu-widget.logout
 local batteryarc_widget = require("awesome-wm-widgets.batteryarc-widget.batteryarc")
 local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
 local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
+local github_activity_widget = require("awesome-wm-widgets.github-activity-widget.github-activity-widget")
+local todo_widget = require("awesome-wm-widgets.todo-widget.todo")
 local volume_control = require("volume-control")
 
 -- define your volume control, using default settings:
@@ -225,6 +227,10 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             mykeyboardlayout,
             volumecfg.widget,
+            todo_widget(),
+            github_activity_widget{
+                username = 'rszamszur',
+            },
             cpu_widget(),
             ram_widget(),
             batteryarc_widget({
