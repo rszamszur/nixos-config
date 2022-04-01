@@ -10,6 +10,7 @@ in
 
     my.awesome.enable = true;
     my.sound.enable = true;
+    my.bash.enable = true;
 
     environment.systemPackages = [
       pkgs.acpi
@@ -44,14 +45,10 @@ in
 
         ".config/awesome/rc.lua".source = awesome/rc.lua;
 
-        ".bashrc".source =  pkgs.writeText "bashrc" ''
-          parse_git_branch() {
-              git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)$ /'
-          }
-          PS1+="\[\033[33m\]\$(parse_git_branch)\[\033[00m\]"
-          export PS1
-          eval "$(direnv hook bash)"
-        '';
+        ".config/awesome/json.lua".source = pkgs.fetchurl {
+          url = "https://raw.githubusercontent.com/rszamszur/json.lua/v0.1.2/json.lua";
+          sha256 = "11xbx7imgn3n92mgzk0mwwa51vkpxa094qd1qyzb6zf76adzagdi";
+        };
 
       };
 
@@ -69,9 +66,6 @@ in
           ];
         };
       };
-
-      programs.direnv.enable = true;
-      programs.direnv.nix-direnv.enable = true;
 
       programs.git = {
         enable = true;
@@ -94,8 +88,6 @@ in
         pkgs.unzip
         pkgs.gnumake
         pkgs.gcc
-        pkgs.nix-linter
-        pkgs.nixpkgs-fmt
         pkgs.vagrant
         pkgs.openvpn
         pkgs.gimp
