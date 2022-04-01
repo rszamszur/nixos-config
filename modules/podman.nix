@@ -15,7 +15,7 @@ in
       pkgs.dive
       pkgs.trivy
     ];
-    
+
   };
 
 }
