@@ -232,3 +232,9 @@ mkpasswd -m sha-512
 ## Reference
 
 - [Installing NixOS with encrypted btrfs root device and home-manager from start to finish](https://blog.kolaente.de/2021/11/installing-nixos-with-encrypted-btrfs-root-device-and-home-manager-from-start-to-finish/)
+
+## Useful links
+
+- [Nix package versions](https://lazamar.co.uk/nix-versions)
+- [home-manager configuration options](https://rycee.gitlab.io/home-manager/options.html)
+- [bennofs/nix-index](https://github.com/bennofs/nix-index)
