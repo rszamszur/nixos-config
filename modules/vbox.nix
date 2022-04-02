@@ -12,7 +12,7 @@ in
     virtualisation.virtualbox.host = {
       enable = true;
       enableHardening = true;
-      addNetworkIngerface = true;
+      addNetworkInterface = true;
       headless = false;
     };
 
