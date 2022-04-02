@@ -26,12 +26,13 @@ hydra-job-revision() {
     curl -fsSL -H 'Accept: application/json' "${job%/job*}/eval/$jobseteval" | jq -r '.jobsetevalinputs.nixpkgs.revision'
 }
 
-nli() {
-    nix-linter -r $PWD
+fzf-manix () { 
+    manix $1 | grep '^# ' | sed 's/^# \(.*\) (.*/\1/;s/ (.*//;s/^# //' | fzf --preview="manix '{}'" | xargs manix;
 }
 
 fzf-store() {
     find /nix/store -mindepth 1 -maxdepth 1 -type d | fzf -m --preview-window right:50% --preview 'nix-store -q --tree {}'
 }
 
+alias nli="nix-linter"
 alias nf="nixpkgs-fmt"
