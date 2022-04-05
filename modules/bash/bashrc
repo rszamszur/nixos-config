@@ -36,3 +36,4 @@ fzf-store() {
 
 alias nli="nix-linter"
 alias nf="nixpkgs-fmt"
+alias ns="nix-shell"
