@@ -45,6 +45,20 @@ let
     sha256 = "sha256:0v8qrmdd8diq2bl19y5g4bi7mkwyy9whkn72jg6ha7inx179rv9q";
   };
 
+  markdownlint = pkgs.vscode-utils.extensionFromVscodeMarketplace {
+    name = "vscode-markdownlint";
+    publisher = "davidanson";
+    version = "0.47.0";
+    sha256 = "sha256:0v50qcfs3jx0m2wqg4qbhw065qzdi57xrzcwnhcpjhg1raiwkl1a";
+  };
+
+  kubernetes = pkgs.vscode-utils.extensionFromVscodeMarketplace {
+    name = "vscode-kubernetes-tools";
+    publisher = "ms-kubernetes-tools";
+    version = "1.3.7";
+    sha256 = "sha256:1m1m8mncqnyh7xanb4pz0icdgy18p0a2zggdzr0b74yhqi3jin87";
+  };
+
   vscode = pkgs.vscode-with-extensions.override {
     vscodeExtensions = [
       luahelper
@@ -53,6 +67,8 @@ let
       shell-format
       vetur
       vuetify-vscode
+      markdownlint
+      kubernetes
     ];
   };
 in
