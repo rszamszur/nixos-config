@@ -64,6 +64,7 @@ in
             "${pkgs.xsecurelock}/libexec/xsecurelock/dimmer"
             "-l"
           ];
+          screensaverCycle = 5;
         };
       };
 
