@@ -10,6 +10,8 @@ in
   config = lib.mkIf cfg.enable {
     sound.enable = true;
     hardware.pulseaudio.enable = true;
+    hardware.bluetooth.enable = true;
+    services.blueman.enable = true;
 
     environment.systemPackages = [
       pkgs.pavucontrol
