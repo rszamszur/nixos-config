@@ -1,4 +1,4 @@
-with import <nixpkgs> {};
+with import <nixpkgs> { };
 
 let
   my-home-manager = stdenv.mkDerivation {
@@ -16,12 +16,12 @@ let
     };
 
     phases = "unpackPhase installPhase";
-    
+
     installPhase = ''
       cp -R ./ $out
       cat $patch > $out/modules/services/screen-locker.nix
     '';
-};
+  };
 in
 {
   imports = [
