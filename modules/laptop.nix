@@ -100,6 +100,8 @@ in
         pkgs.keepassxc
         pkgs.teams
         pkgs.jetbrains.pycharm-professional
+        pkgs.kubectl
+        pkgs.kubernetes-helm
       ];
 
     };
