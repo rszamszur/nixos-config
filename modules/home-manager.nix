@@ -6,8 +6,8 @@ let
     version = "release-21.11";
 
     src = builtins.fetchTarball {
-      url = "https://github.com/nix-community/home-manager/archive/release-21.11.tar.gz";
-      sha256 = "0kvn3fdpcy23z8rh7vi3fq31fbj9y695p5vys703zq1s1kh2744b";
+      url = "https://github.com/nix-community/home-manager/archive/d93d56ab8c1c6aa575854a79b9d2f69d491db7d0.tar.gz";
+      sha256 = "1fi27zabvqlyc2ggg7wr01j813gs46rswg1i897h9hqkbgqsjkny";
     };
 
     patch = builtins.fetchurl {
