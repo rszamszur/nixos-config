@@ -59,6 +59,13 @@ let
     sha256 = "sha256:1m1m8mncqnyh7xanb4pz0icdgy18p0a2zggdzr0b74yhqi3jin87";
   };
 
+  bazel-stack-vscode = pkgs.vscode-utils.extensionFromVscodeMarketplace {
+    name = "bazel-stack-vscode";
+    publisher = "stackbuild";
+    version = "1.9.0";
+    sha256 = "sha256:1hk24hj1qzm8dx5bsn6aavafird7gzkj14xw27xcb2gw6whhwggq";
+  };
+
   vscode = pkgs.vscode-with-extensions.override {
     vscodeExtensions = [
       luahelper
@@ -69,6 +76,7 @@ let
       vuetify-vscode
       markdownlint
       kubernetes
+      bazel-stack-vscode
     ];
   };
 in
