@@ -157,10 +157,23 @@ end), awful.button({}, 5, function()
     awful.client.focus.byidx(-1)
 end))
 
+
+local wallpapers = {
+    string.format("%s/.config/awesome/wallpapers/w1.png", os.getenv("HOME")),
+    string.format("%s/.config/awesome/wallpapers/w2.jpg", os.getenv("HOME")),
+    string.format("%s/.config/awesome/wallpapers/w8.jpg", os.getenv("HOME")),
+    string.format("%s/.config/awesome/wallpapers/w3.jpg", os.getenv("HOME")),
+    string.format("%s/.config/awesome/wallpapers/w4.jpg", os.getenv("HOME")),
+    string.format("%s/.config/awesome/wallpapers/w5.jpg", os.getenv("HOME")),
+    string.format("%s/.config/awesome/wallpapers/w6.jpg", os.getenv("HOME")),
+    string.format("%s/.config/awesome/wallpapers/w7.jpg", os.getenv("HOME")),
+    string.format("%s/.config/awesome/wallpapers/w9.jpg", os.getenv("HOME"))	
+}
+
 local function set_wallpaper(s)
     -- Wallpaper
     if beautiful.wallpaper then
-        local wallpaper = beautiful.wallpaper
+        local wallpaper = wallpapers[s.index]
         -- If wallpaper is a function, call it with the screen
         if type(wallpaper) == "function" then
             wallpaper = wallpaper(s)

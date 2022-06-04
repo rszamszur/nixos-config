@@ -50,6 +50,8 @@ in
           sha256 = "11xbx7imgn3n92mgzk0mwwa51vkpxa094qd1qyzb6zf76adzagdi";
         };
 
+        ".config/awesome/wallpapers".source = awesome/wallpapers;
+
       };
 
       services.screen-locker = {
