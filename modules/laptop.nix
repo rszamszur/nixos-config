@@ -96,6 +96,10 @@ in
         pkgs.gimp
         pkgs.flameshot
         pkgs.spotify
+        pkgs.okular
+        pkgs.htop
+        pkgs.vlc
+        pkgs.firefox
         pkgs.signal-desktop
         pkgs.openconnect
         pkgs.libreoffice
