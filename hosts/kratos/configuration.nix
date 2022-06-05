@@ -9,6 +9,7 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.supportedFilesystems = [ "ntfs" ];
 
   networking.hostName = "kratos";
 
@@ -18,15 +19,8 @@
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
   networking.useDHCP = false;
-  networking.interfaces.enp6s0.useDHCP = true;
-  networking.interfaces.enp7s0.useDHCP = true;
-  networking.interfaces.wlp5s0.useDHCP = true;
 
-  my.laptop.enable = true;
-  my.chrome.enable = true;
-  my.vim.enable = true;
-  my.podman.enable = true;
-  my.vscode.enable = true;
+  my.kvm.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
