@@ -11,6 +11,7 @@ in
     my.awesome.enable = true;
     my.sound.enable = true;
     my.bash.enable = true;
+    my.vbox.enable = true;
 
     environment.systemPackages = [
       pkgs.acpi

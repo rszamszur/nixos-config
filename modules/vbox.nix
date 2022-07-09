@@ -11,7 +11,8 @@ in
 
     virtualisation.virtualbox.host = {
       enable = true;
-      enableHardening = true;
+      enableHardening = false;
+      enableExtensionPack = true;
       addNetworkInterface = true;
       headless = false;
     };
