@@ -25,6 +25,7 @@ in
     services.xserver.libinput.enable = true;
     # A keyboard shortcut daemon
     services.actkbd.enable = true;
+    services.printing.enable = true;
 
     home-manager.users.rszamszur = { ... }: {
 
