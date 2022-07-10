@@ -3,16 +3,16 @@
 let
   cfg = config.my.remarkable;
 
-  rcu = pkgs.callPackage
-    (pkgs.fetchFromGitHub {
-      owner = "rszamszur";
-      repo = "pkg-rcu";
-      rev = "af30bef";
-      sha256 = "18ayiy4s81sk5nlk3zk46n0c8l6j5qrcp25mxw95ywlisgljd94n";
-    })
-    {
-      productKey = builtins.getEnv "RCU_PRODUCT_KEY";
-    };
+  rcu-src = pkgs.fetchFromGitHub {
+    owner = "rszamszur";
+    repo = "pkg-rcu";
+    rev = "8f64840";
+    sha256 = "1rls70v8v1vy5c3gr8zxv5yf0y6khc5zadsa32hzxcshm2d0rxp1";
+  };
+
+  rcu = pkgs.python38.pkgs.callPackage "${rcu-src}/pkg.nix" {
+    productKey = builtins.getEnv "RCU_PRODUCT_KEY";
+  };
 
   remarkable-driver = pkgs.callPackage ../pkgs/misc/cups/drivers/remarkable {
     lib = pkgs.lib;
