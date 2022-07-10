@@ -1,4 +1,4 @@
-{ pkgs ? import <nixpkgs> { system = "x86_64-linux"; } }:
+{ pkgs ? import <nixpkgs> { } }:
 
 let
   nonRootShadowSetup = { user, uid, gid ? uid }: with pkgs; [
