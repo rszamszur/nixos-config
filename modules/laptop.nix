@@ -12,6 +12,7 @@ in
     my.sound.enable = true;
     my.bash.enable = true;
     my.vbox.enable = true;
+    my.remarkable.enable = true;
 
     environment.systemPackages = [
       pkgs.acpi
@@ -25,21 +26,6 @@ in
     services.xserver.libinput.enable = true;
     # A keyboard shortcut daemon
     services.actkbd.enable = true;
-    # Enable cups daemon, and add rmfilter for remarkable printing
-    services.printing = {
-      enable = true;
-      bindirCmds = ''
-      cat << 'EOF' > $out/lib/cups/filter/rmfilter
-      #!${pkgs.bash}/bin/bash
-      # send job name
-      echo -n "@PJL JOB NAME = "
-      echo "\"$3\""
-      # accept PDF as argument or from stdin
-      ${pkgs.coreutils}/bin/cat "$6" -
-      EOF
-      chmod a+x $out/lib/cups/filter/rmfilter
-      '';
-    };
 
     home-manager.users.rszamszur = { ... }: {
 
