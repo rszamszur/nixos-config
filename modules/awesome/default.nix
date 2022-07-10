@@ -18,6 +18,7 @@ in
     services.gvfs.enable = true;
 
     environment.systemPackages = [
+      pkgs.gnome3.eog
       pkgs.gnome3.adwaita-icon-theme
       pkgs.gnomeExtensions.appindicator
       pkgs.gnome3.nautilus
