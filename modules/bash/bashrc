@@ -7,6 +7,23 @@ export PS1
 
 eval "$(direnv hook bash)"
 
+my-bash-help() {
+    echo "Functions:"
+    echo "hydra-rev() args: NIX_PACKAGE_NAME"
+    echo "hydra-job-revision() args: HYDRA_JOB_URL"
+    echo "fzf-manix() args: MANIX_QUERY"
+    echo "fzf-store()"
+    echo "nix-which() args: PROGRAM_NAME"
+    echo "Aliases:"
+    echo "nli -> nix-linter"
+    echo "nf -> nixpkgs-fmt"
+    echo "ns -> nix-shell"
+    echo "gs -> git status"
+    echo "ga -> git add"
+    echo "gc -> git commit"
+    echo "gpo -> git push origin"
+}
+
 hydra-rev() {
     hydra-job-revision $(hydra-check $1 --url | cut -d/ -f 5-)
 }
@@ -34,6 +51,14 @@ fzf-store() {
     find /nix/store -mindepth 1 -maxdepth 1 -type d | fzf -m --preview-window right:50% --preview 'nix-store -q --tree {}'
 }
 
+nix-which() {
+    readlink -f $(which $1)
+}
+
 alias nli="nix-linter"
 alias nf="nixpkgs-fmt"
 alias ns="nix-shell"
+alias gs="git status"
+alias ga="git add"
+alias gc="git commit"
+alias gpo="git push origin"
