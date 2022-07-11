@@ -11,6 +11,12 @@ let
       sha256 = "sha256-ZRfyv46N3oQbpDwobXMPp9PDnAyceN+9GoOeHj4oWWk=";
     })
     { };
+
+  manix = pkgs.callPackage ../../pkgs/tools/nix/manix {
+    lib = pkgs.lib;
+    fetchFromGitHub = pkgs.fetchFromGitHub;
+    rustPlatform = pkgs.rustPlatform;
+  };
 in
 {
 
@@ -33,8 +39,8 @@ in
         pkgs.nixpkgs-fmt
         pkgs.nix-index
         pkgs.hydra-check
-        pkgs.manix
         pkgs.fzf
+        manix
         comma
       ];
 
