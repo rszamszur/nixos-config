@@ -13,6 +13,7 @@ in
     my.bash.enable = true;
     my.vbox.enable = true;
     my.remarkable.enable = true;
+    my.duplicati.enable = true;
 
     environment.systemPackages = [
       pkgs.acpi
