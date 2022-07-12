@@ -111,6 +111,7 @@ in
         pkgs.jetbrains.pycharm-professional
         pkgs.kubectl
         pkgs.kubernetes-helm
+        pkgs.solaar
       ];
 
     };
