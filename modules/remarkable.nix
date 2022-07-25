@@ -10,9 +10,9 @@ let
     sha256 = "1rls70v8v1vy5c3gr8zxv5yf0y6khc5zadsa32hzxcshm2d0rxp1";
   };
 
-  rcu = pkgs.python38.pkgs.callPackage "${rcu-src}/pkg.nix" {
-    productKey = builtins.getEnv "RCU_PRODUCT_KEY";
-  };
+  #rcu = pkgs.python38.pkgs.callPackage "${rcu-src}/pkg.nix" {
+  #  productKey = builtins.getEnv "RCU_PRODUCT_KEY";
+  #};
 
   remarkable-driver = pkgs.callPackage ../pkgs/misc/cups/drivers/remarkable {
     lib = pkgs.lib;
@@ -68,7 +68,7 @@ in
 
       home.packages = [
         pkgs.rmview
-        rcu
+        #rcu
       ];
 
     };
