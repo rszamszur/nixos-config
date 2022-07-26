@@ -6,13 +6,13 @@ let
   rcu-src = pkgs.fetchFromGitHub {
     owner = "rszamszur";
     repo = "pkg-rcu";
-    rev = "8f64840";
-    sha256 = "1rls70v8v1vy5c3gr8zxv5yf0y6khc5zadsa32hzxcshm2d0rxp1";
+    rev = "2ac8d966aa91ea21ce9edb4eb593c512f169c9aa";
+    sha256 = "1w89c7pqp2556gf1jikcb64k07zil4zbd8lk3hh1gj33073vzvci";
   };
 
-  #rcu = pkgs.python38.pkgs.callPackage "${rcu-src}/pkg.nix" {
-  #  productKey = builtins.getEnv "RCU_PRODUCT_KEY";
-  #};
+  rcu = pkgs.python38.pkgs.callPackage "${rcu-src}/pkg.nix" {
+    productKey = builtins.getEnv "RCU_PRODUCT_KEY";
+  };
 
   remarkable-driver = pkgs.callPackage ../pkgs/misc/cups/drivers/remarkable {
     lib = pkgs.lib;
@@ -68,7 +68,7 @@ in
 
       home.packages = [
         pkgs.rmview
-        #rcu
+        rcu
       ];
 
     };
