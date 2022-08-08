@@ -1,9 +1,15 @@
-{ pkgs ? import <nixpkgs> { } }:
+{ pkgs ? import <nixpkgs> { }
+, python ? "python39"
+}:
+
+let
+  pythonPackage = builtins.getAttr (python) pkgs;
+in
 
 pkgs.mkShell {
   buildInputs = [
-    pkgs.python39
-    (pkgs.poetry.override { python = pkgs.python39; })
+    pythonPackage
+    (pkgs.poetry.override { python = pythonPackage; })
   ];
   shellHook = ''
     export POETRY_HOME=${pkgs.poetry}
