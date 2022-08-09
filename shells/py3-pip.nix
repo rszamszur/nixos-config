@@ -1,11 +1,10 @@
 { pkgs ? import <nixpkgs> { }
-, python ? "python39"
+, python ? "python3"
 }:
 
 let
   pythonPackage = builtins.getAttr (python) pkgs;
 in
-
 pkgs.mkShell {
   buildInputs = [
     pythonPackage
