@@ -20,6 +20,13 @@ let
     fetchFromGitHub = pkgs.fetchFromGitHub;
     coreutils = pkgs.coreutils;
   };
+
+  rmview = pkgs.callPackage ../pkgs/applications/misc/remarkable/rmview {
+    lib = pkgs.lib;
+    fetchFromGitHub = pkgs.fetchFromGitHub;
+    python3Packages = pkgs.python39Packages;
+    wrapQtAppsHook = pkgs.qt5.wrapQtAppsHook;
+  };
 in
 {
 
@@ -67,7 +74,7 @@ in
       };
 
       home.packages = [
-        pkgs.rmview
+        rmview
         rcu
       ];
 
