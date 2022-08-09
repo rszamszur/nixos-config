@@ -26,6 +26,5 @@ python3Packages.buildPythonApplication rec {
     description = "Fast live viewer for reMarkable 1 and 2";
     homepage = "https://github.com/bordaigorl/rmview";
     license = licenses.gpl3Only;
-    maintainers = [ maintainers.nickhu ];
   };
 }
