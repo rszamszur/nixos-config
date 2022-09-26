@@ -11,7 +11,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "ntfs" ];
 
-  networking.hostName = "kratos";
+  networking.hostName = "fenrir";
 
   time.timeZone = "Europe/Warsaw";
 

@@ -11,7 +11,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "ntfs" ];
 
-  networking.hostName = "hades";
+  networking.hostName = "draugr";
 
   time.timeZone = "Europe/Warsaw";
 
