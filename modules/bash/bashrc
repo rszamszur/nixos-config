@@ -18,10 +18,11 @@ my-bash-help() {
     echo "nli -> nix-linter"
     echo "nf -> nixpkgs-fmt"
     echo "ns -> nix-shell"
+    echo "nb -> nix-build"
     echo "gs -> git status"
     echo "ga -> git add"
     echo "gc -> git commit"
-    echo "gpo -> git push origin"
+    echo "gd -> git diff"
 }
 
 hydra-rev() {
@@ -58,7 +59,8 @@ nix-which() {
 alias nli="nix-linter"
 alias nf="nixpkgs-fmt"
 alias ns="nix-shell"
+alias nb="nix-build"
 alias gs="git status"
 alias ga="git add"
 alias gc="git commit"
-alias gpo="git push origin"
+alias gd="git diff"
