@@ -25,15 +25,38 @@ in
         #MYPY_USE_MYPYC = false;
       });
       idna = py-prev.idna.overridePythonAttrs (old: {
-        buildInputs = old.buildInputs or [ ] ++ [ py-prev.flit-core ];
+        buildInputs = old.buildInputs or [ ] ++ [ py-final.flit-core ];
       });
       mdit-py-plugins = py-prev.mdit-py-plugins.overridePythonAttrs (old: {
-        buildInputs = old.buildInputs or [ ] ++ [ py-prev.flit-core ];
+        buildInputs = old.buildInputs or [ ] ++ [ py-final.flit-core ];
       });
       suds = py-prev.suds.overridePythonAttrs (old: {
         # Fix naming convention shenanigans.
         # https://github.com/suds-community/suds/blob/a616d96b070ca119a532ff395d4a2a2ba42b257c/setup.py#L648
         SUDS_PACKAGE = "suds";
+      });
+      watchfiles = py-prev.watchfiles.overridePythonAttrs (old: rec {
+        src = final.fetchFromGitHub {
+          owner = "samuelcolvin";
+          repo = "watchfiles";
+          # FIXME: Find out why watchfiles does not include Cargo.lock in pypi released tarball. 
+          # Then either remove this, or add repo shas map.
+          rev = "v0.17.0";
+          sha256 = "sha256-HW94cs/WH1EmMutzE2jlQ60cpTQ+ltIZGBgnWIxwl+s=";
+        };
+        cargoDeps = final.rustPlatform.importCargoLock {
+          lockFile = "${src.out}/Cargo.lock";
+        };
+        nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [
+          final.rustPlatform.cargoSetupHook
+          final.rustPlatform.maturinBuildHook
+        ];
+      });
+      uvicorn = py-prev.uvicorn.overridePythonAttrs (old: {
+        buildInputs = old.buildInputs or [ ] ++ [ py-final.hatchling ];
+        postPatch = ''
+          substituteInPlace pyproject.toml --replace 'watchfiles>=0.13' 'watchfiles'
+        '';
       });
 
     });
