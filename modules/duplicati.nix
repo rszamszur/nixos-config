@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
 let
   cfg = config.my.duplicati;
@@ -9,7 +9,11 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    services.duplicati.enable = true;
+    services.duplicati = {
+      enable = true;
+      interface = "127.0.0.1";
+      port = 8200;
+    };
 
   };
 
