@@ -14,6 +14,7 @@ my-bash-help() {
     echo "fzf-manix() args: MANIX_QUERY"
     echo "fzf-store()"
     echo "nix-which() args: PROGRAM_NAME"
+    echo "monitors() args: [ON, OFF]"
     echo "Aliases:"
     echo "nli -> nix-linter"
     echo "nf -> nixpkgs-fmt"
@@ -54,6 +55,16 @@ fzf-store() {
 
 nix-which() {
     readlink -f $(which $1)
+}
+
+monitors() {
+    if [[ "$1" == "ON" ]]; then
+        xrandr --output eDP-1 --mode 1920x1080 --rate 60.00 --output DP-2-3 --right-of eDP-1 --mode 2560x1440 --rate 60.00 --primary --output DP-2-1 --mode 1920x1080 --rate 60.00 --right-of DP-2-3 --rotate right
+    fi
+
+    if [[ "$1" == "OFF" ]]; then
+        xrandr --output eDP-1 --mode 1920x1080 --rate 60.00 --primary --output DP-2-3 --off --output DP-2-1 --off
+    fi
 }
 
 alias nli="nix-linter"
