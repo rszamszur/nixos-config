@@ -33,7 +33,7 @@ Then create the following partitions:
 | **Number** | **Type** | **Size** | **What**                                               |
 |------------|----------|----------|--------------------------------------------------------|
 | 1          | ef00     | +500M    | The (u)efi partition                                   |
-| 2          | 8300     |          | The one partition that’s going to hold the os and swap 
+| 2          | 8300     |          | The one partition that’s going to hold the os and swap |
 
 ### Cryptsetup
 
@@ -227,10 +227,10 @@ mkpasswd -m sha-512
 
 ## Similar repos
 
-* [*adisbladis/nixconfig](https://github.com/adisbladis/nixconfig)
-* [*yrashk/nix-home](https://github.com/yrashk/nix-home)
-* [*ttuegel/nixos-config](https://github.com/ttuegel/nixos-config)
-* [*AleksanderGondek/nixos-config](https://github.com/AleksanderGondek/nixos-config)
+* [adisbladis/nixconfig](https://github.com/adisbladis/nixconfig)
+* [yrashk/nix-home](https://github.com/yrashk/nix-home)
+* [ttuegel/nixos-config](https://github.com/ttuegel/nixos-config)
+* [AleksanderGondek/nixos-config](https://github.com/AleksanderGondek/nixos-config)
 
 ## Reference
 
@@ -241,3 +241,5 @@ mkpasswd -m sha-512
 * [Nix package versions](https://lazamar.co.uk/nix-versions)
 * [home-manager configuration options](https://rycee.gitlab.io/home-manager/options.html)
 * [bennofs/nix-index](https://github.com/bennofs/nix-index)
+* [An opinionated guide for developers getting things done using the Nix ecosystem.](https://nix.dev/)
+* [Nixpkgs Manual](https://nixos.org/manual/nixpkgs/unstable)
