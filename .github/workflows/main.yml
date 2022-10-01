@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+env:
+  NIX_CHANNEL: nixpkgs=channel:nixos-22.05
+
+jobs:
+  nixpkgs-fmt:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: cachix/install-nix-action@v17
+      with:
+        nix_path: ${{ env.NIX_CHANNEL }}
+    - uses: actions/checkout@v3
+    - name: Check format
+      run: nix-shell -p nixpkgs-fmt --run 'nixpkgs-fmt --check .'
+  nix-linter:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: cachix/install-nix-action@v17
+      with:
+        nix_path: ${{ env.NIX_CHANNEL }}
+    - uses: actions/checkout@v3
+    - name: Run nix-linter
+      run: nix-shell -p nix-linter --run 'nix-linter -r .'
