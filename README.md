@@ -1,5 +1,7 @@
 # nixos-config
+
 [![built with nix](https://builtwithnix.org/badge.svg)](https://builtwithnix.org)
+[![CI](https://github.com/rszamszur/nixos-config/actions/workflows/main.yml/badge.svg)](https://github.com/rszamszur/nixos-config/actions/workflows/main.yml)
 
 Configuration to setup my NixOS instances.
 
@@ -18,6 +20,7 @@ fdisk <drive>
 ### Creating partitions
 
 We’ll create two physical partitions with gdisk:
+
 * One efi partition
 * One for nixos and everything else
 
@@ -44,7 +47,7 @@ cryptsetup luksFormat <device>2
 
 And open it:
 
-```
+```bash
 cryptsetup open <device>2 nixenc
 ```
 
@@ -222,19 +225,19 @@ Users passwords:
 mkpasswd -m sha-512
 ```
 
-## Similar repos:
+## Similar repos
 
-- [adisbladis/nixconfig](https://github.com/adisbladis/nixconfig)
-- [yrashk/nix-home](https://github.com/yrashk/nix-home)
-- [ttuegel/nixos-config](https://github.com/ttuegel/nixos-config)
-- [AleksanderGondek/nixos-config](https://github.com/AleksanderGondek/nixos-config)
+* [*adisbladis/nixconfig](https://github.com/adisbladis/nixconfig)
+* [*yrashk/nix-home](https://github.com/yrashk/nix-home)
+* [*ttuegel/nixos-config](https://github.com/ttuegel/nixos-config)
+* [*AleksanderGondek/nixos-config](https://github.com/AleksanderGondek/nixos-config)
 
 ## Reference
 
-- [Installing NixOS with encrypted btrfs root device and home-manager from start to finish](https://blog.kolaente.de/2021/11/installing-nixos-with-encrypted-btrfs-root-device-and-home-manager-from-start-to-finish/)
+* [Installing NixOS with encrypted btrfs root device and home-manager from start to finish](https://blog.kolaente.de/2021/11/installing-nixos-with-encrypted-btrfs-root-device-and-home-manager-from-start-to-finish/)
 
 ## Useful links
 
-- [Nix package versions](https://lazamar.co.uk/nix-versions)
-- [home-manager configuration options](https://rycee.gitlab.io/home-manager/options.html)
-- [bennofs/nix-index](https://github.com/bennofs/nix-index)
+* [Nix package versions](https://lazamar.co.uk/nix-versions)
+* [home-manager configuration options](https://rycee.gitlab.io/home-manager/options.html)
+* [bennofs/nix-index](https://github.com/bennofs/nix-index)
