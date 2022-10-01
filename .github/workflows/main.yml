@@ -28,6 +28,7 @@ jobs:
           do_not_skip: '["pull_request", "workflow_dispatch", "schedule"]'
   nixpkgs-fmt:
     needs: pre_job
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -39,6 +40,7 @@ jobs:
       run: nix-shell -p nixpkgs-fmt --run 'nixpkgs-fmt --check .'
   nix-linter:
     needs: pre_job
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
 
     steps:
