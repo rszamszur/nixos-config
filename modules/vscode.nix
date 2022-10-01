@@ -64,7 +64,7 @@ let
     publisher = "redhat";
     version = "1.7.0";
     sha256 = "sha256:1bbjpaypp0mq5akww5f0pkpq01j0xhhvkfr44f4lb2rdhr5nmnvc";
-  }; 
+  };
 
   bazel-stack-vscode = pkgs.vscode-utils.extensionFromVscodeMarketplace {
     name = "bazel-stack-vscode";

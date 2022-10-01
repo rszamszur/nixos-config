@@ -9,13 +9,13 @@ in
   config = lib.mkIf cfg.enable {
 
     virtualisation.libvirtd = {
-        enable = true;
-        onBoot = "start";
-        onShutdown = "shutdown";
+      enable = true;
+      onBoot = "start";
+      onShutdown = "shutdown";
     };
 
     environment.systemPackages = [
-        pkgs.libvirt
+      pkgs.libvirt
     ];
 
     users.extraGroups.libvirtd.members = [ "rszamszur" ];
