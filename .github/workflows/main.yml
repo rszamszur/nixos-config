@@ -31,4 +31,4 @@ jobs:
         nix_path: ${{ env.NIX_CHANNEL }}
     - uses: actions/checkout@v3
     - name: Run nix-linter
-      run: nix-shell -p nix-linter --run 'nix-linter -r .'
+      run: nix-shell -p nix-linter --run 'nix-linter -r shells/ hosts/ modules/ pkgs/ images'
