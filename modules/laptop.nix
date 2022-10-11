@@ -11,7 +11,6 @@ in
     my.awesome.enable = true;
     my.sound.enable = true;
     my.bash.enable = true;
-    my.vbox.enable = true;
     my.remarkable.enable = true;
     my.duplicati.enable = true;
 
@@ -104,10 +103,8 @@ in
         pkgs.vlc
         pkgs.firefox
         pkgs.signal-desktop
-        pkgs.openconnect
         pkgs.libreoffice
         pkgs.keepassxc
-        pkgs.teams
         pkgs.jetbrains.pycharm-professional
         pkgs.kubectl
         pkgs.kubernetes-helm
