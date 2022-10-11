@@ -101,7 +101,7 @@ end}}
 mymainmenu = awful.menu({
     items = {{"awesome", myawesomemenu, beautiful.awesome_icon}, {"open terminal", terminal}, {"Firefox", "firefox"},
              {"Chrome", "chromium"}, {"PyCharm", "pycharm-professional"}, {"KeePass", "keepassxc"}, {"VSCode", "code"},
-             {"Teams", "teams"}, {"Files", "nautilus"}}
+             {"Spotify", "spotify"}, {"Signal", "signal-desktop"}, {"Files", "nautilus"}}
 })
 
 mylauncher = awful.widget.launcher({
