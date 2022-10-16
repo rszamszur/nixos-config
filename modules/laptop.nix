@@ -105,7 +105,7 @@ in
         pkgs.signal-desktop
         pkgs.libreoffice
         pkgs.keepassxc
-        pkgs.jetbrains.pycharm-professional
+        pkgs.jetbrains.pycharm-community
         pkgs.kubectl
         pkgs.kubernetes-helm
         pkgs.solaar
