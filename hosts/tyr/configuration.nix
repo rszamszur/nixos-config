@@ -24,6 +24,7 @@
   my.bash = {
     enable = true;
     homepkgs = [
+      pkgs.google-cloud-sdk
       pkgs.firefox
       pkgs.keepassxc
       pkgs.kubectl
