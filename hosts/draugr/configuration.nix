@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -20,11 +20,32 @@
   # replicates the default behaviour.
   networking.useDHCP = false;
 
+  my.awesome.enable = true;
   my.laptop.enable = true;
-  my.chrome.enable = true;
+  my.bash = {
+    enable = true;
+    homepkgs = [
+      pkgs.vagrant
+      pkgs.spotify
+      pkgs.okular
+      pkgs.vlc
+      pkgs.firefox
+      pkgs.signal-desktop
+      pkgs.libreoffice
+      pkgs.keepassxc
+      pkgs.jetbrains.pycharm-community
+      pkgs.kubectl
+      pkgs.kubernetes-helm
+      pkgs.solaar
+      pkgs.openvpn
+      pkgs.gimp
+    ];
+  };
   my.vim.enable = true;
   my.podman.enable = true;
   my.vscode.enable = true;
+  my.remarkable.enable = true;
+  my.chrome.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
