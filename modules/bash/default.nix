@@ -20,7 +20,32 @@ let
 in
 {
 
-  options.my.bash.enable = lib.mkEnableOption "Enables bash.";
+  options = {
+    my.bash = {
+      enable = lib.mkEnableOption "Enables bash.";
+      gitUser = lib.mkOption {
+        type = lib.types.str;
+        default = "Radosław Szamszur";
+        description = "Git user name.";
+      };
+      gitEmail = lib.mkOption {
+        type = lib.types.str;
+        default = "github@rsd.sh";
+        description = "Git user email.";
+      };
+      homepkgs = lib.mkOption {
+        type = lib.types.listOf lib.types.package;
+        default = [ ];
+        description = "List of additional home packages.";
+        example = lib.literalExpression "[ pkgs.vlc ]";
+      };
+      comma = lib.mkOption {
+        type = lib.types.bool;
+        default = false;
+        description = "Whether to add comma to user packages.";
+      };
+    };
+  };
 
   config = lib.mkIf cfg.enable {
 
@@ -34,15 +59,35 @@ in
         bashrcExtra = builtins.readFile ./bashrc;
       };
 
+      programs.git = {
+        enable = true;
+        userName = cfg.gitUser;
+        userEmail = cfg.gitEmail;
+        extraConfig = {
+          init = {
+            defaultBranch = "master";
+          };
+          core = {
+            editor = "vim";
+          };
+        };
+      };
+
       home.packages = [
+        pkgs.nmap
+        pkgs.zip
+        pkgs.unzip
+        pkgs.gnumake
+        pkgs.gcc
+        pkgs.htop
+        pkgs.flameshot
         pkgs.nix-linter
         pkgs.nixpkgs-fmt
         pkgs.nix-index
         pkgs.hydra-check
         pkgs.fzf
         manix
-        comma
-      ];
+      ] ++ cfg.homepkgs ++ lib.optionals cfg.comma [ comma ];
 
     };
 
