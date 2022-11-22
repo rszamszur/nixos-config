@@ -19,10 +19,22 @@
   # replicates the default behaviour.
   networking.useDHCP = false;
 
-  my.awesome.enable = true;
+  # QEMU guest tools
+  environment.systemPackages = [ pkgs.spice ];
+
+  awesome_cfg = pkgs.fetchurl {
+    url = "https://gist.githubusercontent.com/rszamszur/054dd09d279890e502322ac3e560ab0f/raw/23e8515e4884803c0f7fb50f7ad3e00e90480966/rc.lua";
+    sha256 = "1x56pp2pr8y5x45sy08yvwzk4j82v4hi5zvzdpxhwakk3p5lz3h5";
+  };
+
+  my.awesome = {
+    enable = true;
+    rclua = awesome;
+  };
   my.laptop.enable = true;
   my.bash = {
     enable = true;
+    gitEmail = builtins.getEnv "TYR_GIT_EMAIL";
     homepkgs = [
       pkgs.google-cloud-sdk
       pkgs.firefox
@@ -34,7 +46,6 @@
   my.vim.enable = true;
   my.podman.enable = true;
   my.vscode.enable = true;
-  my.remarkable.enable = true;
   my.chrome.enable = true;
 
   # This value determines the NixOS release from which the default
