@@ -6,6 +6,7 @@ let
 in
 {
   environment.systemPackages = [
+    pkgs.coreutils
     pkgs.vim
     pkgs.wget
     pkgs.curl

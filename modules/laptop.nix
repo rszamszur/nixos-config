@@ -8,11 +8,7 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    my.awesome.enable = true;
     my.sound.enable = true;
-    my.bash.enable = true;
-    my.remarkable.enable = true;
-    my.duplicati.enable = true;
 
     environment.systemPackages = [
       pkgs.acpi
@@ -29,33 +25,6 @@ in
 
     home-manager.users.rszamszur = { ... }: {
 
-      home.file = {
-
-        ".config/awesome/volume-control".source = pkgs.fetchFromGitHub {
-          owner = "rszamszur";
-          repo = "volume-control";
-          rev = "a18e862";
-          sha256 = "0fc1l1bqwfwxchg3yqxd7ivx2nf0qcxkg16xzhl9707ycvbqajpi";
-        };
-
-        ".config/awesome/awesome-wm-widgets".source = pkgs.fetchFromGitHub {
-          owner = "rszamszur";
-          repo = "awesome-wm-widgets";
-          rev = "b8e3a86";
-          sha256 = "1y3bbxczzrqk1d2636rc0z76x8648vf3f78dwsjwsy289zmby3dq";
-        };
-
-        ".config/awesome/rc.lua".source = awesome/rc.lua;
-
-        ".config/awesome/json.lua".source = pkgs.fetchurl {
-          url = "https://raw.githubusercontent.com/rszamszur/json.lua/v0.1.2/json.lua";
-          sha256 = "11xbx7imgn3n92mgzk0mwwa51vkpxa094qd1qyzb6zf76adzagdi";
-        };
-
-        ".config/awesome/wallpapers".source = awesome/wallpapers;
-
-      };
-
       services.screen-locker = {
         enable = true;
         lockCmd = "${pkgs.xsecurelock}/bin/xsecurelock";
@@ -71,45 +40,6 @@ in
           screensaverCycle = 5;
         };
       };
-
-      programs.git = {
-        enable = true;
-        userName = "Radosław Szamszur";
-        userEmail = "radoslawszamszur@gmail.com";
-        extraConfig = {
-          init = {
-            defaultBranch = "master";
-          };
-          core = {
-            editor = "vim";
-          };
-        };
-      };
-
-      home.packages = [
-        pkgs.coreutils
-        pkgs.nmap
-        pkgs.zip
-        pkgs.unzip
-        pkgs.gnumake
-        pkgs.gcc
-        pkgs.vagrant
-        pkgs.openvpn
-        pkgs.gimp
-        pkgs.flameshot
-        pkgs.spotify
-        pkgs.okular
-        pkgs.htop
-        pkgs.vlc
-        pkgs.firefox
-        pkgs.signal-desktop
-        pkgs.libreoffice
-        pkgs.keepassxc
-        pkgs.jetbrains.pycharm-community
-        pkgs.kubectl
-        pkgs.kubernetes-helm
-        pkgs.solaar
-      ];
 
     };
 
