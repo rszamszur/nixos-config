@@ -11,6 +11,8 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "ntfs" ];
 
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   networking.hostName = "draugr";
 
   time.timeZone = "Europe/Warsaw";
