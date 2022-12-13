@@ -27,8 +27,8 @@
   my.awesome = {
     enable = true;
     rclua = pkgs.fetchurl {
-      url = "https://gist.githubusercontent.com/rszamszur/054dd09d279890e502322ac3e560ab0f/raw/23e8515e4884803c0f7fb50f7ad3e00e90480966/rc.lua";
-      sha256 = "1x56pp2pr8y5x45sy08yvwzk4j82v4hi5zvzdpxhwakk3p5lz3h5";
+      url = "https://gist.githubusercontent.com/rszamszur/054dd09d279890e502322ac3e560ab0f/raw/403d63ae125e316305f2358ea3df469b982cb498/rc.lua";
+      sha256 = "1d1fsm9pd615izwiwv8mz4kxabdyq0ad5pj5k5mx5gq28fg9y73k";
     };
   };
   my.laptop.enable = true;
@@ -47,6 +47,11 @@
   my.podman.enable = true;
   my.vscode.enable = true;
   my.chrome.enable = true;
+  my.aarch = {
+    enable = true;
+    idea = true;
+  };
+  my.remarkable.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
