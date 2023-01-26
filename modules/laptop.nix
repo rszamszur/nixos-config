@@ -23,26 +23,6 @@ in
     # A keyboard shortcut daemon
     services.actkbd.enable = true;
 
-    home-manager.users.rszamszur = { ... }: {
-
-      services.screen-locker = {
-        enable = true;
-        lockCmd = "${pkgs.xsecurelock}/bin/xsecurelock";
-        inactiveInterval = 5;
-        xautolock.enable = false;
-        xss-lock = {
-          package = pkgs.xss-lock;
-          extraOptions = [
-            "-n"
-            "${pkgs.xsecurelock}/libexec/xsecurelock/dimmer"
-            "-l"
-          ];
-          screensaverCycle = 5;
-        };
-      };
-
-    };
-
   };
 
 }
