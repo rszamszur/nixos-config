@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -22,7 +22,41 @@
   # replicates the default behaviour.
   networking.useDHCP = false;
 
+  environment.systemPackages = [
+    pkgs.acpi
+  ];
+
+  services.acpid.enable = true;
+  # A keyboard shortcut daemon
+  services.actkbd.enable = true;
+
+  my.awesome.enable = true;
+  my.bash = {
+    enable = true;
+    homepkgs = [
+      pkgs.vagrant
+      pkgs.spotify
+      pkgs.okular
+      pkgs.vlc
+      pkgs.firefox
+      pkgs.signal-desktop
+      pkgs.libreoffice
+      pkgs.keepassxc
+      pkgs.jetbrains.pycharm-community
+      pkgs.kubectl
+      pkgs.kubernetes-helm
+      pkgs.solaar
+      pkgs.openvpn
+      pkgs.gimp
+    ];
+  };
+  my.vim.enable = true;
+  my.sound.enable = true;
   my.kvm.enable = true;
+  my.podman.enable = true;
+  my.vscode.enable = true;
+  my.remarkable.enable = true;
+  my.chrome.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -30,6 +64,6 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "21.11"; # Did you read the comment?
+  system.stateVersion = "22.05"; # Did you read the comment?
 
 }
