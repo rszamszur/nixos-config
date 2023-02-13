@@ -6,8 +6,8 @@ let
   rcu-src = pkgs.fetchFromGitHub {
     owner = "rszamszur";
     repo = "pkg-rcu";
-    rev = "74b2513754d8ee823541571cf32059acf827ccca";
-    sha256 = "1ka4s6r1b9k73whs238a3lfrwq38hyg6g9d2ryxc8cwgmjzb0ar2";
+    rev = "e9fee9e84c57f796ec6b3d1016c9ccbedc0c2c15";
+    sha256 = "1vknxkbbwd9658v7x4p3ixnnckv3ibnfx1d70g1zcbrrzgxmbwww";
   };
 
   rcu = pkgs.python38.pkgs.callPackage "${rcu-src}/pkg.nix" {
