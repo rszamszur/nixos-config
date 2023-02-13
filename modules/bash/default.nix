@@ -50,7 +50,7 @@ in
   config = lib.mkIf cfg.enable {
 
     home-manager.users.rszamszur = { ... }: {
-      
+
       home.stateVersion = "22.11";
 
       programs.direnv.enable = true;
