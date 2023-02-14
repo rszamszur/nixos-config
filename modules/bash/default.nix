@@ -51,6 +51,8 @@ in
 
     home-manager.users.rszamszur = { ... }: {
 
+      home.stateVersion = "22.11";
+
       programs.direnv.enable = true;
       programs.direnv.nix-direnv.enable = true;
 
