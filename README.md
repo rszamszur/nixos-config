@@ -228,9 +228,13 @@ mkpasswd -m sha-512
 ## Similar repos
 
 * [adisbladis/nixconfig](https://github.com/adisbladis/nixconfig)
+* [AleksanderGondek/nixos-config](https://github.com/AleksanderGondek/nixos-config)
+* [kczulko/nixos-config](https://github.com/kczulko/nixos-config)
 * [yrashk/nix-home](https://github.com/yrashk/nix-home)
 * [ttuegel/nixos-config](https://github.com/ttuegel/nixos-config)
-* [AleksanderGondek/nixos-config](https://github.com/AleksanderGondek/nixos-config)
+* [NobbZ/nixos-config](https://github.com/NobbZ/nixos-config)
+* [MatthiasBenaets/nixos-config](https://github.com/MatthiasBenaets/nixos-config)
+* [patryk-kozak/nixos-config](https://github.com/patryk-kozak/nixos-config)
 
 ## Reference
 
