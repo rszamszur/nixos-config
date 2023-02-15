@@ -11,16 +11,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "ntfs" ];
 
-  nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
-    substituters = [
-      "https://cache.nixos.org"
-      "https://fastapi-mvc.cachix.org"
-    ];
-    trusted-public-keys = [
-      "fastapi-mvc.cachix.org-1:knQ8Qo41bnhBmOB6Sp0UH10EV76AXW5o69SbAS668Fg="
-    ];
-  };
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   networking.hostName = "draugr";
 
@@ -31,6 +22,7 @@
   # replicates the default behaviour.
   networking.useDHCP = false;
 
+  my.cache.enable = true;
   my.awesome.enable = true;
   my.laptop.enable = true;
   my.bash = {
