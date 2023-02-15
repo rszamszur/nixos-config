@@ -9,15 +9,27 @@ in
 
   config = lib.mkIf cfg.enable {
     sound.enable = true;
-    hardware.pulseaudio.enable = true;
-    hardware.bluetooth.enable = true;
+    hardware = {
+      pulseaudio = {
+        enable = true;
+        package = pkgs.pulseaudioFull;
+      };
+      bluetooth = {
+        enable = true;
+        hsphfpd.enable = true;
+        settings = {
+          General = {
+            Enable = "Source,Sink,Media,Socket";
+          };
+        };
+      };
+    };
     services.blueman.enable = true;
     programs.noisetorch.enable = true;
 
     environment.systemPackages = [
       pkgs.pavucontrol
     ];
-    # hardware.bluetooth.hsphfpd.enable = true;
   };
 
 }
