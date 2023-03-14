@@ -31,7 +31,10 @@
   services.actkbd.enable = true;
 
   my.cache.enable = true;
-  my.awesome.enable = true;
+  my.awesome = {
+    enable = true;
+    rclua = ./rc.lua;
+  };
   my.bash = {
     enable = true;
     homepkgs = [
@@ -49,6 +52,7 @@
       pkgs.solaar
       pkgs.openvpn
       pkgs.gimp
+      (builtins.getFlake "github:fastapi-mvc/fastapi-mvc").packages.${builtins.currentSystem}.default
     ];
   };
   my.vim.enable = true;
