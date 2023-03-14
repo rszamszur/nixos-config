@@ -3,8 +3,8 @@ let
   src = final.fetchFromGitHub {
     owner = "nix-community";
     repo = "poetry2nix";
-    rev = "1.31.0";
-    sha256 = "06psv5mc7xg31bvjpg030mwnk0sv90cj5bvgsdmcwicifpl3k3yj";
+    rev = "1.39.1";
+    sha256 = "0kb738zsp9d2hywv7js9clz2nwmjfqya2ln8xxq2yil7bpns0xnf";
   };
   p2n = import "${src.out}/default.nix" { pkgs = final; poetry = final.poetry; };
 in
@@ -24,39 +24,13 @@ in
         # If one wants to use pure python mypy, use the following:
         #MYPY_USE_MYPYC = false;
       });
-      idna = py-prev.idna.overridePythonAttrs (old: {
-        buildInputs = old.buildInputs or [ ] ++ [ py-final.flit-core ];
-      });
-      mdit-py-plugins = py-prev.mdit-py-plugins.overridePythonAttrs (old: {
-        buildInputs = old.buildInputs or [ ] ++ [ py-final.flit-core ];
-      });
-      suds = py-prev.suds.overridePythonAttrs (old: {
-        # Fix naming convention shenanigans.
-        # https://github.com/suds-community/suds/blob/a616d96b070ca119a532ff395d4a2a2ba42b257c/setup.py#L648
-        SUDS_PACKAGE = "suds";
-      });
-      watchfiles = py-prev.watchfiles.overridePythonAttrs (old: rec {
-        src = final.fetchFromGitHub {
-          owner = "samuelcolvin";
-          repo = "watchfiles";
-          # FIXME: Find out why watchfiles does not include Cargo.lock in pypi released tarball. 
-          # Then either remove this, or add repo shas map.
-          rev = "v0.17.0";
-          sha256 = "sha256-HW94cs/WH1EmMutzE2jlQ60cpTQ+ltIZGBgnWIxwl+s=";
-        };
-        cargoDeps = final.rustPlatform.importCargoLock {
-          lockFile = "${src.out}/Cargo.lock";
-        };
-        nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [
-          final.rustPlatform.cargoSetupHook
-          final.rustPlatform.maturinBuildHook
-        ];
-      });
-      uvicorn = py-prev.uvicorn.overridePythonAttrs (old: {
-        buildInputs = old.buildInputs or [ ] ++ [ py-final.hatchling ];
+      pyyaml-include = py-prev.pyyaml-include.overridePythonAttrs (old: {
         postPatch = ''
-          substituteInPlace pyproject.toml --replace 'watchfiles>=0.13' 'watchfiles'
+          substituteInPlace setup.py --replace 'setup()' 'setup(version="${old.version}")'
         '';
+      });
+      pydantic = py-prev.pydantic.overrideAttrs (old: {
+        buildInputs = old.buildInputs or [ ] ++ [ final.libxcrypt ];
       });
 
     });
