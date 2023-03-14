@@ -49,8 +49,7 @@ in
                     "address": [
                         "192.168.0.189"
                     ],
-                    "auth_method": "key",
-                    "key": "/home/rszamszur/.ssh/remarkable"
+                    "auth_method": "password"
                 },
                 "orientation": "portrait",
                 "pen_size": 15,
