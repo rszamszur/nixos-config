@@ -34,4 +34,6 @@ jobs:
     # - name: Run flake checks
     #   run: nix flake check --impure
     - name: Build draugr
+      env:
+        RCU_PRODUCT_KEY: ${{ secrets.RCU_PRODUCT_KEY }}
       run: nix build .#nixosConfigurations.draugr.config.system.build.toplevel -L --impure
