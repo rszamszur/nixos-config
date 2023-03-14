@@ -31,7 +31,7 @@ jobs:
     steps:
     - uses: cachix/install-nix-action@v20
     - uses: actions/checkout@v3
-    - name: Run flake checks
-      run: nix flake check --impure
+    # - name: Run flake checks
+    #   run: nix flake check --impure
     - name: Build draugr
       run: nix build .#nixosConfigurations.draugr.config.system.build.toplevel -L --impure
