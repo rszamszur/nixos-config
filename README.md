@@ -9,8 +9,8 @@ Configuration to setup my NixOS instances.
 
 | Name         | CI Status |
 |--------------|-----------|
-| draugr | [![draugr](https://github.com/rszamszur/nixos-config/actions/workflows/draugr.yml/badge.svg?branch=master)](https://github.com/rszamszur/nixos-config/actions/workflows/draugr.yml) |
-| fenrir | [![fenrir](https://github.com/rszamszur/nixos-config/actions/workflows/fenrir.yml/badge.svg?branch=master)](https://github.com/rszamszur/nixos-config/actions/workflows/fenrir.yml) |
+| draugr | [![draugr](https://github.com/rszamszur/nixos-config/actions/workflows/draugr.yml/badge.svg)](https://github.com/rszamszur/nixos-config/actions/workflows/draugr.yml) |
+| fenrir | [![fenrir](https://github.com/rszamszur/nixos-config/actions/workflows/fenrir.yml/badge.svg)](https://github.com/rszamszur/nixos-config/actions/workflows/fenrir.yml) |
 
 ## Disk setup - encrypted btrfs
 
