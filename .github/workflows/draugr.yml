@@ -4,9 +4,23 @@ on:
   push:
     branches:
       - master
+    paths:
+      - "hosts/draugr/**"
+      - ".github/workflows/draugr.yml"
+      - "modules/**"
+      - "pkgs/**"
+      - "flake.nix"
+      - "flake.lock"
   pull_request:
     branches:
       - master
+    paths:
+      - "hosts/draugr/**"
+      - ".github/workflows/draugr.yml"
+      - "modules/**"
+      - "pkgs/**"
+      - "flake.nix"
+      - "flake.lock"
 
 jobs:
   # This job checks if an identical workflow is being triggered by different
@@ -36,8 +50,6 @@ jobs:
       with:
         name: rszamszur-nixos
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-    # - name: Run flake checks
-    #   run: nix flake check --impure
     - name: Build draugr
       env:
         RCU_PRODUCT_KEY: ${{ secrets.RCU_PRODUCT_KEY }}
