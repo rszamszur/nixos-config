@@ -1,0 +1,56 @@
+name: fenrir
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "hosts/fenrir/**"
+      - ".github/workflows/fenrir.yml"
+      - "modules/**"
+      - "pkgs/**"
+      - "flake.nix"
+      - "flake.lock"
+  pull_request:
+    branches:
+      - master
+    paths:
+      - "hosts/fenrir/**"
+      - ".github/workflows/fenrir.yml"
+      - "modules/**"
+      - "pkgs/**"
+      - "flake.nix"
+      - "flake.lock"
+
+jobs:
+  # This job checks if an identical workflow is being triggered by different
+  # event and skips it. For instance there is no need to run the same pipeline
+  # twice for pull_request and push for identical commit sha.
+  pre_job:
+    runs-on: ubuntu-latest
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+    steps:
+      - id: skip_check
+        uses: fkirc/skip-duplicate-actions@v5.3.0
+        with:
+          skip_after_successful_duplicate: 'true'
+          concurrent_skipping: same_content
+          do_not_skip: '["pull_request", "workflow_dispatch", "schedule"]'
+  nix-build:
+    needs: pre_job
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: cachix/install-nix-action@v20
+    - uses: actions/checkout@v3
+    - name: Setup Cachix ❄️
+      uses: cachix/cachix-action@v12
+      with:
+        name: rszamszur-nixos
+        authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+    - name: Build fenrir
+      env:
+        RCU_PRODUCT_KEY: ${{ secrets.RCU_PRODUCT_KEY }}
+      run: nix build .#nixosConfigurations.fenrir.config.system.build.toplevel -L --impure

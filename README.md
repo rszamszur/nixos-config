@@ -5,6 +5,13 @@
 
 Configuration to setup my NixOS instances.
 
+## Hosts configurations health
+
+| Name         | CI Status |
+|--------------|-----------|
+| draugr | [![draugr](https://github.com/rszamszur/nixos-config/actions/workflows/draugr.yml/badge.svg?branch=master)](https://github.com/rszamszur/nixos-config/actions/workflows/draugr.yml) |
+| fenrir | [![fenrir](https://github.com/rszamszur/nixos-config/actions/workflows/fenrir.yml/badge.svg?branch=master)](https://github.com/rszamszur/nixos-config/actions/workflows/fenrir.yml) |
+
 ## Disk setup - encrypted btrfs
 
 [**Credits for the instructions**](https://blog.kolaente.de/2021/11/installing-nixos-with-encrypted-btrfs-root-device-and-home-manager-from-start-to-finish/)
@@ -148,7 +155,7 @@ To create the symlink, it’s important to create one with a relative path - nix
 cd /mnt/etc/nixos
 mv configuration.nix configuration.generated.nix
 # Choose host to build
-ln -s ../../var/nixos-config/hosts/hades/configuration.nix configuration.nix
+ln -s ../../var/nixos-config/hosts/draugr/configuration.nix configuration.nix
 ```
 
 Usually, it’s a good idea to take a look at the auto generated `hardware-configuration.nix` and add it to the already existing config because it has all disks and everything else detected by `nixos-generate-config`.

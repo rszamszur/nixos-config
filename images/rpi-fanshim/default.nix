@@ -1,76 +1,54 @@
-{ pkgs ? import <nixpkgs> { } }:
+{ pkgs ? import <nixpkgs> { overlays = [ import ../overlays/pkgs.nix ]; }
+, name ? "rpi-fanshim"
+, tag ? "latest"
+}:
 
 let
-  nonRootShadowSetup = { user, uid, gid ? uid }: with pkgs; [
-    (
-      writeTextDir "etc/shadow" ''
-        root:!x:::::::
-        ${user}:!:::::::
-      ''
-    )
-    (
-      writeTextDir "etc/passwd" ''
-        root:x:0:0::/root:${runtimeShell}
-        ${user}:x:${toString uid}:${toString gid}::/home/${user}:
-      ''
-    )
-    (
-      writeTextDir "etc/group" ''
-        root:x:0:
-        ${user}:x:${toString gid}:
-      ''
-    )
-    (
-      writeTextDir "etc/gshadow" ''
-        root:x::
-        ${user}:x::
-      ''
-    )
-  ];
-
   service = pkgs.writeTextDir "src/run.py" (builtins.readFile ./run.py);
 
-  RPiGPIO = pkgs.callPackage ../../pkgs/development/python-modules/RPi.GPIO {
-    buildPythonPackage = pkgs.python39Packages.buildPythonPackage;
-    fetchPypi = pkgs.python39Packages.fetchPypi;
-    setuptools = pkgs.python39.pkgs.setuptools;
-  };
-
-  apa102 = pkgs.callPackage ../../pkgs/development/python-modules/apa102 {
-    buildPythonPackage = pkgs.python39Packages.buildPythonPackage;
-    fetchPypi = pkgs.python39Packages.fetchPypi;
-    setuptools = pkgs.python39.pkgs.setuptools;
-    inherit RPiGPIO;
-    spidev = pkgs.python39.pkgs.spidev;
-  };
-
-  fanshim = pkgs.callPackage ../../pkgs/development/python-modules/fanshim {
-    buildPythonPackage = pkgs.python39Packages.buildPythonPackage;
-    fetchPypi = pkgs.python39Packages.fetchPypi;
-    setuptools = pkgs.python39.pkgs.setuptools;
-    psutil = pkgs.python39.pkgs.psutil;
-    inherit apa102;
-    inherit RPiGPIO;
-  };
-
   pyEnv = pkgs.python39.withPackages (ps: with ps; [
-    RPiGPIO
-    fanshim
-    apa102
+    pkgs.RPiGPIO
+    pkgs.fanshim
+    pkgs.apa102
   ]);
 in
 
 pkgs.dockerTools.buildImage {
-  name = "rpi-fanshim";
-  tag = "latest";
+  inherit name tag;
 
-  contents = [
-    pyEnv
-    service
-  ] ++ nonRootShadowSetup { uid = 999; user = "nonroot"; };
+  copyToRoot = pkgs.buildEnv {
+    name = "image-root";
+    paths = [
+      pyEnv
+      service
+      pkgs.bash
+      pkgs.coreutils
+      pkgs.cacert
+    ];
+    pathsToLink = [ "/bin" ];
+  };
+
+  runAsRoot = ''
+    #!${pkgs.runtimeShell}
+    ${pkgs.dockerTools.shadowSetup}
+    mkdir /tmp
+    chmod 777 -R /tmp
+    mkdir -p /usr/bin
+    ln -s ${pkgs.coreutils}/bin/env /usr/bin/env
+    groupadd -r nonroot
+    useradd -r -g nonroot nonroot
+    mkdir -p /home/nonroot
+    chown nonroot:nonroot /home/nonroot
+  '';
 
   config = {
+    Env = [
+      "SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
+      "PYTHONDONTWRITEBYTECODE=1"
+      "PYTHONUNBUFFERED=1"
+    ];
     User = "nonroot";
+    WorkingDir = "/home/nonroot";
     Entrypoint = [ "${pyEnv}/bin/python3" "/src/run.py" ];
   };
 }
