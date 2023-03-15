@@ -71,9 +71,6 @@
         packages = {
           manix = channels.nixpkgs.manix;
           cups-remarkable = channels.nixpkgs.cups-remarkable;
-          RPiGPIO = channels.nixpkgs.RPiGPIO;
-          apa102 = channels.nixpkgs.apa102;
-          fanshim = channels.nixpkgs.fanshim;
         };
 
         devShells = {
@@ -88,6 +85,9 @@
         rpi-fanshim = import ./images/rpi-fanshim {
           pkgs = self.pkgs.aarch64-linux.nixpkgs;
         };
+        RPiGPIO = self.pkgs.aarch64-linux.nixpkgs.RPiGPIO;
+        apa102 = self.pkgs.aarch64-linux.nixpkgs.apa102;
+        fanshim = self.pkgs.aarch64-linux.nixpkgs.fanshim;
       };
 
     };
