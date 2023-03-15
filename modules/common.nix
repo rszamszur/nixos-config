@@ -44,6 +44,6 @@ in
     defaultLocale = "en_US.UTF-8";
   };
 
-  nix.trustedUsers = [ "rszamszur" ];
+  nix.settings.trusted-users = [ "rszamszur" ];
 
 }
