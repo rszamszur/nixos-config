@@ -47,10 +47,7 @@
   my.podman.enable = true;
   my.vscode.enable = true;
   my.chrome.enable = true;
-  my.aarch = {
-    enable = true;
-    idea = true;
-  };
+  my.aarch.enable = true;
   my.remarkable.enable = true;
 
   # This value determines the NixOS release from which the default
