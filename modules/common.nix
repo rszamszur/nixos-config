@@ -13,6 +13,9 @@ in
     pkgs.git
     pkgs.tmux
     pkgs.jq
+    pkgs.gron
+    pkgs.file
+    pkgs.patchelf
     pkgs.dnsutils
     pkgs.cryptsetup
   ];
