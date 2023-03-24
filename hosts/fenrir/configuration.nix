@@ -53,6 +53,7 @@
       pkgs.openvpn
       pkgs.gimp
       (builtins.getFlake "github:fastapi-mvc/fastapi-mvc").packages.${builtins.currentSystem}.default
+      (builtins.getFlake "github:rszamszur/b3-flake").packages.${builtins.currentSystem}.default
     ];
   };
   my.vim.enable = true;
