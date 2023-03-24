@@ -23,6 +23,11 @@
 
   # QEMU guest tools
   environment.systemPackages = [ pkgs.spice ];
+  services.spice-vdagentd.enable = true;
+  services.spice-webdavd.enable = true;
+  services.qemuGuest.enable = true;
+  # Run unpatched dynamic binaries on NixOS
+  programs.nix-ld.enable = true;
 
   my.awesome = {
     enable = true;
@@ -41,13 +46,20 @@
       pkgs.keepassxc
       pkgs.kubectl
       pkgs.kubernetes-helm
+      pkgs.kubectx
+      pkgs.burpsuite
+      pkgs.mitmproxy
+      pkgs.httpie
+      (builtins.getFlake "github:rszamszur/b3-flake").packages.${builtins.currentSystem}.default
     ];
   };
   my.vim.enable = true;
   my.podman.enable = true;
   my.vscode.enable = true;
   my.chrome.enable = true;
-  my.aarch.enable = true;
+  my.aarch = {
+    enable = true;
+  };
   my.remarkable.enable = true;
 
   # This value determines the NixOS release from which the default
