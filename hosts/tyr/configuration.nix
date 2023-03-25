@@ -11,6 +11,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nixpkgs.config.allowUnfree = true;
 
   networking.hostName = "tyr";
 
@@ -50,7 +51,7 @@
       pkgs.burpsuite
       pkgs.mitmproxy
       pkgs.httpie
-      (builtins.getFlake "github:rszamszur/b3-flake").packages.${builtins.currentSystem}.default
+      pkgs.b3
     ];
   };
   my.vim.enable = true;

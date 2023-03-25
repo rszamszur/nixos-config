@@ -12,6 +12,7 @@
   boot.supportedFilesystems = [ "ntfs" ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nixpkgs.config.allowUnfree = true;
 
   networking.hostName = "fenrir";
 
@@ -52,8 +53,8 @@
       pkgs.solaar
       pkgs.openvpn
       pkgs.gimp
-      (builtins.getFlake "github:fastapi-mvc/fastapi-mvc").packages.${builtins.currentSystem}.default
-      (builtins.getFlake "github:rszamszur/b3-flake").packages.${builtins.currentSystem}.default
+      pkgs.fastapi-mvc
+      pkgs.rcu
     ];
   };
   my.vim.enable = true;
