@@ -1,6 +1,16 @@
 {
   description = "Radosław Szamszur NixOS configurations";
-  nixConfig.bash-prompt = ''\n\[\033[1;32m\][nix-develop:\w]\$\[\033[0m\] '';
+  nixConfig = {
+    bash-prompt = ''\n\[\033[1;32m\][nix-develop:\w]\$\[\033[0m\] '';
+    extra-trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "rszamszur-nixos.cachix.org-1:OOpiY87os0SYfYVQmLzxTvvn2sEoeOkKzaeguQCZVyQ="
+    ];
+    extra-substituters = [
+      "https://nix-community.cachix.org"
+      "https://rszamszur-nixos.cachix.org"
+    ];
+  };
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
@@ -8,87 +18,61 @@
       url = "github:nix-community/home-manager/release-22.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus";
-
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    fastapi-mvc.url = "github:fastapi-mvc/fastapi-mvc";
+    rcu.url = "github:rszamszur/pkg-rcu";
+    b3.url = "github:rszamszur/b3-flake";
   };
 
-  outputs = { self, nixpkgs, home-manager, flake-utils-plus }@inputs:
-    {
-      overlays = {
-        default = nixpkgs.lib.composeManyExtensions [
-          self.overlays.pkgs
-          self.overlays.poetry2nix
-        ];
-        pkgs = import ./overlays/pkgs.nix;
-        poetry2nix = import ./overlays/poetry2nix.nix;
-      };
-
-    } // flake-utils-plus.lib.mkFlake {
-      inherit self inputs;
-
-      supportedSystems = [
-        "aarch64-linux"
-        "x86_64-linux"
+  outputs = { self, nixpkgs, home-manager, flake-parts, fastapi-mvc, rcu, b3 }@inputs:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [
+        ./shells/flake-module.nix
+        ./pkgs/flake-module.nix
+        ./images/flake-module.nix
       ];
-
-      channelsConfig = {
-        allowUnfree = true;
-      };
-
-      sharedOverlays = [ self.overlays.default ];
-
-      hostDefaults = {
-        system = "x86_64-linux";
-        channelName = "nixpkgs";
-        modules = [
-          home-manager.nixosModules.home-manager
-        ];
-      };
-
-      hosts.fenrir = {
-        modules = [
-          ./hosts/fenrir/hardware-configuration.nix
-          ./hosts/fenrir/configuration.nix
-        ];
-      };
-
-      hosts.draugr = {
-        modules = [
-          ./hosts/draugr/hardware-configuration.nix
-          ./hosts/draugr/configuration.nix
-        ];
-      };
-
-      hosts.tyr = {
-        system = "aarch64-linux";
-        modules = [
-          ./hosts/tyr/hardware-configuration.nix
-          ./hosts/tyr/configuration.nix
-        ];
-      };
-
-      outputsBuilder = channels: {
+      systems = [ "x86_64-linux" "aarch64-linux" ];
+      perSystem = { config, self', inputs', pkgs, system, ... }: {
         packages = {
-          manix = channels.nixpkgs.manix;
-          cups-remarkable = channels.nixpkgs.cups-remarkable;
+          fastapi-mvc = fastapi-mvc.packages.${system}.default;
+          rcu = rcu.packages.${system}.rcu;
+          b3 = b3.packages.${system}.default;
         };
 
-        devShells = {
-          poetry = import ./shells/py3-poetry.nix { pkgs = channels.nixpkgs; };
-          pip = import ./shells/py3-pip.nix { pkgs = channels.nixpkgs; };
-          nodejs = import ./shells/js.nix { pkgs = channels.nixpkgs; };
-          ruby = import ./shells/ruby.nix { pkgs = channels.nixpkgs; };
-        };
       };
-
-      packages.aarch64-linux = {
-        rpi-fanshim = import ./images/rpi-fanshim {
-          pkgs = self.pkgs.aarch64-linux.nixpkgs;
+      flake = {
+        nixosConfigurations = {
+          fenrir = inputs.nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            modules = [
+              ./hosts/fenrir/hardware-configuration.nix
+              ./hosts/fenrir/configuration.nix
+              inputs.home-manager.nixosModules.home-manager
+            ];
+          };
+          draugr = inputs.nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            modules = [
+              ./hosts/draugr/hardware-configuration.nix
+              ./hosts/draugr/configuration.nix
+              inputs.home-manager.nixosModules.home-manager
+            ];
+          };
+          tyr = inputs.nixpkgs.lib.nixosSystem {
+            system = "aarch64-linux";
+            modules = [
+              ./hosts/tyr/hardware-configuration.nix
+              ./hosts/tyr/configuration.nix
+              inputs.home-manager.nixosModules.home-manager
+            ];
+          };
         };
-        RPiGPIO = self.pkgs.aarch64-linux.nixpkgs.RPiGPIO;
-        apa102 = self.pkgs.aarch64-linux.nixpkgs.apa102;
-        fanshim = self.pkgs.aarch64-linux.nixpkgs.fanshim;
+        nixosModules = builtins.listToAttrs (map
+          (module: {
+            name = builtins.replaceStrings [ ".nix" ] [ "" ] (builtins.baseNameOf module);
+            value = module;
+          })
+          (import ./modules { lib = inputs.nixpkgs.lib; }).imports);
       };
-
     };
 }
