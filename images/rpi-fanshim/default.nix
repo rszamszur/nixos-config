@@ -1,15 +1,18 @@
 { pkgs ? import <nixpkgs> { overlays = [ import ../overlays/pkgs.nix ]; }
 , name ? "rpi-fanshim"
 , tag ? "latest"
+, RPiGPIO
+, fanshim
+, apa102
 }:
 
 let
   service = pkgs.writeTextDir "src/run.py" (builtins.readFile ./run.py);
 
   pyEnv = pkgs.python39.withPackages (ps: with ps; [
-    pkgs.RPiGPIO
-    pkgs.fanshim
-    pkgs.apa102
+    RPiGPIO
+    fanshim
+    apa102
   ]);
 in
 
