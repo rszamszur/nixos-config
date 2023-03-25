@@ -29,7 +29,6 @@ jobs:
         with:
           filters: |
             build:
-              paths:
               - "hosts/draugr/**"
               - ".github/workflows/draugr.yml"
               - "modules/**"

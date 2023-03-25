@@ -29,13 +29,12 @@ jobs:
         with:
           filters: |
             build:
-              paths:
-                - "hosts/fenrir/**"
-                - ".github/workflows/fenrir.yml"
-                - "modules/**"
-                - "pkgs/**"
-                - "flake.nix"
-                - "flake.lock"  
+              - "hosts/fenrir/**"
+              - ".github/workflows/fenrir.yml"
+              - "modules/**"
+              - "pkgs/**"
+              - "flake.nix"
+              - "flake.lock"
   nix-build:
     needs: pre_job
     if: ${{ needs.pre_job.outputs.should_skip != 'true' && needs.pre_job.outputs.build == 'true' }}
