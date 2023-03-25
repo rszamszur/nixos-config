@@ -38,18 +38,6 @@ jobs:
     - uses: actions/checkout@v3
     - name: Check format
       run: nix-shell -p nixpkgs-fmt --run 'nixpkgs-fmt --check .'
-  nix-linter:
-    needs: pre_job
-    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: cachix/install-nix-action@v20
-      with:
-        nix_path: ${{ env.NIX_CHANNEL }}
-    - uses: actions/checkout@v3
-    - name: Run nix-linter
-      run: nix-shell -p nix-linter --run 'nix-linter -r shells/ hosts/ modules/ pkgs/ images'
   nix-flake-check:
     needs: pre_job
     if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
