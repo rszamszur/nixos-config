@@ -51,7 +51,7 @@
       pkgs.burpsuite
       pkgs.mitmproxy
       pkgs.httpie
-      (builtins.getFlake "github:rszamszur/b3-flake").packages.${builtins.currentSystem}.default
+      pkgs.b3
     ];
   };
   my.vim.enable = true;

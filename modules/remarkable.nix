@@ -2,20 +2,6 @@
 
 let
   cfg = config.my.remarkable;
-
-  remarkable-driver = pkgs.callPackage ../pkgs/misc/cups/drivers/remarkable {
-    lib = pkgs.lib;
-    stdenv = pkgs.stdenv;
-    fetchFromGitHub = pkgs.fetchFromGitHub;
-    coreutils = pkgs.coreutils;
-  };
-
-  rmview = pkgs.callPackage ../pkgs/applications/misc/remarkable/rmview {
-    lib = pkgs.lib;
-    fetchFromGitHub = pkgs.fetchFromGitHub;
-    python3Packages = pkgs.python39Packages;
-    wrapQtAppsHook = pkgs.qt5.wrapQtAppsHook;
-  };
 in
 {
 
@@ -26,7 +12,7 @@ in
     # Enable cups daemon, and add rmfilter for remarkable printing
     services.printing = {
       enable = true;
-      drivers = [ remarkable-driver ];
+      drivers = [ pkgs.cups-remarkable ];
     };
 
     hardware.printers.ensurePrinters = [
@@ -62,8 +48,8 @@ in
       };
 
       home.packages = [
-        rmview
-        (builtins.getFlake "github:rszamszur/pkg-rcu").packages.${builtins.currentSystem}.rcu
+        pkgs.rmview
+        pkgs.rcu
       ];
 
     };
