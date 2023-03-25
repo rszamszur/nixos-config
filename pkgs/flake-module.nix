@@ -10,6 +10,9 @@
         wrapQtAppsHook = pkgs.qt5.wrapQtAppsHook;
       };
     };
+    overlayAttrs = {
+      inherit (config.packages) manix cups-remarkable rmview;
+    };
   };
   flake = {
     packages.aarch64-linux = withSystem "x86_64-linux" (ctx@{ pkgs, ... }: {

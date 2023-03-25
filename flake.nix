@@ -27,6 +27,7 @@
   outputs = { self, nixpkgs, home-manager, flake-parts, fastapi-mvc, rcu, b3 }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
+        inputs.flake-parts.flakeModules.easyOverlay
         ./shells/flake-module.nix
         ./pkgs/flake-module.nix
         ./images/flake-module.nix
@@ -38,13 +39,18 @@
           rcu = rcu.packages.${system}.rcu;
           b3 = b3.packages.${system}.default;
         };
-
+        overlayAttrs = {
+          inherit (config.packages) fastapi-mvc rcu b3;
+        };
       };
       flake = {
         nixosConfigurations = {
           fenrir = inputs.nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
             modules = [
+              {
+                nixpkgs.overlays = [ self.overlays.default ];
+              }
               ./hosts/fenrir/hardware-configuration.nix
               ./hosts/fenrir/configuration.nix
               inputs.home-manager.nixosModules.home-manager
@@ -53,6 +59,9 @@
           draugr = inputs.nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
             modules = [
+              {
+                nixpkgs.overlays = [ self.overlays.default ];
+              }
               ./hosts/draugr/hardware-configuration.nix
               ./hosts/draugr/configuration.nix
               inputs.home-manager.nixosModules.home-manager
@@ -61,6 +70,9 @@
           tyr = inputs.nixpkgs.lib.nixosSystem {
             system = "aarch64-linux";
             modules = [
+              {
+                nixpkgs.overlays = [ self.overlays.default ];
+              }
               ./hosts/tyr/hardware-configuration.nix
               ./hosts/tyr/configuration.nix
               inputs.home-manager.nixosModules.home-manager
