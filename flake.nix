@@ -44,6 +44,9 @@
         };
       };
       flake = {
+        overlays = {
+          poetry2nix = import ./overlays/poetry2nix.nix;
+        };
         nixosConfigurations = {
           fenrir = inputs.nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
