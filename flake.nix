@@ -44,6 +44,20 @@
         };
       };
       flake = {
+        templates = {
+          default = {
+            path = ./templates/default;
+            description = ''
+              A minimal flake using flake-parts.
+            '';
+          };
+          poetry2nix = {
+            path = ./templates/poetry2nix;
+            description = ''
+              Base flake for Python projects using poetry2nix.
+            '';
+          };
+        };
         overlays = {
           poetry2nix = import ./overlays/poetry2nix.nix;
         };
