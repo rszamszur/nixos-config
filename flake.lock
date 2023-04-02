@@ -122,16 +122,16 @@
     },
     "fastapi-mvc": {
       "inputs": {
-        "flake-utils": "flake-utils",
+        "flake-parts": "flake-parts",
         "nixpkgs": "nixpkgs_2",
         "poetry2nix": "poetry2nix_2"
       },
       "locked": {
-        "lastModified": 1679482253,
-        "narHash": "sha256-GWVqYOJSx8T/DeClVhwm6tDJE152okQ5jSGHcSpd3+M=",
+        "lastModified": 1679869691,
+        "narHash": "sha256-gR+2aI4PB2tv67oSVxcFE6XtDz9drS4zrmEU52rhbJY=",
         "owner": "fastapi-mvc",
         "repo": "fastapi-mvc",
-        "rev": "d18e07c118f6b54cfeae3949ee04511b7209189b",
+        "rev": "6350cf98c65a460835a297fd3cc8411cab692e92",
         "type": "github"
       },
       "original": {
@@ -198,6 +198,24 @@
         "type": "github"
       }
     },
+    "flake-parts_2": {
+      "inputs": {
+        "nixpkgs-lib": "nixpkgs-lib_2"
+      },
+      "locked": {
+        "lastModified": 1680392223,
+        "narHash": "sha256-n3g7QFr85lDODKt250rkZj2IFS3i4/8HBU2yKHO3tqw=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "dcc36e45d054d7bb554c9cdab69093debd91a0b5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "locked": {
         "lastModified": 1667395993,
@@ -220,21 +238,6 @@
         "owner": "numtide",
         "repo": "flake-utils",
         "rev": "3cecb5b042f7f209c56ffd8371b2711a290ec797",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "flake-utils_2": {
-      "locked": {
-        "lastModified": 1667395993,
-        "narHash": "sha256-nuEHfE/LcWyuSWnS8t12N1wc105Qtau+/OdUAjtQ0rA=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "5aed5285a952e0b949eb3ba02c12fa4fcfef535f",
         "type": "github"
       },
       "original": {
@@ -361,6 +364,24 @@
         "type": "github"
       }
     },
+    "nixpkgs-lib_2": {
+      "locked": {
+        "dir": "lib",
+        "lastModified": 1680213900,
+        "narHash": "sha256-cIDr5WZIj3EkKyCgj/6j3HBH4Jj1W296z7HTcWj1aMA=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "e3652e0735fbec227f342712f180f4f21f0594f2",
+        "type": "github"
+      },
+      "original": {
+        "dir": "lib",
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1675681488,
@@ -379,11 +400,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1679710833,
-        "narHash": "sha256-9yKVvGX1oAnlc8vTVvN2lRH35q6ETudQbM1w9ragMRU=",
+        "lastModified": 1680334310,
+        "narHash": "sha256-ISWz16oGxBhF7wqAxefMPwFag6SlsA9up8muV79V9ck=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "83607dae4e05e1de755bbc7d7949b33fc1cfbbb9",
+        "rev": "884e3b68be02ff9d61a042bc9bd9dd2a358f95da",
         "type": "github"
       },
       "original": {
@@ -428,23 +449,23 @@
     },
     "poetry2nix_2": {
       "inputs": {
-        "flake-utils": "flake-utils_2",
+        "flake-utils": "flake-utils",
         "nixpkgs": [
           "fastapi-mvc",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1670681815,
-        "narHash": "sha256-znag7V2HRi9w78hSoTx2snIrPmVJy7O5h6Klqz8aZ00=",
+        "lastModified": 1679621603,
+        "narHash": "sha256-4e6cny6AHzQcyXH3fqSHIXC5wx8mv6hdP4lP7EtnbnQ=",
         "owner": "nix-community",
         "repo": "poetry2nix",
-        "rev": "bb7f4e1d046c5f19fda8bebb638d5d5bc07573d9",
+        "rev": "3313ab3740fb795f577c3c0598faaa4efb6c1597",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
-        "ref": "1.39.1",
+        "ref": "1.40.1",
         "repo": "poetry2nix",
         "type": "github"
       }
@@ -500,7 +521,7 @@
       "inputs": {
         "b3": "b3",
         "fastapi-mvc": "fastapi-mvc",
-        "flake-parts": "flake-parts",
+        "flake-parts": "flake-parts_2",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs_3",
         "rcu": "rcu"
