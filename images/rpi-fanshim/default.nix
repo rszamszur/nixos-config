@@ -1,4 +1,4 @@
-{ pkgs ? import <nixpkgs> { overlays = [ import ../overlays/pkgs.nix ]; }
+{ pkgs ? import <nixpkgs> { }
 , name ? "rpi-fanshim"
 , tag ? "latest"
 , RPiGPIO
