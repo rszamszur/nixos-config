@@ -7,7 +7,7 @@
 }:
 
 let
-  service = pkgs.writeTextDir "src/run.py" (builtins.readFile ./run.py);
+  service = pkgs.writeText "run.py" (builtins.readFile ./run.py);
 
   pyEnv = pkgs.python39.withPackages (ps: with ps; [
     RPiGPIO
@@ -23,7 +23,6 @@ pkgs.dockerTools.buildImage {
     name = "image-root";
     paths = [
       pyEnv
-      service
       pkgs.bash
       pkgs.coreutils
       pkgs.cacert
@@ -38,10 +37,7 @@ pkgs.dockerTools.buildImage {
     chmod 777 -R /tmp
     mkdir -p /usr/bin
     ln -s ${pkgs.coreutils}/bin/env /usr/bin/env
-    groupadd -r nonroot
-    useradd -r -g nonroot nonroot
-    mkdir -p /home/nonroot
-    chown nonroot:nonroot /home/nonroot
+    mkdir -p /workspace
   '';
 
   config = {
@@ -50,8 +46,8 @@ pkgs.dockerTools.buildImage {
       "PYTHONDONTWRITEBYTECODE=1"
       "PYTHONUNBUFFERED=1"
     ];
-    User = "nonroot";
-    WorkingDir = "/home/nonroot";
-    Entrypoint = [ "${pyEnv}/bin/python3" "/src/run.py" ];
+    User = "root";
+    WorkingDir = "/workspace";
+    Entrypoint = [ "${pyEnv}/bin/python3" service ];
   };
 }
