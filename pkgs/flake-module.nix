@@ -15,7 +15,7 @@
     };
   };
   flake = {
-    packages.aarch64-linux = withSystem "x86_64-linux" (ctx@{ pkgs, ... }: {
+    packages.aarch64-linux = withSystem "aarch64-linux" (ctx@{ pkgs, ... }: {
       RPiGPIO = pkgs.callPackage ./development/python-modules/RPi.GPIO {
         buildPythonPackage = pkgs.python39Packages.buildPythonPackage;
         fetchPypi = pkgs.python39Packages.fetchPypi;

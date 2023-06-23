@@ -2,7 +2,7 @@
 
 {
   flake = {
-    packages.aarch64-linux = withSystem "x86_64-linux" (ctx@{ pkgs, ... }: {
+    packages.aarch64-linux = withSystem "aarch64-linux" (ctx@{ pkgs, ... }: {
       rpi-fanshim = import ./rpi-fanshim {
         inherit pkgs;
         RPiGPIO = self.packages.aarch64-linux.RPiGPIO;
