@@ -4,7 +4,7 @@
 
 let
   pythonPackage = builtins.getAttr (python) pkgs;
-  poetry = pkgs.poetry.override { python = pythonPackage; };
+  poetry = pkgs.poetry.override { python3 = pythonPackage; };
 in
 pkgs.mkShell {
   buildInputs = [
