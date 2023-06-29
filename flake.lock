@@ -127,11 +127,11 @@
         "poetry2nix": "poetry2nix_2"
       },
       "locked": {
-        "lastModified": 1686493308,
-        "narHash": "sha256-FpSbV2Qk7H4WOdspAp+xpnRyTVY54SFfDnAj0UPwmPg=",
+        "lastModified": 1687366452,
+        "narHash": "sha256-5au+KCZhGf4p1/tAXoIQ4Pd4/ytBxB6Wxha5ynW0NVk=",
         "owner": "fastapi-mvc",
         "repo": "fastapi-mvc",
-        "rev": "470f301b7f99a66c69ccf547fbe566f625070c3a",
+        "rev": "5bedd38c211d0b56be31dbad73cbea35b4ee404e",
         "type": "github"
       },
       "original": {
