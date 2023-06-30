@@ -18,7 +18,7 @@ in
 
     environment.systemPackages = [
       pkgs.minikube
-      pkgs.kubeclt
+      pkgs.kubectl
       pkgs.kubernetes-helm
     ];
 
