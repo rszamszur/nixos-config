@@ -61,6 +61,7 @@
   my.sound.enable = true;
   my.kvm.enable = true;
   my.podman.enable = true;
+  my.docker.enable = true;
   my.vscode.enable = true;
   my.remarkable.enable = true;
   my.chrome.enable = true;
