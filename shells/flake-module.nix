@@ -6,7 +6,6 @@ let
     , name
     , pkgs
     , pythons ? [
-        "python38"
         "python39"
         "python310"
       ]

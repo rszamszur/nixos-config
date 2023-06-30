@@ -16,7 +16,6 @@ my-bash-help() {
     echo "nix-which() args: PROGRAM_NAME"
     echo "monitors() args: [ON, OFF]"
     echo "Aliases:"
-    echo "nli -> nix-linter"
     echo "nf -> nixpkgs-fmt"
     echo "ns -> nix-shell"
     echo "nb -> nix-build"
@@ -67,7 +66,6 @@ monitors() {
     fi
 }
 
-alias nli="nix-linter"
 alias nf="nixpkgs-fmt"
 alias ns="nix-shell"
 alias nb="nix-build"

@@ -83,7 +83,6 @@ in
         pkgs.gcc
         pkgs.htop
         pkgs.flameshot
-        pkgs.nix-linter
         pkgs.nixpkgs-fmt
         pkgs.nix-index
         pkgs.hydra-check
