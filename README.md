@@ -11,6 +11,8 @@ Configuration to setup my NixOS instances.
 |--------------|-----------|
 | draugr | [![draugr](https://github.com/rszamszur/nixos-config/actions/workflows/draugr.yml/badge.svg)](https://github.com/rszamszur/nixos-config/actions/workflows/draugr.yml) |
 | fenrir | [![fenrir](https://github.com/rszamszur/nixos-config/actions/workflows/fenrir.yml/badge.svg)](https://github.com/rszamszur/nixos-config/actions/workflows/fenrir.yml) |
+| tyr | needs `aarch64-linux` builder |
+| huginn | needs `aarch64-linux` builder |
 
 ## Disk setup - encrypted btrfs
 
