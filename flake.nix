@@ -95,6 +95,17 @@
               inputs.home-manager.nixosModules.home-manager
             ];
           };
+          huginn = inputs.nixpkgs.lib.nixosSystem {
+            system = "aarch64-linux";
+            modules = [
+              {
+                nixpkgs.overlays = [ self.overlays.default ];
+              }
+              ./hosts/huginn/hardware-configuration.nix
+              ./hosts/huginn/configuration.nix
+              inputs.home-manager.nixosModules.home-manager
+            ];
+          };
         };
         nixosModules = builtins.listToAttrs (map
           (module: {
