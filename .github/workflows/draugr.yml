@@ -18,7 +18,7 @@ jobs:
       should_skip: ${{ steps.skip_check.outputs.should_skip }}
       build: ${{ steps.filter.outputs.build }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - id: skip_check
         uses: fkirc/skip-duplicate-actions@v5.3.1
         with:
@@ -43,7 +43,7 @@ jobs:
 
     steps:
     - uses: cachix/install-nix-action@v24
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Setup Cachix ❄️
       uses: cachix/cachix-action@v13
       with:
