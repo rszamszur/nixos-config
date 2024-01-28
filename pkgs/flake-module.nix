@@ -12,6 +12,7 @@
     };
     overlayAttrs = {
       inherit (config.packages) manix cups-remarkable rmview;
+      inherit (self.packages.aarch64-linux) RPiGPIO apa102 fanshim;
     };
   };
   flake = {
