@@ -55,22 +55,29 @@ let
   kubernetes = pkgs.vscode-utils.extensionFromVscodeMarketplace {
     name = "vscode-kubernetes-tools";
     publisher = "ms-kubernetes-tools";
-    version = "1.3.7";
-    sha256 = "sha256:1m1m8mncqnyh7xanb4pz0icdgy18p0a2zggdzr0b74yhqi3jin87";
+    version = "1.3.15";
+    sha256 = "sha256:EXFE8F0ZhPcF7CxxarJzFSrZQAcNhqZL52GZCxK71vQ=";
   };
 
   vscode-yaml = pkgs.vscode-utils.extensionFromVscodeMarketplace {
     name = "vscode-yaml";
     publisher = "redhat";
-    version = "1.7.0";
-    sha256 = "sha256:1bbjpaypp0mq5akww5f0pkpq01j0xhhvkfr44f4lb2rdhr5nmnvc";
+    version = "1.14.0";
+    sha256 = "sha256:hCRyDA6oZF7hJv0YmbNG3S2XPtNbyxX1j3qL1ixOnF8=";
   };
 
   bazel-stack-vscode = pkgs.vscode-utils.extensionFromVscodeMarketplace {
     name = "bazel-stack-vscode";
     publisher = "stackbuild";
-    version = "1.9.0";
-    sha256 = "sha256:1hk24hj1qzm8dx5bsn6aavafird7gzkj14xw27xcb2gw6whhwggq";
+    version = "1.9.8";
+    sha256 = "sha256:7DJ+HQu1qliLuqDH2kkaG7OwD+GQGx61Ue9LE9c3Avk=";
+  };
+
+  hashicorp-terraform = pkgs.vscode-utils.extensionFromVscodeMarketplace {
+    name = "terraform";
+    publisher = "hashicorp";
+    version = "2.29.3";
+    sha256 = "sha256:cYYtBZaWgtT6vS6In+tbpLfp/GdyWodBXyHsxn8ZZrU=";
   };
 
   vscode = pkgs.vscode-with-extensions.override {
@@ -85,6 +92,7 @@ let
       kubernetes
       vscode-yaml
       bazel-stack-vscode
+      hashicorp-terraform
     ];
   };
 in
