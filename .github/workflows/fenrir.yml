@@ -13,7 +13,7 @@ jobs:
   # event and skips it. For instance there is no need to run the same pipeline
   # twice for pull_request and push for identical commit sha.
   pre_job:
-    runs-on: ubuntu-latest
+    runs-on: pve-talos
     outputs:
       should_skip: ${{ steps.skip_check.outputs.should_skip }}
       build: ${{ steps.filter.outputs.build }}
@@ -39,7 +39,7 @@ jobs:
   nix-build:
     needs: pre_job
     if: ${{ needs.pre_job.outputs.should_skip != 'true' && needs.pre_job.outputs.build == 'true' }}
-    runs-on: ubuntu-latest
+    runs-on: pve-talos
 
     steps:
     - uses: cachix/install-nix-action@v25
@@ -52,4 +52,4 @@ jobs:
     - name: Build fenrir
       env:
         RCU_PRODUCT_KEY: ${{ secrets.RCU_PRODUCT_KEY }}
-      run: nix build .#nixosConfigurations.fenrir.config.system.build.toplevel -L
+      run: nix build .#nixosConfigurations.fenrir.config.system.build.toplevel -L --accept-flake-config
