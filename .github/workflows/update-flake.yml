@@ -6,7 +6,7 @@ on:
 
 jobs:
   lockfile:
-    runs-on: pve-talos
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
