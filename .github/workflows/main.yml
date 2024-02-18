@@ -16,7 +16,7 @@ jobs:
   # event and skips it. For instance there is no need to run the same pipeline
   # twice for pull_request and push for identical commit sha.
   pre_job:
-    runs-on: pve-talos
+    runs-on: ubuntu-latest
     outputs:
       should_skip: ${{ steps.skip_check.outputs.should_skip }}
     steps:
@@ -29,7 +29,7 @@ jobs:
   nixpkgs-fmt:
     needs: pre_job
     if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
-    runs-on: pve-talos
+    runs-on: ubuntu-latest
 
     steps:
     - uses: cachix/install-nix-action@v25
@@ -41,7 +41,7 @@ jobs:
   nix-flake-check:
     needs: pre_job
     if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
-    runs-on: pve-talos
+    runs-on: ubuntu-latest
 
     steps:
     - uses: cachix/install-nix-action@v25
