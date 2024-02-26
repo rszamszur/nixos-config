@@ -52,4 +52,4 @@ jobs:
     - name: Build draugr
       env:
         RCU_PRODUCT_KEY: ${{ secrets.RCU_PRODUCT_KEY }}
-      run: nix build .#nixosConfigurations.draugr.config.system.build.toplevel -L --accept-flake-config
+      run: nix build .#nixosConfigurations.draugr.config.system.build.toplevel --impure -L --accept-flake-config
