@@ -30,38 +30,10 @@
   # Run unpatched dynamic binaries on NixOS
   programs.nix-ld.enable = true;
 
-  my.awesome = {
-    enable = true;
-    rclua = pkgs.fetchurl {
-      url = "https://gist.githubusercontent.com/rszamszur/054dd09d279890e502322ac3e560ab0f/raw/403d63ae125e316305f2358ea3df469b982cb498/rc.lua";
-      sha256 = "1d1fsm9pd615izwiwv8mz4kxabdyq0ad5pj5k5mx5gq28fg9y73k";
-    };
-  };
-  my.laptop.enable = true;
-  my.bash = {
-    enable = true;
-    gitEmail = builtins.getEnv "TYR_GIT_EMAIL";
-    homepkgs = [
-      pkgs.google-cloud-sdk
-      pkgs.firefox
-      pkgs.keepassxc
-      pkgs.kubectl
-      pkgs.kubernetes-helm
-      pkgs.kubectx
-      pkgs.burpsuite
-      pkgs.mitmproxy
-      pkgs.httpie
-      pkgs.b3
-    ];
-  };
+  my.cache.enable = true;
+  my.bash.enable = true;
   my.vim.enable = true;
   my.podman.enable = true;
-  my.vscode.enable = true;
-  my.chrome.enable = true;
-  my.aarch = {
-    enable = true;
-  };
-  my.remarkable.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

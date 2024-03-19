@@ -85,7 +85,7 @@
             ];
           };
           tyr = inputs.nixpkgs.lib.nixosSystem {
-            system = "aarch64-linux";
+            system = "x86_64-linux";
             modules = [
               {
                 nixpkgs.overlays = [ self.overlays.default ];
