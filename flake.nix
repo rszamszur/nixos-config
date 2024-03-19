@@ -95,6 +95,17 @@
               inputs.home-manager.nixosModules.home-manager
             ];
           };
+          installation-iso = inputs.nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            modules = [
+              "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+              self.nixosModules.cache
+              ({ pkgs, ... }: {
+                environment.systemPackages = [ pkgs.git ];
+                my.cache.enable = true;
+              })
+            ];
+          };
         };
         nixosModules = builtins.listToAttrs (map
           (module: {
