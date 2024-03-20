@@ -13,7 +13,7 @@ jobs:
   # event and skips it. For instance there is no need to run the same pipeline
   # twice for pull_request and push for identical commit sha.
   pre_job:
-    runs-on: pve-talos
+    runs-on: ubuntu-latest
     outputs:
       should_skip: ${{ steps.skip_check.outputs.should_skip }}
       build: ${{ steps.filter.outputs.build }}
@@ -39,16 +39,10 @@ jobs:
   nix-build:
     needs: pre_job
     if: ${{ needs.pre_job.outputs.should_skip != 'true' && needs.pre_job.outputs.build == 'true' }}
-    runs-on: pve-talos
+    runs-on: nixos
 
     steps:
-    - uses: cachix/install-nix-action@v25
     - uses: actions/checkout@v4
-    - name: Setup Cachix ❄️
-      uses: cachix/cachix-action@v14
-      with:
-        name: rszamszur-nixos
-        authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
     - name: Build draugr
       env:
         RCU_PRODUCT_KEY: ${{ secrets.RCU_PRODUCT_KEY }}
