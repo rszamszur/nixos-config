@@ -18,13 +18,17 @@
       url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     flake-parts.url = "github:hercules-ci/flake-parts";
     fastapi-mvc.url = "github:fastapi-mvc/fastapi-mvc";
     rcu.url = "github:rszamszur/pkg-rcu";
     b3.url = "github:rszamszur/b3-flake";
   };
 
-  outputs = { self, nixpkgs, home-manager, flake-parts, fastapi-mvc, rcu, b3 }@inputs:
+  outputs = { self, nixpkgs, home-manager, sops-nix, flake-parts, fastapi-mvc, rcu, b3 }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
@@ -93,6 +97,7 @@
               ./hosts/tyr/hardware-configuration.nix
               ./hosts/tyr/configuration.nix
               inputs.home-manager.nixosModules.home-manager
+              inputs.sops-nix.nixosModules.sops
             ];
           };
           installation-iso = inputs.nixpkgs.lib.nixosSystem {
