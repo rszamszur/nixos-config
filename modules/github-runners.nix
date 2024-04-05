@@ -14,7 +14,7 @@ in
       '';
     };
     tokenFile = lib.mkOption {
-      type = lib.lib.types.path;
+      type = lib.types.path;
       description = lib.mdDoc ''
         The full path to a file which contains either
 
