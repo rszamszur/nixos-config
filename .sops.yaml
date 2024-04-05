@@ -1,0 +1,7 @@
+keys:
+  - &host_default age15vlkqcfp3wdjjjmdm8shq9wkkrcmrpz9fpqsclmeedspas793emq7uxmh5
+creation_rules:
+  - path_regex: tyr/secrets/[^/]+\.yaml$
+    key_groups:
+      - age:
+        - *host_default
