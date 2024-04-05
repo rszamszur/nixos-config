@@ -112,7 +112,7 @@ in
         tokenFile = cfg.tokenFile;
         user = cfg.user;
         replace = true;
-        extraPackages = cfg.extraLabels;
+        extraPackages = cfg.extraPackages;
         extraLabels = cfg.extraLabels;
         url = cfg.url;
       };
