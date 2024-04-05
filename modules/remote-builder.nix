@@ -1,10 +1,10 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.my.builder;
+  cfg = config.my.remote-builder;
 in
 {
-  options.my.builder = {
+  options.my.remote-builder = {
     enable = lib.mkEnableOption "Enable cache module.";
     user = lib.mkOption {
       type = lib.types.str;
