@@ -31,8 +31,8 @@
   programs.nix-ld.enable = true;
 
   # Sops secrets
-  sops.age.keyFile = "/var/lib/sops-nix/key.txt";
-  sops.age.sshKeyPaths = [ "/etc/ssh/sopsnix_ed25519" ];
+  sops.age.keyFile = "/root/.config/age/sops/key.txt";
+  sops.age.sshKeyPaths = [ "/root/.ssh/id_ed25519" ];
   sops.age.generateKey = true;
   sops.secrets.gh-runners-token = {
     sopsFile = ./secrets/gh-runners.yaml;
