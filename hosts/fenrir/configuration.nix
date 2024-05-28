@@ -65,6 +65,7 @@
   my.vscode.enable = true;
   my.remarkable.enable = true;
   my.chrome.enable = true;
+  my.gaming.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
