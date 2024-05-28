@@ -33,6 +33,7 @@ in
       pkgs.gnome3.nautilus
       pkgs.gnome3.gnome-terminal
       pkgs.arc-icon-theme
+      pkgs.arandr
     ];
 
     home-manager.users.rszamszur = { ... }: {
