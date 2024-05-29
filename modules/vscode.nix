@@ -80,6 +80,13 @@ let
     sha256 = "sha256:cYYtBZaWgtT6vS6In+tbpLfp/GdyWodBXyHsxn8ZZrU=";
   };
 
+  cue = pkgs.vscode-utils.extensionFromVscodeMarketplace {
+    name = "cue";
+    publisher = "asdine";
+    version = "0.3.2";
+    sha256 = "sha256-jMXqhgjRdM3UG/9NtiwWAg61mBW8OYVAKDWgb4hzhA4=";
+  };
+
   vscode = pkgs.vscode-with-extensions.override {
     vscodeExtensions = [
       luahelper
@@ -93,6 +100,7 @@ let
       vscode-yaml
       bazel-stack-vscode
       hashicorp-terraform
+      cue
     ];
   };
 in
