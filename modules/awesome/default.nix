@@ -18,7 +18,7 @@ in
   config = lib.mkIf cfg.enable {
 
     services.xserver.enable = true;
-    services.xserver.layout = "pl";
+    services.xserver.xkb.layout = "pl";
     services.xserver.windowManager.awesome.enable = true;
     # Necessary config to run awesome without desktop
     services.udev.packages = [ pkgs.gnome3.gnome-settings-daemon ];
