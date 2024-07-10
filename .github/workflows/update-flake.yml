@@ -17,7 +17,6 @@ jobs:
         with:
           pr-title: "Update flake.lock"
           pr-assignees: rszamszur
-          pr-reviewers: rszamszur
           commit-msg: "chore: updates flake.lock"
           token: ${{ secrets.API_GITHUB_TOKEN }}
           pr-labels: |
