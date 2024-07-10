@@ -6,7 +6,7 @@
       manix = pkgs.callPackage ./tools/nix/manix { };
       cups-remarkable = pkgs.callPackage ./misc/cups/drivers/remarkable { };
       rmview = pkgs.callPackage ../pkgs/applications/misc/remarkable/rmview {
-        python3Packages = pkgs.python39Packages;
+        python3Packages = pkgs.python311Packages;
         wrapQtAppsHook = pkgs.qt5.wrapQtAppsHook;
       };
     };
