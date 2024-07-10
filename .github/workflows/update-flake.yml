@@ -4,6 +4,10 @@ on:
   schedule:
     - cron: '0 0 * * 0'
 
+permissions:
+  contents: write # to push the branch for the PR
+  pull-requests: write # to open the PR
+
 jobs:
   lockfile:
     runs-on: ubuntu-latest
@@ -19,7 +23,6 @@ jobs:
           pr-assignees: rszamszur
           pr-reviewers: rszamszur
           commit-msg: "chore: updates flake.lock"
-          token: ${{ secrets.API_GITHUB_TOKEN }}
           pr-labels: |
             dependencies
           pr-body: |
