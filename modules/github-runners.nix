@@ -6,11 +6,11 @@ in
 {
   options.my.github-runners = {
     enable = lib.mkEnableOption "Enable self-hosted GitHub runners.";
-    namePrefix = lib.mkOption {
+    name = lib.mkOption {
       type = lib.types.str;
-      default = "pve-nixos-tyr";
+      default = "nixos-runner";
       description = lib.mdDoc ''
-        GitHub runners name prefix.
+        GitHub runner name.
       '';
     };
     tokenFile = lib.mkOption {
@@ -106,19 +106,9 @@ in
   config = lib.mkIf cfg.enable {
 
     services.github-runners = {
-      runner1 = {
+      runner = {
         enable = true;
-        name = "${cfg.namePrefix}-runner1";
-        tokenFile = cfg.tokenFile;
-        user = cfg.user;
-        replace = true;
-        extraPackages = cfg.extraPackages;
-        extraLabels = cfg.extraLabels;
-        url = cfg.url;
-      };
-      runner2 = {
-        enable = true;
-        name = "${cfg.namePrefix}-runner2";
+        name = cfg.name;
         tokenFile = cfg.tokenFile;
         user = cfg.user;
         replace = true;
