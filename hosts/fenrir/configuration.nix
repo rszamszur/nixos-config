@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   imports = [
@@ -30,6 +30,17 @@
   services.acpid.enable = true;
   # A keyboard shortcut daemon
   services.actkbd.enable = true;
+
+  # Sops secrets
+  sops.age.keyFile = "/root/.config/age/sops/key.txt";
+  sops.age.sshKeyPaths = [ "/root/.ssh/id_ed25519" ];
+  sops.age.generateKey = true;
+  sops.secrets.nixremote = {
+    sopsFile = ./secrets/rbe.yaml;
+    owner = "root";
+    group = "root";
+    mode = "0600";
+  };
 
   my.cache.enable = true;
   my.awesome = {
@@ -66,6 +77,10 @@
   my.remarkable.enable = true;
   my.chrome.enable = true;
   my.gaming.enable = true;
+  my.rbe = {
+    enable = true;
+    rbePrivateKey = config.sops.secrets.nixremote.path;
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
