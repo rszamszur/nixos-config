@@ -75,6 +75,7 @@
               ./hosts/fenrir/hardware-configuration.nix
               ./hosts/fenrir/configuration.nix
               inputs.home-manager.nixosModules.home-manager
+              inputs.sops-nix.nixosModules.sops
             ];
           };
           draugr = inputs.nixpkgs.lib.nixosSystem {
