@@ -29,7 +29,6 @@
   my.bash = {
     enable = true;
     homepkgs = [
-      pkgs.vagrant
       pkgs.spotify
       pkgs.okular
       pkgs.vlc
@@ -38,12 +37,9 @@
       pkgs.libreoffice
       pkgs.keepassxc
       pkgs.jetbrains.pycharm-community
-      pkgs.kubectl
-      pkgs.kubernetes-helm
       pkgs.solaar
       pkgs.openvpn
       pkgs.gimp
-      pkgs.fastapi-mvc
       pkgs.b3
     ];
   };
