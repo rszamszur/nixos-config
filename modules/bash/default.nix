@@ -87,6 +87,9 @@ in
         pkgs.nix-index
         pkgs.hydra-check
         pkgs.fzf
+        pkgs.kubectl
+        pkgs.kubectx
+        pkgs.helm
         manix
       ] ++ cfg.homepkgs ++ lib.optionals cfg.comma [ comma ];
 

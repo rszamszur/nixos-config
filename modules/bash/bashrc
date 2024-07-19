@@ -14,7 +14,6 @@ my-bash-help() {
     echo "fzf-manix() args: MANIX_QUERY"
     echo "fzf-store()"
     echo "nix-which() args: PROGRAM_NAME"
-    echo "monitors() args: [ON, OFF]"
     echo "Aliases:"
     echo "nf -> nixpkgs-fmt"
     echo "ns -> nix-shell"
@@ -23,6 +22,9 @@ my-bash-help() {
     echo "ga -> git add"
     echo "gc -> git commit"
     echo "gd -> git diff"
+    echo "kc -> kubectl"
+    echo "kx -> kubectx"
+    echo "kn -> kubens"
 }
 
 hydra-rev() {
@@ -56,16 +58,6 @@ nix-which() {
     readlink -f $(which $1)
 }
 
-monitors() {
-    if [[ "$1" == "ON" ]]; then
-        xrandr --output eDP-1 --mode 1920x1080 --rate 60.00 --output DP-2-3 --right-of eDP-1 --mode 2560x1440 --rate 60.00 --primary --output DP-2-1 --mode 1920x1080 --rate 60.00 --right-of DP-2-3 --rotate right
-    fi
-
-    if [[ "$1" == "OFF" ]]; then
-        xrandr --output eDP-1 --mode 1920x1080 --rate 60.00 --primary --output DP-2-3 --off --output DP-2-1 --off
-    fi
-}
-
 alias nf="nixpkgs-fmt"
 alias ns="nix-shell"
 alias nb="nix-build"
@@ -73,3 +65,6 @@ alias gs="git status"
 alias ga="git add"
 alias gc="git commit"
 alias gd="git diff"
+alias kc="kubectl"
+alias kx="kubectx"
+alias kn="kubens"
