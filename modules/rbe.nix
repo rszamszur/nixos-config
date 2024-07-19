@@ -27,6 +27,13 @@ in
       '';
       default = 18;
     };
+    speedFactor = lib.mkOption {
+      type = lib.types.int;
+      description = lib.mdDoc ''
+        Defines the relative speed of the remote build machine as a positive integer.
+      '';
+      default = 2;
+    };
     rbePrivateKey = lib.mkOption {
       type = lib.types.path;
       description = lib.mdDoc ''
@@ -54,7 +61,7 @@ in
         system = "x86_64-linux";
         protocol = "ssh-ng";
         maxJobs = cfg.maxJobs;
-        speedFactor = 2;
+        speedFactor = cfg.speedFactor;
         supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
         mandatoryFeatures = [ ];
       }];
