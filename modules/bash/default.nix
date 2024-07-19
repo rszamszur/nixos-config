@@ -89,7 +89,7 @@ in
         pkgs.fzf
         pkgs.kubectl
         pkgs.kubectx
-        pkgs.helm
+        pkgs.kubernetes-helm
         manix
       ] ++ cfg.homepkgs ++ lib.optionals cfg.comma [ comma ];
 
