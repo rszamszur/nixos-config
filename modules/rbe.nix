@@ -69,6 +69,11 @@ in
       extraOptions = ''
         builders-use-substitutes = true
       '';
+      settings = {
+        substituters = [
+          "ssh-ng://${cfg.hostName}"
+        ];
+      };
     };
 
   };
