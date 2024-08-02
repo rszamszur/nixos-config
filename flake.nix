@@ -2,14 +2,6 @@
   description = "Radosław Szamszur NixOS configurations";
   nixConfig = {
     bash-prompt = ''\n\[\033[1;32m\][nix-develop:\w]\$\[\033[0m\] '';
-    extra-trusted-public-keys = [
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "rszamszur-nixos.cachix.org-1:OOpiY87os0SYfYVQmLzxTvvn2sEoeOkKzaeguQCZVyQ="
-    ];
-    extra-substituters = [
-      "https://nix-community.cachix.org"
-      "https://rszamszur-nixos.cachix.org"
-    ];
   };
 
   inputs = {
