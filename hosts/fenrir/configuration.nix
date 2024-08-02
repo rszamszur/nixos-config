@@ -41,6 +41,12 @@
     group = "root";
     mode = "0600";
   };
+  sops.secrets.nasCredentials = {
+    sopsFile = ./secrets/nas.yaml;
+    owner = "${builtins.toString config.users.users.rszamszur.uid}";
+    group = "root";
+    mode = "0600";
+  };
 
   my.cache.enable = true;
   my.awesome = {
@@ -75,6 +81,10 @@
   my.rbe = {
     enable = true;
     rbePrivateKey = config.sops.secrets.nixremote.path;
+  };
+  my.nas = {
+    enable = true;
+    credentialsPath = config.sops.secrets.nasCredentials.path;
   };
 
   # This value determines the NixOS release from which the default
