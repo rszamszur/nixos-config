@@ -43,7 +43,7 @@
   };
   sops.secrets.nasCredentials = {
     sopsFile = ./secrets/nas.yaml;
-    owner = "${builtins.toString config.users.users.rszamszur.uid}";
+    owner = "${builtins.toString config.users.users.rszamszur.name}";
     group = "root";
     mode = "0600";
   };
