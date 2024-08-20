@@ -48,7 +48,6 @@
     mode = "0600";
   };
 
-  my.cache.enable = true;
   my.awesome = {
     enable = true;
     rclua = ./rc.lua;
@@ -81,6 +80,15 @@
   my.rbe = {
     enable = true;
     rbePrivateKey = config.sops.secrets.nixremote.path;
+  };
+  my.cache = {
+    enable = true;
+    extraSubstituters = [
+      "ssh-ng://nix-rbe"
+    ];
+    extraTrustedPublicKeys = [
+      "tyr:bbjBCfYPxGt0i2LGCDy802CbgqkRRoRGL2h3u7QVeVg="
+    ];
   };
   my.nas = {
     enable = true;

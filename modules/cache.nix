@@ -4,7 +4,19 @@ let
   cfg = config.my.cache;
 in
 {
-  options.my.cache.enable = lib.mkEnableOption "Enable cache module.";
+  options.my.cache = {
+    enable = lib.mkEnableOption "Enable cache module.";
+    extraSubstituters = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ ];
+      description = "List of extra substituters.";
+    };
+    extraTrustedPublicKeys = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ ];
+      description = "List of extra trusted public keys.";
+    };
+  };
 
   config = lib.mkIf cfg.enable {
     nix.settings = {
@@ -12,12 +24,12 @@ in
         "https://nix-community.cachix.org"
         "https://fastapi-mvc.cachix.org"
         "https://rszamszur-nixos.cachix.org"
-      ];
+      ] ++ cfg.extraSubstituters;
       trusted-public-keys = [
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
         "fastapi-mvc.cachix.org-1:knQ8Qo41bnhBmOB6Sp0UH10EV76AXW5o69SbAS668Fg="
         "rszamszur-nixos.cachix.org-1:OOpiY87os0SYfYVQmLzxTvvn2sEoeOkKzaeguQCZVyQ="
-      ];
+      ] ++ cfg.extraTrustedPublicKeys;
     };
     environment.systemPackages = [ pkgs.cachix ];
   };
