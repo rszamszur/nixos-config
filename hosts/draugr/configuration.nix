@@ -23,6 +23,17 @@
   # replicates the default behaviour.
   networking.useDHCP = false;
 
+  # Sops secrets
+  sops.age.keyFile = "/root/.config/age/sops/key.txt";
+  sops.age.sshKeyPaths = [ "/root/.ssh/id_ed25519" ];
+  sops.age.generateKey = true;
+  sops.secrets.nixremote = {
+    sopsFile = ./secrets/rbe.yaml;
+    owner = "root";
+    group = "root";
+    mode = "0600";
+  };
+
   my.cache.enable = true;
   my.awesome.enable = true;
   my.laptop.enable = true;
@@ -49,6 +60,20 @@
   my.vscode.enable = true;
   my.remarkable.enable = true;
   my.chrome.enable = true;
+  my.rbe = {
+    enable = true;
+    speedFactor = 3;
+    rbePrivateKey = config.sops.secrets.nixremote.path;
+  };
+  my.cache = {
+    enable = true;
+    extraSubstituters = [
+      "ssh-ng://nix-rbe"
+    ];
+    extraTrustedPublicKeys = [
+      "tyr:bbjBCfYPxGt0i2LGCDy802CbgqkRRoRGL2h3u7QVeVg="
+    ];
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

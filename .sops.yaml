@@ -9,3 +9,7 @@ creation_rules:
     key_groups:
       - age:
         - *host_default
+  - path_regex: draugr/secrets/[^/]+\.yaml$
+    key_groups:
+      - age:
+        - *host_default
