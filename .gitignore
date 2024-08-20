@@ -1,2 +1,4 @@
 # Nix build result
 result
+# direnv
+.direnv
