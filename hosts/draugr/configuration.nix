@@ -34,7 +34,6 @@
     mode = "0600";
   };
 
-  my.cache.enable = true;
   my.awesome.enable = true;
   my.laptop.enable = true;
   my.bash = {
