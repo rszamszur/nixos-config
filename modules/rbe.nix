@@ -32,7 +32,7 @@ in
       description = lib.mdDoc ''
         Defines the relative speed of the remote build machine as a positive integer.
       '';
-      default = 2;
+      default = 1;
     };
     rbePrivateKey = lib.mkOption {
       type = lib.types.path;
