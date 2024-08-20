@@ -21,6 +21,7 @@ in
 {
   perSystem = { config, self', inputs', pkgs, ... }: {
     devShells = {
+      default = import ./default.nix { inherit pkgs; };
       nodejs = import ./js.nix { inherit pkgs; };
       ruby = import ./ruby.nix { inherit pkgs; };
     } // buildPyShells {
