@@ -79,6 +79,7 @@
               ./hosts/draugr/hardware-configuration.nix
               ./hosts/draugr/configuration.nix
               inputs.home-manager.nixosModules.home-manager
+              inputs.sops-nix.nixosModules.sops
             ];
           };
           tyr = inputs.nixpkgs.lib.nixosSystem {
