@@ -1,0 +1,16 @@
+name: Collect garbage
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 1 * *"
+
+jobs:
+  collect-garbage:
+    strategy:
+      matrix:
+        runner: [pve-nixos-tyr1, pve-nixos-tyr2, pve-nixos-tyr3]
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - name: Run nix garbage collector
+        run: nix-collect-garbage -d
