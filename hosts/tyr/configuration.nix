@@ -56,6 +56,7 @@
     enable = true;
     name = config.networking.hostName;
     tokenFile = config.sops.secrets.gh-runners-token.path;
+    extraLabels = [ "nixos" config.networking.hostName ];
   };
   my.remote-builder = {
     enable = true;
