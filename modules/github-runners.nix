@@ -106,7 +106,7 @@ in
   config = lib.mkIf cfg.enable {
 
     services.github-runners = {
-      runner = {
+      "${cfg.name}" = {
         enable = true;
         name = cfg.name;
         tokenFile = cfg.tokenFile;

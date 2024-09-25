@@ -37,7 +37,7 @@
   sops.secrets.gh-runners-token = {
     sopsFile = ./secrets/gh-runners.yaml;
     restartUnits = [
-      "github-runner-pve-nixos-tyr.service"
+      "github-runner-${config.my.github-runners.name}.service"
     ];
   };
   sops.secrets.binary-cache-key = {
@@ -54,7 +54,7 @@
   my.podman.enable = true;
   my.github-runners = {
     enable = true;
-    name = "nixos-tyr";
+    name = config.networking.hostName;
     tokenFile = config.sops.secrets.gh-runners-token.path;
   };
   my.remote-builder = {
