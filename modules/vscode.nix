@@ -101,6 +101,7 @@ let
       bazel-stack-vscode
       hashicorp-terraform
       cue
+      pkgs.vscode-extensions.ms-vscode-remote.remote-ssh
     ];
   };
 in
