@@ -52,13 +52,6 @@ let
     sha256 = "sha256:0v50qcfs3jx0m2wqg4qbhw065qzdi57xrzcwnhcpjhg1raiwkl1a";
   };
 
-  kubernetes = pkgs.vscode-utils.extensionFromVscodeMarketplace {
-    name = "vscode-kubernetes-tools";
-    publisher = "ms-kubernetes-tools";
-    version = "1.3.15";
-    sha256 = "sha256:EXFE8F0ZhPcF7CxxarJzFSrZQAcNhqZL52GZCxK71vQ=";
-  };
-
   vscode-yaml = pkgs.vscode-utils.extensionFromVscodeMarketplace {
     name = "vscode-yaml";
     publisher = "redhat";
@@ -71,13 +64,6 @@ let
     publisher = "stackbuild";
     version = "1.9.8";
     sha256 = "sha256:7DJ+HQu1qliLuqDH2kkaG7OwD+GQGx61Ue9LE9c3Avk=";
-  };
-
-  hashicorp-terraform = pkgs.vscode-utils.extensionFromVscodeMarketplace {
-    name = "terraform";
-    publisher = "hashicorp";
-    version = "2.29.3";
-    sha256 = "sha256:cYYtBZaWgtT6vS6In+tbpLfp/GdyWodBXyHsxn8ZZrU=";
   };
 
   cue = pkgs.vscode-utils.extensionFromVscodeMarketplace {
@@ -96,11 +82,11 @@ let
       vetur
       vuetify-vscode
       markdownlint
-      kubernetes
       vscode-yaml
       bazel-stack-vscode
-      hashicorp-terraform
       cue
+      pkgs.vscode-extensions.ms-kubernetes-tools.vscode-kubernetes-tools
+      pkgs.vscode-extensions.hashicorp.terraform
       pkgs.vscode-extensions.ms-vscode-remote.remote-ssh
     ];
   };
