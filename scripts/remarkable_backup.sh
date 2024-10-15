@@ -1,6 +1,6 @@
 #!/usr/bin/env nix-shell
 #! nix-shell -i bash --pure
-#! nix-shell -p bash sshfs rsync
+#! nix-shell -p bash sshfs rsync umount mount
 #! nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/nixos-24.05.tar.gz
 
 if [ -n "$DEBUG" ]; then
