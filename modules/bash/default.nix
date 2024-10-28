@@ -51,47 +51,50 @@ in
 
     home-manager.users.rszamszur = { ... }: {
 
-      home.stateVersion = "22.11";
-
-      programs.direnv.enable = true;
-      programs.direnv.nix-direnv.enable = true;
-
-      programs.bash = {
-        enable = true;
-        bashrcExtra = builtins.readFile ./bashrc;
+      home = {
+        stateVersion = "24.05";
+        packages = [
+          pkgs.nmap
+          pkgs.zip
+          pkgs.unzip
+          pkgs.gnumake
+          pkgs.gcc
+          pkgs.htop
+          pkgs.flameshot
+          pkgs.nixpkgs-fmt
+          pkgs.nix-index
+          pkgs.hydra-check
+          pkgs.fzf
+          pkgs.kubectl
+          pkgs.kubectx
+          pkgs.kubernetes-helm
+          manix
+        ] ++ cfg.homepkgs ++ lib.optionals cfg.comma [ comma ];
       };
 
-      programs.git = {
-        enable = true;
-        userName = cfg.gitUser;
-        userEmail = cfg.gitEmail;
-        extraConfig = {
-          init = {
-            defaultBranch = "master";
-          };
-          core = {
-            editor = "vim";
+      programs = {
+        direnv.enable = true;
+        direnv.nix-direnv.enable = true;
+
+        bash = {
+          enable = true;
+          bashrcExtra = builtins.readFile ./bashrc;
+        };
+
+        git = {
+          enable = true;
+          userName = cfg.gitUser;
+          userEmail = cfg.gitEmail;
+          extraConfig = {
+            init = {
+              defaultBranch = "master";
+            };
+            core = {
+              editor = "vim";
+            };
           };
         };
       };
-
-      home.packages = [
-        pkgs.nmap
-        pkgs.zip
-        pkgs.unzip
-        pkgs.gnumake
-        pkgs.gcc
-        pkgs.htop
-        pkgs.flameshot
-        pkgs.nixpkgs-fmt
-        pkgs.nix-index
-        pkgs.hydra-check
-        pkgs.fzf
-        pkgs.kubectl
-        pkgs.kubectx
-        pkgs.kubernetes-helm
-        manix
-      ] ++ cfg.homepkgs ++ lib.optionals cfg.comma [ comma ];
 
     };
 
