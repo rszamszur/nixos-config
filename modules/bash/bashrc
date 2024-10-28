@@ -5,8 +5,6 @@ parse_git_branch() {
 PS1+="\[\033[33m\]\$(parse_git_branch)\[\033[00m\]"
 export PS1
 
-eval "$(direnv hook bash)"
-
 my-bash-help() {
     echo "Functions:"
     echo "hydra-rev() args: NIX_PACKAGE_NAME"

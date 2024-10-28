@@ -73,8 +73,11 @@ in
       };
 
       programs = {
-        direnv.enable = true;
-        direnv.nix-direnv.enable = true;
+        direnv = {
+          enable = true;
+          enableBashIntegration = true;
+          nix-direnv.enable = true;
+        };
 
         bash = {
           enable = true;
