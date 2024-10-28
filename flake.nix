@@ -112,6 +112,14 @@
             value = module;
           })
           (import ./modules { lib = inputs.nixpkgs.lib; }).imports);
+        homeConfigurations = {
+          coder = home-manager.lib.homeManagerConfiguration {
+            pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
+            modules = [
+              ./home/coder.nix
+            ];
+          };
+        };
       };
     };
 }

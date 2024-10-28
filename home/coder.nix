@@ -1,0 +1,66 @@
+{ pkgs, config, ... }:
+
+let
+  manix = pkgs.callPackage ../pkgs/tools/nix/manix {
+    lib = pkgs.lib;
+    fetchFromGitHub = pkgs.fetchFromGitHub;
+    rustPlatform = pkgs.rustPlatform;
+  };
+in
+{
+  home = {
+    username = "coder";
+    homeDirectory = "/home/coder";
+    stateVersion = "24.05";
+
+    packages = [
+      pkgs.nmap
+      pkgs.zip
+      pkgs.unzip
+      pkgs.gnumake
+      pkgs.gcc
+      pkgs.htop
+      pkgs.flameshot
+      pkgs.nixpkgs-fmt
+      pkgs.nix-index
+      pkgs.hydra-check
+      pkgs.fzf
+      pkgs.kubectl
+      pkgs.kubectx
+      pkgs.kubernetes-helm
+      manix
+    ];
+  };
+
+  programs = {
+    # Let Home Manager install and manage itself.
+    home-manager.enable = true;
+
+    starship = {
+      enable = true;
+      enableBashIntegration = true;
+    };
+
+    direnv.enable = true;
+    direnv.nix-direnv.enable = true;
+
+    bash = {
+      enable = true;
+      bashrcExtra = builtins.readFile ../modules/bash/bashrc;
+    };
+
+    git = {
+      enable = true;
+      userName = "Radosław Szamszur";
+      userEmail = "github@rsd.sh";
+      extraConfig = {
+        init = {
+          defaultBranch = "master";
+        };
+        core = {
+          editor = "vim";
+        };
+      };
+    };
+  };
+}
