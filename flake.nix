@@ -68,6 +68,21 @@
               ./hosts/fenrir/configuration.nix
               inputs.home-manager.nixosModules.home-manager
               inputs.sops-nix.nixosModules.sops
+              self.nixosModules.common
+              self.nixosModules.awesome
+              self.nixosModules.bash
+              self.nixosModules.vim
+              self.nixosModules.sound
+              self.nixosModules.kvm
+              self.nixosModules.podman
+              self.nixosModules.docker
+              self.nixosModules.vscode
+              self.nixosModules.remarkable
+              self.nixosModules.chrome
+              self.nixosModules.gaming
+              self.nixosModules.rbe
+              self.nixosModules.cache
+              self.nixosModules.nas
             ];
           };
           draugr = inputs.nixpkgs.lib.nixosSystem {
@@ -80,6 +95,19 @@
               ./hosts/draugr/configuration.nix
               inputs.home-manager.nixosModules.home-manager
               inputs.sops-nix.nixosModules.sops
+              self.nixosModules.common
+              self.nixosModules.awesome
+              self.nixosModules.laptop
+              self.nixosModules.bash
+              self.nixosModules.vim
+              self.nixosModules.sound
+              self.nixosModules.podman
+              self.nixosModules.docker
+              self.nixosModules.vscode
+              self.nixosModules.remarkable
+              self.nixosModules.chrome
+              self.nixosModules.rbe
+              self.nixosModules.cache
             ];
           };
           tyr = inputs.nixpkgs.lib.nixosSystem {
@@ -92,6 +120,13 @@
               ./hosts/tyr/configuration.nix
               inputs.home-manager.nixosModules.home-manager
               inputs.sops-nix.nixosModules.sops
+              self.nixosModules.common
+              self.nixosModules.cache
+              self.nixosModules.bash
+              self.nixosModules.vim
+              self.nixosModules.podman
+              self.nixosModules.github-runners
+              self.nixosModules.remote-builder
             ];
           };
           installation-iso = inputs.nixpkgs.lib.nixosSystem {
