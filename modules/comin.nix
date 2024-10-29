@@ -11,12 +11,22 @@ in
       description = lib.mdDoc "The full path to a local nixos-config repository";
       example = "/var/nixos-config";
     };
+    openFirewall = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = lib.mdDoc ''
+        Open port in firewall for incoming connections to the Prometheus exporter.
+      '';
+    };
   };
 
   config = lib.mkIf cfg.enable {
 
     services.comin = {
       enable = true;
+      exporter = {
+        openFirewall = cfg.openFirewall;
+      };
       remotes = [
         {
           name = "origin";
