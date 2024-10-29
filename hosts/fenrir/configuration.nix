@@ -93,10 +93,10 @@
     enable = true;
     credentialsPath = config.sops.secrets.nasCredentials.path;
   };
-  # my.comin = {
-  #   enable = true;
-  #   localRepoPath = "/home/rszamszur/repos/gh/rszamszur/nixos-config";
-  # };
+  my.comin = {
+    enable = true;
+    localRepoPath = "/home/rszamszur/repos/gh/rszamszur/nixos-config";
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
