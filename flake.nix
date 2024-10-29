@@ -14,13 +14,17 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    comin = {
+      url = "github:nlewo/comin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     flake-parts.url = "github:hercules-ci/flake-parts";
     fastapi-mvc.url = "github:fastapi-mvc/fastapi-mvc";
     rcu.url = "github:rszamszur/pkg-rcu";
     b3.url = "github:rszamszur/b3-flake";
   };
 
-  outputs = { self, nixpkgs, home-manager, sops-nix, flake-parts, fastapi-mvc, rcu, b3 }@inputs:
+  outputs = { self, nixpkgs, home-manager, sops-nix, comin, flake-parts, fastapi-mvc, rcu, b3 }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
@@ -68,6 +72,7 @@
               ./hosts/fenrir/configuration.nix
               inputs.home-manager.nixosModules.home-manager
               inputs.sops-nix.nixosModules.sops
+              inputs.comin.nixosModules.comin
               self.nixosModules.common
               self.nixosModules.awesome
               self.nixosModules.bash
@@ -83,6 +88,7 @@
               self.nixosModules.rbe
               self.nixosModules.cache
               self.nixosModules.nas
+              self.nixosModules.comin
             ];
           };
           draugr = inputs.nixpkgs.lib.nixosSystem {
