@@ -96,6 +96,7 @@
   my.comin = {
     enable = true;
     localRepoPath = "/home/rszamszur/repos/gh/rszamszur/nixos-config";
+    openFirewall = true;
   };
 
   # This value determines the NixOS release from which the default
