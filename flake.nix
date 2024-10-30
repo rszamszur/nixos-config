@@ -144,6 +144,8 @@
               self.nixosModules.cache
               ({ pkgs, ... }: {
                 environment.systemPackages = [ pkgs.git ];
+                services.qemuGuest.enable = true;
+                services.openssh.settings.PermitRootLogin = "yes";
                 my.cache.enable = true;
               })
             ];
