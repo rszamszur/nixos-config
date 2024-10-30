@@ -126,6 +126,7 @@
               ./hosts/tyr/configuration.nix
               inputs.home-manager.nixosModules.home-manager
               inputs.sops-nix.nixosModules.sops
+              inputs.comin.nixosModules.comin
               self.nixosModules.common
               self.nixosModules.cache
               self.nixosModules.bash
@@ -133,6 +134,7 @@
               self.nixosModules.podman
               self.nixosModules.github-runners
               self.nixosModules.remote-builder
+              self.nixosModules.comin
             ];
           };
           installation-iso = inputs.nixpkgs.lib.nixosSystem {

@@ -64,6 +64,11 @@
     ];
     binaryCacheKey = config.sops.secrets.binary-cache-key.path;
   };
+  my.comin = {
+    enable = true;
+    localRepoPath = "/var/nixos-config";
+    openFirewall = true;
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
