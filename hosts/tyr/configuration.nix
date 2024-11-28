@@ -66,7 +66,6 @@
   };
   my.comin = {
     enable = true;
-    localRepoPath = "/var/nixos-config";
     openFirewall = true;
   };
 
