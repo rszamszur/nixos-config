@@ -95,7 +95,6 @@
   };
   my.comin = {
     enable = true;
-    localRepoPath = "/home/rszamszur/repos/gh/rszamszur/nixos-config";
     openFirewall = true;
   };
 
