@@ -50,6 +50,23 @@ in
     bash = {
       enable = true;
       bashrcExtra = builtins.readFile ../modules/bash/bashrc;
+      shellAliases = {
+        "l" = "ls -lah";
+      };
+    };
+
+    vim = {
+      enable = true;
+      extraConfig = builtins.readFile ../modules/vim/vimrc;
+      plugins = [
+        pkgs.vimPlugins.YouCompleteMe
+        pkgs.vimPlugins.syntastic
+        pkgs.vimPlugins.vim-flake8
+        pkgs.vimPlugins.nerdtree
+        pkgs.vimPlugins.vim-airline
+        pkgs.vimPlugins.gruvbox
+        pkgs.vimPlugins.vim-nix
+      ];
     };
 
     git = {
