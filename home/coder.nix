@@ -11,7 +11,7 @@ in
   home = {
     username = "coder";
     homeDirectory = "/home/coder";
-    stateVersion = "24.05";
+    stateVersion = "24.11";
 
     packages = [
       pkgs.nmap
