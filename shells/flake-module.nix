@@ -6,8 +6,9 @@ let
     , name
     , pkgs
     , pythons ? [
-        "python39"
         "python310"
+        "python311"
+        "python312"
       ]
     ,
     }:

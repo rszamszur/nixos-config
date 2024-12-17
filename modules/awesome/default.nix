@@ -21,20 +21,29 @@ in
     services.xserver.xkb.layout = "pl";
     services.xserver.windowManager.awesome.enable = true;
     # Necessary config to run awesome without desktop
-    services.udev.packages = [ pkgs.gnome3.gnome-settings-daemon ];
+    services.udev.packages = if (lib.trivial.release == "24.11") then [ pkgs.gnome-settings-daemon ] else [ pkgs.gnome3.gnome-settings-daemon ];
     programs.dconf.enable = true;
     # Needed for nautilus USB devices discovery and mount
     services.gvfs.enable = true;
 
-    environment.systemPackages = [
-      pkgs.gnome3.eog
-      pkgs.gnome3.adwaita-icon-theme
-      pkgs.gnomeExtensions.appindicator
-      pkgs.gnome3.nautilus
-      pkgs.gnome3.gnome-terminal
-      pkgs.arc-icon-theme
-      pkgs.arandr
-    ];
+    environment.systemPackages =
+      if (lib.trivial.release == "24.11") then [
+        pkgs.eog
+        pkgs.adwaita-icon-theme
+        pkgs.gnomeExtensions.appindicator
+        pkgs.nautilus
+        pkgs.gnome-terminal
+        pkgs.arc-icon-theme
+        pkgs.arandr
+      ] else [
+        pkgs.gnome3.eog
+        pkgs.gnome3.adwaita-icon-theme
+        pkgs.gnomeExtensions.appindicator
+        pkgs.gnome3.nautilus
+        pkgs.gnome3.gnome-terminal
+        pkgs.arc-icon-theme
+        pkgs.arandr
+      ];
 
     home-manager.users.rszamszur = { ... }: {
 
