@@ -42,14 +42,13 @@ in
         };
       };
 
-    services.pipewire = lib.mkIf (cfg.driver == "pipewire") {
-      enable = true; # if not already enabled
+    services.pipewire = {
+      enable = if cfg.driver == "pipewire" then true else false;
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
-      # If you want to use JACK applications, uncomment this
-      #jack.enable = true;
-      wireplumber.enable = true;
+      jack.enable = true;
+      wireplumber.enable = if cfg.driver == "pipewire" then true else false;
     };
 
     services.blueman.enable = true;
