@@ -12,9 +12,9 @@ in
         "pulseaudio"
         "pipewire"
       ];
-      default = "pipewire";
+      default = "pulseaudio";
       description = ''
-        What sound server to use, defaults to pipewire.
+        What sound server to use, defaults to pulseaudio.
       '';
     };
   };
