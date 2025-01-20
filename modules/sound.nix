@@ -29,6 +29,7 @@ in
             Enable = "Source,Sink,Media,Socket";
           };
         };
+        hsphfpd.enable = if cfg.driver == "pulseaudio" then true else false;
       };
     } // lib.optionalAttrs
       (cfg.driver == "pulseaudio")
@@ -36,9 +37,6 @@ in
         pulseaudio = {
           enable = true;
           package = pkgs.pulseaudioFull;
-        };
-        bluetooth = {
-          hsphfpd.enable = true;
         };
       };
 
