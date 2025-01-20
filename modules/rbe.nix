@@ -68,6 +68,8 @@ in
       distributedBuilds = true;
       extraOptions = ''
         builders-use-substitutes = true
+        # Ensure we can still build when missing-server is not accessible
+        fallback = true
       '';
     };
 
