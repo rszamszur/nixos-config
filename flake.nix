@@ -89,6 +89,7 @@
               self.nixosModules.cache
               self.nixosModules.nas
               self.nixosModules.comin
+              self.nixosModules.local-llm
             ];
           };
           draugr = inputs.nixpkgs.lib.nixosSystem {

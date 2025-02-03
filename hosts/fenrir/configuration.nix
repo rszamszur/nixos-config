@@ -97,6 +97,17 @@
     enable = true;
     openFirewall = true;
   };
+  my.local-llm = {
+    enable = true;
+    loadModels = [
+      "llama3.3:70b"
+      "qwen2.5-coder:32b"
+      "deepseek-r1:70b"
+      "deepseek-r1:32b"
+    ];
+    ollamaHome = "/data/ollama";
+    ingressFQDN = "fyi.goto.fail";
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
