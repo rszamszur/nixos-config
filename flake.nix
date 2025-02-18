@@ -6,6 +6,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -24,7 +25,7 @@
     b3.url = "github:rszamszur/b3-flake";
   };
 
-  outputs = { self, nixpkgs, home-manager, sops-nix, comin, flake-parts, fastapi-mvc, rcu, b3 }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, sops-nix, comin, flake-parts, fastapi-mvc, rcu, b3 }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
@@ -91,6 +92,12 @@
               self.nixosModules.comin
               self.nixosModules.local-llm
             ];
+            specialArgs = {
+              pkgs-unstable = import inputs.nixpkgs-unstable {
+                system = "x86_64-linux";
+                config.allowUnfree = true;
+              };
+            };
           };
           draugr = inputs.nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";

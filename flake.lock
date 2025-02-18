@@ -398,6 +398,22 @@
         "url": "https://github.com/NixOS/nixpkgs/archive/072a6db25e947df2f31aab9eccd0ab75d5b2da11.tar.gz"
       }
     },
+    "nixpkgs-unstable": {
+      "locked": {
+        "lastModified": 1739834344,
+        "narHash": "sha256-PUAcU3YlKNFYrBBHkqshO4wRfMunzhMTEIH1dyhjTtk=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "f0295845e58ada369322524631821b01c0db13a7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1703034876,
@@ -541,6 +557,7 @@
         "flake-parts": "flake-parts_2",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs_3",
+        "nixpkgs-unstable": "nixpkgs-unstable",
         "rcu": "rcu",
         "sops-nix": "sops-nix"
       }

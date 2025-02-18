@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, pkgs-unstable, ... }:
 
 {
   imports = [
@@ -87,6 +87,8 @@
   };
   my.local-llm = {
     enable = true;
+    ollamaPackage = pkgs-unstable.ollama;
+    webuiPackage = pkgs-unstable.open-webui;
     loadModels = [
       "llama3.3:70b"
       "qwen2.5-coder:32b"
@@ -94,7 +96,7 @@
       "deepseek-r1:32b"
     ];
     ollamaHome = "/data/ollama";
-    ingressFQDN = "fyi.goto.fail";
+    ingressFQDN = "goto.fail";
   };
 
   # This value determines the NixOS release from which the default
