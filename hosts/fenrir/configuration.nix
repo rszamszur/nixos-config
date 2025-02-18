@@ -76,19 +76,7 @@
   my.remarkable.enable = true;
   my.chrome.enable = true;
   my.gaming.enable = true;
-  my.rbe = {
-    enable = true;
-    rbePrivateKey = config.sops.secrets.nixremote.path;
-  };
-  my.cache = {
-    enable = true;
-    extraSubstituters = [
-      "ssh-ng://nix-rbe"
-    ];
-    extraTrustedPublicKeys = [
-      "tyr:bbjBCfYPxGt0i2LGCDy802CbgqkRRoRGL2h3u7QVeVg="
-    ];
-  };
+  my.cache.enable = true;
   my.nas = {
     enable = true;
     credentialsPath = config.sops.secrets.nasCredentials.path;
