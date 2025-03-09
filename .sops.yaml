@@ -1,15 +1,15 @@
 keys:
   - &host_default age15vlkqcfp3wdjjjmdm8shq9wkkrcmrpz9fpqsclmeedspas793emq7uxmh5
 creation_rules:
-  - path_regex: tyr/secrets/[^/]+\.yaml$
+  - path_regex: tyr/secrets/[^/]+\.(yaml|json)$
     key_groups:
       - age:
         - *host_default
-  - path_regex: fenrir/secrets/[^/]+\.yaml$
+  - path_regex: fenrir/secrets/[^/]+\.(yaml|json)$
     key_groups:
       - age:
         - *host_default
-  - path_regex: draugr/secrets/[^/]+\.yaml$
+  - path_regex: draugr/secrets/[^/]+\.(yaml|json)$
     key_groups:
       - age:
         - *host_default
