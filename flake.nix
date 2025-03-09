@@ -122,6 +122,7 @@
               self.nixosModules.chrome
               self.nixosModules.rbe
               self.nixosModules.cache
+              self.nixosModules.zerotier
             ];
           };
           tyr = inputs.nixpkgs.lib.nixosSystem {

@@ -72,6 +72,14 @@
       "tyr:bbjBCfYPxGt0i2LGCDy802CbgqkRRoRGL2h3u7QVeVg="
     ];
   };
+  my.zerotier =
+    let
+      networkId = builtins.getEnv "ZEROTIER_NET_ID";
+    in
+    {
+      enable = if networkId == "" then false else true;
+      inherit networkId;
+    };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
