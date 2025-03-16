@@ -42,6 +42,7 @@
         };
         overlayAttrs = {
           inherit (config.packages) fastapi-mvc rcu b3;
+          mylib = import ./lib { lib = pkgs.lib; };
         };
       };
       flake = {
