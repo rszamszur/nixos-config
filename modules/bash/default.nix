@@ -11,12 +11,6 @@ let
       sha256 = "sha256-ZRfyv46N3oQbpDwobXMPp9PDnAyceN+9GoOeHj4oWWk=";
     })
     { };
-
-  manix = pkgs.callPackage ../../pkgs/tools/nix/manix {
-    lib = pkgs.lib;
-    fetchFromGitHub = pkgs.fetchFromGitHub;
-    rustPlatform = pkgs.rustPlatform;
-  };
 in
 {
 
@@ -68,7 +62,7 @@ in
           pkgs.kubectl
           pkgs.kubectx
           pkgs.kubernetes-helm
-          manix
+          pkgs.manix
         ] ++ cfg.homepkgs ++ lib.optionals cfg.comma [ comma ];
       };
 

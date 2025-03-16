@@ -1,12 +1,5 @@
 { pkgs, config, ... }:
 
-let
-  manix = pkgs.callPackage ../pkgs/tools/nix/manix {
-    lib = pkgs.lib;
-    fetchFromGitHub = pkgs.fetchFromGitHub;
-    rustPlatform = pkgs.rustPlatform;
-  };
-in
 {
   home = {
     username = "coder";
@@ -28,7 +21,7 @@ in
       pkgs.kubectl
       pkgs.kubectx
       pkgs.kubernetes-helm
-      manix
+      pkgs.manix
     ];
   };
 
