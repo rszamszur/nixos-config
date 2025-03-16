@@ -87,15 +87,20 @@
   };
   my.local-llm = {
     enable = true;
-    ollamaPackage = pkgs-unstable.ollama;
-    webuiPackage = pkgs-unstable.open-webui;
-    loadModels = [
-      "llama3.3:70b"
-      "qwen2.5-coder:32b"
-      "deepseek-r1:70b"
-      "deepseek-r1:32b"
-    ];
-    ollamaHome = "/data/ollama";
+    ollama = {
+      package = pkgs-unstable.ollama;
+      loadModels = [
+        "llama3.3:70b"
+        "qwen2.5-coder:32b"
+        "deepseek-r1:70b"
+        "deepseek-r1:32b"
+      ];
+      user = "ollama";
+      home = "/data/ollama";
+    };
+    open-webui = {
+      package = pkgs-unstable.open-webui;
+    };
     ingressFQDN = "goto.fail";
   };
 
