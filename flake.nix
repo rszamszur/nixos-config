@@ -61,6 +61,7 @@
           };
         };
         overlays = {
+          mylib = import ./overlays/mylib.nix;
           poetry2nix = import ./overlays/poetry2nix.nix;
         };
         nixosConfigurations = {
