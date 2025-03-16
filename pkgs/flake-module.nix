@@ -3,7 +3,6 @@
 {
   perSystem = { config, self', inputs', pkgs, ... }: {
     packages = {
-      manix = pkgs.callPackage ./tools/nix/manix { };
       cups-remarkable = pkgs.callPackage ./misc/cups/drivers/remarkable { };
       rmview = pkgs.callPackage ../pkgs/applications/misc/remarkable/rmview {
         python3Packages = pkgs.python311Packages;
@@ -11,7 +10,7 @@
       };
     };
     overlayAttrs = {
-      inherit (config.packages) manix cups-remarkable rmview;
+      inherit (config.packages) cups-remarkable rmview;
     };
   };
   flake = {
