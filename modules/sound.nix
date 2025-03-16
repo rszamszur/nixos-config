@@ -52,9 +52,18 @@ in
     services.blueman.enable = true;
     programs.noisetorch.enable = true;
 
-    environment.systemPackages = [
-      pkgs.pavucontrol
-    ];
+    environment.systemPackages =
+      [
+        pkgs.alsa-utils
+      ]
+      ++ lib.optionals (cfg.driver == "pulseaudio")
+        [
+          pkgs.pavucontrol
+        ]
+      ++ lib.optionals (cfg.driver == "pipewire")
+        [
+          pkgs.pwvucontrol
+        ];
 
     security.rtkit.enable = true;
   };
