@@ -1,6 +1,7 @@
-{ config, lib, pkgs, ... }:
+{ config, options, lib, pkgs, ... }:
 
 let
+  inherit (pkgs.mylib.trivial) inheritAllExcept filterRemovedOptions;
   cfg = config.my.local-llm;
   tls-cert = { alt ? [ ] }: (pkgs.runCommand "selfSignedCert" { buildInputs = [ pkgs.openssl ]; } ''
     mkdir -p $out
@@ -12,33 +13,8 @@ in
 {
   options.my.local-llm = {
     enable = lib.mkEnableOption "Enable stack for local large language models.";
-    ollamaPackage = lib.mkPackageOption pkgs "ollama" { };
-    webuiPackage = lib.mkPackageOption pkgs "open-webui" { };
-    loadModels = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
-      default = [ ];
-      description = ''
-        Download these models using `ollama pull` as soon as `ollama.service` has started.
-
-        This creates a systemd unit `ollama-model-loader.service`.
-
-        Search for models of your choice from: https://ollama.com/library
-      '';
-    };
-    ollamaHome = lib.mkOption {
-      type = lib.types.str;
-      default = "/var/lib/ollama";
-      example = "/home/foo";
-      description = ''
-        The home directory that the ollama service is started in.
-      '';
-    };
-    webuiStateDir = lib.mkOption {
-      type = lib.types.path;
-      default = "/var/lib/open-webui";
-      example = "/home/foo";
-      description = "State directory of Open-WebUI.";
-    };
+    open-webui = filterRemovedOptions options.services.open-webui;
+    ollama = filterRemovedOptions options.services.ollama;
     ingressFQDN = lib.mkOption {
       type = lib.types.nullOr lib.types.str;
       default = null;
@@ -51,19 +27,13 @@ in
 
   config = lib.mkIf cfg.enable rec {
 
-    services.ollama = {
-      package = cfg.ollamaPackage;
+    services.ollama = inheritAllExcept cfg.ollama [ "enable" "acceleration" ] // {
       enable = true;
-      user = "ollama";
       acceleration = "cuda";
-      loadModels = cfg.loadModels;
-      home = cfg.ollamaHome;
     };
 
-    services.open-webui = {
+    services.open-webui = inheritAllExcept cfg.open-webui [ "enable" ] // {
       enable = true;
-      package = cfg.webuiPackage;
-      stateDir = cfg.webuiStateDir;
     };
 
     services.nginx = lib.mkIf (cfg.ingressFQDN != null) {
