@@ -13,6 +13,7 @@ in
     pkgs.wget
     pkgs.curl
     pkgs.git
+    pkgs.alacritty
     pkgs.tmux
     pkgs.jq
     pkgs.gron
