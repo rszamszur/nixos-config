@@ -4,6 +4,7 @@ parse_git_branch() {
 
 PS1+="\[\033[33m\]\$(parse_git_branch)\[\033[00m\]"
 export PS1
+export EDITOR="vim"
 
 my-bash-help() {
     echo "Functions:"
