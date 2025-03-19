@@ -76,12 +76,17 @@
     "hyprland/workspaces": {
       "on-scroll-up": "hyprctl dispatch workspace -1",
       "on-scroll-down": "hyprctl dispatch workspace +1",
+      // "persistent-workspaces": {
+      //   "1": [],
+      //   "2": [],
+      //   "3": [],
+      //   "4": [],
+      //   "5": []
+      // }
       "persistent-workspaces": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": [],
-        "5": []
+        "eDP-1": [1, 2, 3, 4, 5],
+        "DP-1": [11, 12, 13, 14, 15],
+        "DP-2": [21, 22, 23, 24, 25]
       }
     },
   

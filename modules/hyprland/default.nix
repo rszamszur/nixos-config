@@ -29,6 +29,7 @@ in
       pkgs.hypridle
       pkgs.hyprshot
       pkgs.hyprcursor
+      pkgs.hyprsome
       pkgs.swaybg # or hyprpaper?
       pkgs.wlogout # not sure if used?
 
