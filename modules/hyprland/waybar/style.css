@@ -1,0 +1,504 @@
+/* Catppuccin Mocha */
+
+@define-color rosewater       #f5e0dc;
+@define-color flamingo        #f2cdcd;
+@define-color pink            #f5c2e7;
+@define-color mauve           #cba6f7;
+@define-color red             #f38ba8;
+@define-color maroon          #eba0ac;
+@define-color peach           #fab387;
+@define-color yellow          #f9e2af;
+@define-color green           #a6e3a1;
+@define-color teal            #94e2d5;
+@define-color sky             #89dceb;
+@define-color sapphire        #74c7ec;
+@define-color blue            #89b4fa;
+@define-color lavender        #b4befe;
+@define-color text            #cdd6f4;
+@define-color subtext1        #bac2de;
+@define-color subtext0        #a6adc8;
+@define-color overlay2        #9399b2;
+@define-color overlay1        #7f849c;
+@define-color overlay0        #6c7086;
+@define-color surface2        #585b70;
+@define-color surface1        #45475a;
+@define-color surface0        #313244;
+@define-color base            #1e1e2e;
+@define-color mantle          #181825;
+@define-color crust           #11111b;
+
+@define-color white           #ffffff;
+@define-color black           #000000;
+
+/* 
+  bg - background
+  fg - foreground
+  br - border
+*/
+
+/* Main Colors */
+
+@define-color shadow          shade(@crust, 0.5);
+@define-color main-fg         @text;
+@define-color main-bg         @crust;
+@define-color main-br         @text;
+
+@define-color active-bg       @overlay2;
+@define-color active-fg       @crust;
+
+@define-color hover-bg        @surface0;
+@define-color hover-fg        alpha(@text, 0.75);
+
+/* Module Colors */
+
+@define-color module-fg       @text;
+@define-color workspaces      @mantle;
+
+@define-color temp         @mantle;
+@define-color memory          @base;
+@define-color cpu             @surface0;
+@define-color distro-fg       @black;
+@define-color distro-bg       @overlay2;
+@define-color time            @surface0;
+@define-color date            @base;
+@define-color tray            @mantle;
+
+@define-color pulseaudio      @mantle;
+@define-color backlight       @base;
+@define-color battery         @surface0;
+@define-color power           @overlay2;
+
+/* State Colors */
+
+@define-color warning         @yellow;
+@define-color critical        @red;
+@define-color charging        @text;
+
+
+* {
+  font-family: "JetBrainsMono Nerd Font";
+  font-weight: bold;
+  min-height: 0;
+  padding: 0;
+  border: none;
+  margin: 0;
+}
+
+/* <<--< Main Background >-->> */
+
+window#waybar > box {
+  background-color: @main-bg;
+  margin: 2px;
+}
+
+/* <<--< Drop Shadow >-->> */
+
+window#waybar {
+  background: @shadow;
+}
+
+/* <<--< Tooltip >-->> */
+
+tooltip {
+  background: @main-bg;
+  border: solid;
+  border-width: 1.5px;
+  border-radius: 8px;
+  border-color: @main-br;
+}
+tooltip label {
+  color: @main-fg;
+  font-weight: normal;
+  margin: -1.5px 3px;
+}
+
+/* <<--< Workspace Buttons >-->> */
+
+#workspaces button {
+  color: @module-fg;
+  border-radius: 8px;
+  box-shadow: none;
+  margin: 2px 0;
+  padding: 0 2px;
+  transition: none;
+}
+#workspaces button:hover {
+  color: @hover-fg;
+  background: @hover-bg;
+  text-shadow: none;
+}
+#workspaces button.active {
+  color: @active-fg;
+  background: @active-bg;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.4);
+  margin: 2px;
+  padding: 0 6px;
+}
+
+/* <<--< General >-->> */
+
+#custom-ws,
+#workspaces,
+#window,
+#temperature,
+#memory,
+#cpu,
+#idle_inhibitor,
+#clock,
+#network,
+#bluetooth,
+#custom-update,
+#mpris,
+#pulseaudio,
+#backlight,
+#battery,
+#custom-power {
+  opacity: 1;
+  color: @module-fg;
+  padding: 0 4px;
+}
+
+#custom-left1,
+#custom-left2,
+#custom-left3,
+#custom-left4,
+#custom-left5,
+#custom-left6,
+#custom-left7,
+#custom-left8 {
+  margin-bottom: 0;
+  text-shadow: -2px 0 2px rgba(0, 0, 0, 0.5);
+}
+
+#custom-right1,
+#custom-right2,
+#custom-right3,
+#custom-right4,
+#custom-right5 {
+  margin-bottom: 0;
+  padding-right: 3px;
+  text-shadow: 2px 0 2px rgba(0, 0, 0, 0.5);
+}
+
+/* <<--< Modules >-->> */
+
+/* Window Icon */
+
+#custom-ws {
+  background: @main-bg;
+}
+#custom-ws:hover {
+  color: @hover-fg;
+}
+
+/* Workspaces */
+
+#custom-left1 {
+  color: @workspaces;
+  background: @main-bg;
+  margin-bottom: 0;
+  padding-left: 2px;
+}
+#workspaces {
+  background: @workspaces;
+}
+#custom-right1 {
+  color: @workspaces;
+  background: @main-bg;
+  text-shadow: 3px 0 2px rgba(0, 0, 0, 0.4);
+  margin-bottom: 0;
+}
+
+/* Temperature */
+
+#custom-paddc {
+  padding-right: 22px;
+}
+#custom-left2 {
+  color: @temp;
+  background: @main-bg;
+  padding-left: 3px;
+}
+#temperature {
+  background: @temp;
+  padding-left: 1px;
+  padding-right: 0;
+}
+
+/* Memory */
+
+#custom-left3 {
+  color: @memory;
+  background: @temp;
+  padding-left: 3px;
+}
+#memory {
+  background: @memory;
+  padding-left: 1px;
+  padding-right: 0;
+}
+#memory.warning {
+  color: @warning;
+}
+#memory.critical {
+  color: @critical;
+}
+
+/* CPU */
+
+#custom-left4 {
+  color: @cpu;
+  background: @memory;
+  padding-left: 3px;
+}
+#cpu {
+  background: @cpu;
+}
+#custom-leftin1 {
+  color: @cpu;
+  margin-bottom: -1px;
+}
+
+/* Distro Icon */
+
+#custom-left5 {
+  color: @distro-bg;
+  background: @main-bg;
+  text-shadow: none;
+  margin-bottom: -2px;
+  padding-left: 3px;
+}
+#custom-distro {
+  color: @distro-fg;
+  background: @distro-bg;
+  margin: 0 -1px -2px 0;
+  padding: 0 0 0 3px;
+  text-shadow: 0 0 1.5px rgba(0, 0, 0, 1);
+}
+#custom-right2 {
+  color: @distro-bg;
+  background: @main-bg;
+  text-shadow: none;
+  margin-bottom: -2px;
+}
+
+/* Time */
+
+#custom-rightin1 {
+  color: @time;
+  margin-bottom: -1px;
+}
+#idle_inhibitor {
+  background: @time;
+  margin-right: -2px;
+  padding: 0 0 0 7px;
+}
+#idle_inhibitor:hover {
+  color: @hover-fg;
+}
+#clock.time {
+  background: @time;
+  padding: 0 3px 0 0;
+}
+#custom-right3 {
+  color: @time;
+  background: @date;
+}
+
+/* Date */
+
+#clock.date {
+  background: @date;
+}
+#clock.date:hover {
+  color: @hover-fg;
+}
+#custom-right4 {
+  color: @date;
+  background: @tray;
+}
+
+/* Tray */
+
+#network {
+  padding-left: 5px;
+  padding-right: 8px;
+  background: @tray;
+}
+#network:hover {
+  color: @hover-fg;
+}
+
+#bluetooth {
+  padding-right: 5px;
+  background: @tray;
+}
+#bluetooth:hover {
+  color: @hover-fg;
+}
+
+#custom-update {
+  padding-right: 8px;
+  background: @tray;
+}
+#custom-update:hover {
+  color: @hover-fg;
+}
+#custom-right5 {
+  color: @tray;
+  background: @main-bg;
+}
+
+/* Media Info */
+
+#mpris {
+  font-weight: normal;
+  background-color: @main-bg;
+  padding-right: 8px;
+  padding-left: 8px;
+}
+#mpris:hover {
+  color: @hover-fg;
+}
+
+/* Output Device */
+
+#custom-left6 {
+  color: @pulseaudio;
+  background: @main-bg;
+  padding-left: 3px;
+}
+#pulseaudio {
+  background: @pulseaudio;
+}
+#pulseaudio:hover {
+  color: @hover-fg;
+}
+
+/* Brightness */
+
+#custom-left7 {
+  color: @backlight;
+  background: @pulseaudio;
+  padding-left: 2px;
+}
+#backlight {
+  background: @backlight;
+}
+
+/* Battery */
+
+#custom-left8 {
+  color: @battery;
+  background: @backlight;
+  padding-left: 2px;
+}
+#battery {
+  color: @module-fg;
+  background: @battery;
+}
+#battery.warning {
+  color: @warning;
+}
+#battery.critical {
+  color: @critical;
+}
+#battery.charging {
+  color: @charging;
+}
+
+/* Power Button */
+
+#custom-leftin2 {
+  color: @battery;
+  background: @main-bg;
+  margin-bottom: -1px;
+}
+#custom-power {
+  color: @main-bg;
+  background: @power;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  margin: 2px 4px 2px 0;
+  padding: 0 6px 0 9px;
+}
+#custom-power:hover {
+  color: @hover-fg;
+  background: @hover-bg;
+  text-shadow: none;
+  box-shadow: none;
+}
+
+/* <<--< FONT SIZES >-->> */
+
+/*
+  NOTE: Be careful when changing font sizes, as they
+  can affect alignment.
+
+  Try adjusting whole numbers first, then refine with
+  decimals.
+
+  If you increase or decrease a value, make the same
+  change to all properties in this section to keep
+  the layout consistent.
+*/
+
+/* modules */
+* {
+  font-size: 10px;
+}
+
+/* left and right arrows */
+#custom-left1,
+#custom-left2,
+#custom-left3,
+#custom-left4,
+#custom-left5,
+#custom-left6,
+#custom-left7,
+#custom-left8,
+#custom-right1,
+#custom-right2,
+#custom-right3,
+#custom-right4,
+#custom-right5 {
+  font-size: 14.68px;
+}
+
+/* left and right inverse */
+#custom-leftin1,
+#custom-leftin2,
+#custom-rightin1 {
+  font-size: 15.5px;
+}
+
+/* distro icon */
+#custom-distro {
+  font-size: 14.6px;
+}
+
+/* distro arrows override */
+#custom-left5,
+#custom-right2 {
+  font-size: 15.68px;
+}
+
+/*
+  Adjust these properties as well to keep the design
+  consistent.
+*/
+
+#workspaces button {
+  border-radius: 8px;
+  padding: 0 2px;
+}
+#workspaces button.active {
+  padding: 0 6px;
+}
+
+#custom-power {
+  border-radius: 10px;
+  padding: 0 6px 0 9px;
+}
