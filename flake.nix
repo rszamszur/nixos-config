@@ -112,7 +112,7 @@
               inputs.home-manager.nixosModules.home-manager
               inputs.sops-nix.nixosModules.sops
               self.nixosModules.common
-              self.nixosModules.awesome
+              self.nixosModules.hyprland
               self.nixosModules.laptop
               self.nixosModules.bash
               self.nixosModules.vim

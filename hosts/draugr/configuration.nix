@@ -22,6 +22,10 @@
   # replicates the default behaviour.
   networking.useDHCP = false;
 
+  # Lunar lake fixes
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+  hardware.enableRedistributableFirmware = true;
+
   # Sops secrets
   sops.age.keyFile = "/root/.config/age/sops/key.txt";
   sops.age.sshKeyPaths = [ "/root/.ssh/id_ed25519" ];
@@ -33,7 +37,7 @@
     mode = "0600";
   };
 
-  my.awesome.enable = true;
+  my.hyprland.enable = true;
   my.laptop.enable = true;
   my.bash = {
     enable = true;
@@ -59,12 +63,11 @@
   my.remarkable.enable = true;
   my.chrome.enable = true;
   my.rbe = {
-    enable = true;
-    speedFactor = 3;
+    enable = false;
     rbePrivateKey = config.sops.secrets.nixremote.path;
   };
   my.cache = {
-    enable = true;
+    enable = false;
     extraSubstituters = [
       "ssh-ng://nix-rbe"
     ];
