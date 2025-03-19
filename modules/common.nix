@@ -5,6 +5,8 @@ let
   rootPassHash = "$6$DBH/m/TvG3cIKJUr$v5TjDD4RRQhrCbOZs3ktWj6v1Vz81z0KIMzlBVq6UfG8dlFkTmKLl.s3QFW4CwLIdeZmDHyof7Iufx.8VhGOk0";
 in
 {
+
+  environment.variables.EDITOR = "vim";
   environment.systemPackages = [
     pkgs.coreutils
     pkgs.vim
