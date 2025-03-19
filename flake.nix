@@ -63,6 +63,7 @@
         overlays = {
           mylib = import ./overlays/mylib.nix;
           poetry2nix = import ./overlays/poetry2nix.nix;
+          lunar-lake-firmware-fix = import ./overlays/lunar-lake-firmware-fix.nix;
         };
         nixosConfigurations = {
           fenrir = inputs.nixpkgs.lib.nixosSystem {
@@ -105,7 +106,10 @@
             system = "x86_64-linux";
             modules = [
               {
-                nixpkgs.overlays = [ self.overlays.default ];
+                nixpkgs.overlays = [
+                  self.overlays.default
+                  self.overlays.lunar-lake-firmware-fix
+                ];
               }
               ./hosts/draugr/hardware-configuration.nix
               ./hosts/draugr/configuration.nix
