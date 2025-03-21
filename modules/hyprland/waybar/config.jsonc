@@ -186,7 +186,8 @@
         "format": "󰔏 {temperatureC}°C",
         "tooltip": false,
         "min-length": 8,
-        "max-length": 8
+        "max-length": 8,
+        "thermal-zone": "/sys/class/hwmon/hwmon4/temp1_input"
     },
   
     "memory": {
