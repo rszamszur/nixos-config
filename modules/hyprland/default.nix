@@ -45,6 +45,7 @@ in
       pkgs.swayimg
       pkgs.nautilus
       pkgs.alacritty
+      pkgs.bibata-cursors
     ];
     fonts.packages = [
       pkgs.nerdfonts
@@ -75,6 +76,7 @@ in
           ".config/rofi/power-menu.rasi".source = ./rofi/power-menu.rasi;
           ".config/ranger/rc.conf".source = ./ranger/rc.conf;
           ".config/alacritty/alacritty.toml".source = ./alacritty/alacritty.toml;
+          ".local/share/icons/Bibata-Modern-Classic".source = "${pkgs.bibata-cursors}/share/icons/Bibata-Modern-Classic";
 
           ".config/wallpapers".source = ../awesome/wallpapers;
         } // cfg.configOverrides;
