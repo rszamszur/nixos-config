@@ -20,7 +20,10 @@ in
   config = lib.mkIf cfg.enable {
 
 
-    programs.hyprland.enable = true;
+    programs.hyprland = {
+      enable = true;
+      package = pkgs.hyprland;
+    };
     programs.waybar.enable = true;
     environment.systemPackages = [
       # Hyprland ecosytem packages
@@ -46,6 +49,12 @@ in
       pkgs.nautilus
       pkgs.alacritty
       pkgs.bibata-cursors
+
+      # plugins
+      # pkgs.hyprlandPlugins.hyprsplit
+      (pkgs.hyprlandPlugins.hyprsplit.override {
+        hyprland = pkgs.hyprland;
+      })
     ];
     fonts.packages = [
       pkgs.nerdfonts
@@ -66,7 +75,11 @@ in
 
       home = {
         file = {
-          ".config/hypr/hyprland.conf".source = ./hypr/hyprland.conf;
+          # ".config/hypr/hyprland.conf".source = ./hypr/hyprland.conf;
+          ".config/hypr/hyprland.conf".text = ''
+            plugin = ${pkgs.hyprlandPlugins.hyprsplit}/lib/libhyprsplit.so
+          '' + (builtins.readFile ./hypr/hyprland.conf);
+
           ".config/hypr/hyprlock.conf".source = ./hypr/hyprlock.conf;
           ".config/hypr/hypridle.conf".source = ./hypr/hypridle.conf;
           ".config/waybar/config.jsonc".source = ./waybar/config.jsonc;
