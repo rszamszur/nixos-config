@@ -46,6 +46,13 @@
     mode = "0600";
   };
 
+  # Automatic garbage collection
+  nix.gc = {
+    automatic = true;
+    dates = "monthly";
+    options = "-d";
+  };
+
   # My NixOS modules
   my.cache.enable = true;
   my.bash.enable = true;
