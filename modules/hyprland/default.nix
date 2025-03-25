@@ -2,11 +2,26 @@
 
 let
   cfg = config.my.hyprland;
+  pluginsToHyprconf = plugins: (builtins.concatStringsSep "\n" (builtins.map
+    (entry:
+      if lib.types.package.check entry then
+        "plugin = ${entry}/lib/lib${entry.pname}.so"
+      else
+        "plugin = ${entry}")
+    plugins));
 in
 {
   options = {
     my.hyprland = {
       enable = lib.mkEnableOption "Enable common hyprland window manager options.";
+      package = lib.mkPackageOption pkgs "hyprland" { };
+      hyprlandConf = lib.mkOption {
+        type = lib.types.path;
+        description = lib.mdDoc ''
+          The path to a hyprland configuration file.
+        '';
+        default = ./hypr/hyprland.conf;
+      };
       configOverrides = lib.mkOption {
         type = lib.types.attrs;
         description = lib.mdDoc ''
@@ -14,13 +29,24 @@ in
         '';
         default = { };
       };
+      plugins = lib.mkOption {
+        type = lib.types.listOf (lib.types.either lib.types.package lib.types.path);
+        default = [ pkgs.hyprlandPlugins.hyprsplit ];
+        description = ''
+          List of Hyprland plugins to use. Can either be packages or
+          absolute plugin paths.
+        '';
+      };
     };
   };
 
   config = lib.mkIf cfg.enable {
 
 
-    programs.hyprland.enable = true;
+    programs.hyprland = {
+      enable = true;
+      package = cfg.package;
+    };
     programs.waybar.enable = true;
     environment.systemPackages = [
       # Hyprland ecosytem packages
@@ -66,7 +92,6 @@ in
 
       home = {
         file = {
-          ".config/hypr/hyprland.conf".source = ./hypr/hyprland.conf;
           ".config/hypr/hyprlock.conf".source = ./hypr/hyprlock.conf;
           ".config/hypr/hypridle.conf".source = ./hypr/hypridle.conf;
           ".config/waybar/config.jsonc".source = ./waybar/config.jsonc;
@@ -79,7 +104,9 @@ in
           ".local/share/icons/Bibata-Modern-Classic".source = "${pkgs.bibata-cursors}/share/icons/Bibata-Modern-Classic";
 
           ".config/wallpapers".source = ../awesome/wallpapers;
-        } // cfg.configOverrides;
+        } // cfg.configOverrides // {
+          ".config/hypr/hyprland.conf".text = pluginsToHyprconf cfg.plugins + "\n" + (builtins.readFile cfg.hyprlandConf);
+        };
       };
 
     };
