@@ -125,6 +125,7 @@
               self.nixosModules.rbe
               self.nixosModules.cache
               self.nixosModules.zerotier
+              self.nixosModules.nas
             ];
           };
           tyr = inputs.nixpkgs.lib.nixosSystem {
