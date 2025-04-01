@@ -36,6 +36,12 @@
     group = "root";
     mode = "0600";
   };
+  sops.secrets.nasCredentials = {
+    sopsFile = ./secrets/nas.yaml;
+    owner = "${builtins.toString config.users.users.rszamszur.name}";
+    group = "root";
+    mode = "0600";
+  };
 
   my.hyprland.enable = true;
   my.laptop.enable = true;
@@ -62,6 +68,10 @@
   my.vscode.enable = true;
   my.remarkable.enable = true;
   my.chrome.enable = true;
+  my.nas = {
+    enable = true;
+    credentialsPath = config.sops.secrets.nasCredentials.path;
+  };
   my.rbe = {
     enable = false;
     rbePrivateKey = config.sops.secrets.nixremote.path;
