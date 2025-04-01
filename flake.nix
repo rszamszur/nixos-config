@@ -75,7 +75,6 @@
               ./hosts/fenrir/hardware-configuration.nix
               ./hosts/fenrir/configuration.nix
               inputs.home-manager.nixosModules.home-manager
-              inputs.sops-nix.nixosModules.sops
               inputs.comin.nixosModules.comin
               self.nixosModules.common
               self.nixosModules.awesome
@@ -86,12 +85,9 @@
               self.nixosModules.podman
               self.nixosModules.docker
               self.nixosModules.vscode
-              self.nixosModules.remarkable
               self.nixosModules.chrome
               self.nixosModules.gaming
-              self.nixosModules.rbe
               self.nixosModules.cache
-              self.nixosModules.nas
               self.nixosModules.comin
               self.nixosModules.local-llm
             ];

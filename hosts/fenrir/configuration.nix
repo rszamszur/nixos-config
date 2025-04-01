@@ -30,23 +30,6 @@
   # A keyboard shortcut daemon
   services.actkbd.enable = true;
 
-  # Sops secrets
-  sops.age.keyFile = "/root/.config/age/sops/key.txt";
-  sops.age.sshKeyPaths = [ "/root/.ssh/id_ed25519" ];
-  sops.age.generateKey = true;
-  sops.secrets.nixremote = {
-    sopsFile = ./secrets/rbe.yaml;
-    owner = "root";
-    group = "root";
-    mode = "0600";
-  };
-  sops.secrets.nasCredentials = {
-    sopsFile = ./secrets/nas.yaml;
-    owner = "${builtins.toString config.users.users.rszamszur.name}";
-    group = "root";
-    mode = "0600";
-  };
-
   my.awesome = {
     enable = true;
     rclua = ./rc.lua;
@@ -73,14 +56,9 @@
   my.podman.enable = true;
   my.docker.enable = true;
   my.vscode.enable = true;
-  my.remarkable.enable = true;
   my.chrome.enable = true;
   my.gaming.enable = true;
   my.cache.enable = true;
-  my.nas = {
-    enable = true;
-    credentialsPath = config.sops.secrets.nasCredentials.path;
-  };
   my.comin = {
     enable = true;
     openFirewall = true;
