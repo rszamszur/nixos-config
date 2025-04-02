@@ -8,8 +8,6 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    my.sound.enable = true;
-
     environment.systemPackages = [
       pkgs.acpi
     ];
