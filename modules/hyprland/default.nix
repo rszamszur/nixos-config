@@ -72,6 +72,7 @@ in
       pkgs.nautilus
       pkgs.alacritty
       pkgs.bibata-cursors
+      pkgs.xdg-desktop-portal-hyprland
     ];
     fonts.packages = [
       pkgs.nerdfonts
