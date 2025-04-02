@@ -2,10 +2,6 @@
 
 {
   home = {
-    username = "rszamszur";
-    homeDirectory = "/home/rszamszur";
-    stateVersion = "24.11";
-
     packages = [
       pkgs.nmap
       pkgs.zip

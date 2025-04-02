@@ -173,13 +173,28 @@
           coder = home-manager.lib.homeManagerConfiguration {
             pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
             modules = [
-              ./home/coder.nix
+              ./home/default.nix
+              {
+                home = {
+                  username = "coder";
+                  homeDirectory = "/home/coder";
+                  stateVersion = "24.11";
+                };
+              }
             ];
+
           };
           rszamszur = home-manager.lib.homeManagerConfiguration {
             pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
             modules = [
-              ./home/rszamszur.nix
+              ./home/default.nix
+              {
+                home = {
+                  username = "rszamszur";
+                  homeDirectory = "/home/rszamszur";
+                  stateVersion = "24.11";
+                };
+              }
             ];
           };
         };
