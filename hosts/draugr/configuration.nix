@@ -45,6 +45,10 @@
 
   my.hyprland.enable = true;
   my.laptop.enable = true;
+  my.sound = {
+    enable = true;
+    driver = "pipewire";
+  };
   my.bash = {
     enable = true;
     homepkgs = [
