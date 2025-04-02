@@ -64,6 +64,7 @@
       pkgs.openvpn
       pkgs.gimp
       pkgs.b3
+      pkgs.discord
     ];
   };
   my.vim.enable = true;
