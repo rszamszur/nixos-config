@@ -30,6 +30,16 @@
   # A keyboard shortcut daemon
   services.actkbd.enable = true;
 
+  # Extra drives
+  fileSystems."/data" =
+    {
+      device = "/dev/disk/by-uuid/7e10094c-e8e7-4763-bb30-562c76dc6ee1";
+      fsType = "btrfs";
+      options = [
+        "nofail"
+      ];
+    };
+
   my.awesome = {
     enable = true;
     rclua = ./rc.lua;
