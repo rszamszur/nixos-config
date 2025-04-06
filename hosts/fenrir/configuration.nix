@@ -78,6 +78,7 @@
     };
     open-webui = {
       package = pkgs-unstable.open-webui;
+      stateDir = "/data/open-webui";
     };
     ingressFQDN = "goto.fail";
   };
