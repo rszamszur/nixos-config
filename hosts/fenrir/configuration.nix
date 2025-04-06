@@ -31,6 +31,18 @@
   services.actkbd.enable = true;
 
   # Extra drives
+  # Ensure proper permissions for mountpoint
+  systemd.tmpfiles.settings = {
+    "data" = {
+      "/data" = {
+        d = {
+          group = "root";
+          mode = "0775";
+          user = "root";
+        };
+      };
+    };
+  };
   fileSystems."/data" =
     {
       device = "/dev/disk/by-uuid/7e10094c-e8e7-4763-bb30-562c76dc6ee1";
