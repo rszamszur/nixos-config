@@ -36,6 +36,12 @@ in
       enable = true;
     };
 
+    systemd.services.open-webui = {
+      serviceConfig = {
+        ReadWritePaths = cfg.open-webui.stateDir;
+      };
+    };
+
     services.nginx = lib.mkIf (cfg.ingressFQDN != null) {
       enable = true;
       virtualHosts = {
