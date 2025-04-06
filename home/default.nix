@@ -17,6 +17,7 @@
       pkgs.kubectl
       pkgs.kubectx
       pkgs.kubernetes-helm
+      pkgs.k9s
       pkgs.manix
     ];
   };
