@@ -11,22 +11,21 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-TARGET_DRIVE=$1
+TARGET_DRIVE=/dev/nvme1n1
 NIXOS_HOST="fenrir"
-BOOT_SIZE=${BOOT_SIZE:=1000M}
 
 # EFI system partition on a GUID Partition Table is identified by the partition type GUID C12A7328-F81F-11D2-BA4B-00A0C93EC93B
 sfdisk "$TARGET_DRIVE" << EOF
 label: gpt
-,$BOOT_SIZE,C12A7328-F81F-11D2-BA4B-00A0C93EC93B
+,1000M,C12A7328-F81F-11D2-BA4B-00A0C93EC93B
 ;
 EOF
 
-mkfs.vfat -n boot "$TARGET_DRIVE"1
-mkfs.btrfs -L root "$TARGET_DRIVE"2
-mount "$TARGET_DRIVE"2 /mnt
+mkfs.vfat -n boot "$TARGET_DRIVE"p1
+mkfs.btrfs -L root "$TARGET_DRIVE"p2
+mount "$TARGET_DRIVE"p2 /mnt
 mkdir /mnt/boot
-mount "$TARGET_DRIVE"1 /mnt/boot
+mount "$TARGET_DRIVE"p1 /mnt/boot
 
 nixos-generate-config --root /mnt
 
