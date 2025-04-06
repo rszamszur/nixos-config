@@ -81,12 +81,16 @@ in
 
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
-    services.xserver = {
-      xkb.layout = "pl";
-      displayManager.gdm = {
-        enable = true;
-        wayland = true;
+    services = {
+      xserver = {
+        xkb.layout = "pl";
+        displayManager.gdm = {
+          enable = true;
+          wayland = true;
+        };
       };
+      # Needed for nautilus USB devices discovery and mount
+      gvfs.enable = true;
     };
 
     home-manager.users.rszamszur = { ... }: {
