@@ -19,13 +19,14 @@
       url = "github:nlewo/comin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi";
     flake-parts.url = "github:hercules-ci/flake-parts";
     fastapi-mvc.url = "github:fastapi-mvc/fastapi-mvc";
     rcu.url = "github:rszamszur/pkg-rcu";
     b3.url = "github:rszamszur/b3-flake";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, sops-nix, comin, flake-parts, fastapi-mvc, rcu, b3 }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, sops-nix, comin, nixos-raspberrypi, flake-parts, fastapi-mvc, rcu, b3 }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
@@ -147,6 +148,27 @@
               self.nixosModules.github-runners
               self.nixosModules.remote-builder
               self.nixosModules.comin
+            ];
+          };
+          muninn = inputs.nixos-raspberrypi.inputs.nixpkgs.lib.nixosSystem {
+            system = "aarch64-linux";
+            specialArgs = inputs;
+            modules = [
+              ./hosts/muninn/hardware-configuration.nix
+              ./hosts/muninn/configuration.nix
+              inputs.home-manager.nixosModules.home-manager
+              inputs.nixos-raspberrypi.nixosModules.raspberry-pi-5.base
+              inputs.nixos-raspberrypi.nixosModules.raspberry-pi-5.display-vc4
+              inputs.nixos-raspberrypi.nixosModules.usb-gadget-ethernet
+              inputs.nixos-raspberrypi.nixosModules.nixpkgs-rpi
+              inputs.nixos-raspberrypi.lib.inject-overlays
+              #inputs.nixos-raspberrypi.lib.inject-overlays-global
+              self.nixosModules.common
+              self.nixosModules.bash
+              self.nixosModules.vim
+              self.nixosModules.docker
+              self.nixosModules.podman
+              self.nixosModules.cache
             ];
           };
           installation-iso = inputs.nixpkgs.lib.nixosSystem {
