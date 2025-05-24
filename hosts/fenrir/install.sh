@@ -1,7 +1,7 @@
 #!/usr/bin/env nix-shell
 #! nix-shell -i bash
 #! nix-shell -p git
-#! nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/nixos-23.11.tar.gz
+#! nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/nixos-25.05.tar.gz
 
 if [ -n "$DEBUG" ]; then
     set -x

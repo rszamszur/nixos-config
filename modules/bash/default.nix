@@ -46,7 +46,7 @@ in
     home-manager.users.rszamszur = { ... }: {
 
       home = {
-        stateVersion = "24.11";
+        stateVersion = "25.05";
         packages = [
           pkgs.nmap
           pkgs.zip
