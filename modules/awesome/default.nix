@@ -21,13 +21,13 @@ in
     services.xserver.xkb.layout = "pl";
     services.xserver.windowManager.awesome.enable = true;
     # Necessary config to run awesome without desktop
-    services.udev.packages = if (lib.trivial.release == "24.11") then [ pkgs.gnome-settings-daemon ] else [ pkgs.gnome3.gnome-settings-daemon ];
+    services.udev.packages = if (lib.trivial.release == "25.05") then [ pkgs.gnome-settings-daemon ] else [ pkgs.gnome3.gnome-settings-daemon ];
     programs.dconf.enable = true;
     # Needed for nautilus USB devices discovery and mount
     services.gvfs.enable = true;
 
     environment.systemPackages =
-      if (lib.trivial.release == "24.11") then [
+      if (lib.trivial.release == "25.05") then [
         pkgs.eog
         pkgs.adwaita-icon-theme
         pkgs.gnomeExtensions.appindicator
