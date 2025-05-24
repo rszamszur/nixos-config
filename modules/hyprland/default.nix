@@ -75,6 +75,9 @@ in
       pkgs.xdg-desktop-portal-hyprland
     ];
     fonts.packages = [
+      # pkgs.nerd-fonts._0xproto
+      # pkgs.nerd-fonts.droid-sans-mono
+      # pkgs.nerd-fonts.noto
       pkgs.nerdfonts
       pkgs.font-awesome
     ];

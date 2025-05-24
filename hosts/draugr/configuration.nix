@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, pkgs-unstable, ... }:
 
 {
   imports = [
@@ -23,8 +23,22 @@
   networking.useDHCP = false;
 
   # Lunar lake fixes
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs-unstable.linuxPackages_latest;
   hardware.enableRedistributableFirmware = true;
+  #options snd-intel-dspcfg dsp_driver=3
+  # boot.extraModprobeConfig =''
+  #   options snd-hda-intel model=asus-zenbook
+  # '';
+  # boot.kernelParams = [ "snd-intel-dspcfg.dsp_driver=3" ];
+  hardware.firmware = [
+    pkgs-unstable.sof-firmware
+    pkgs-unstable.alsa-firmware
+  ];
+  environment.systemPackages = [
+    pkgs-unstable.alsa-topology-conf
+    pkgs-unstable.alsa-ucm-conf
+    pkgs-unstable.alsa-utils
+  ];
 
   # Sops secrets
   sops.age.keyFile = "/root/.config/age/sops/key.txt";
@@ -53,7 +67,7 @@
     enable = true;
     homepkgs = [
       pkgs.spotify
-      pkgs.okular
+      # pkgs.kdePackages.okular
       pkgs.vlc
       pkgs.firefox
       pkgs.signal-desktop
