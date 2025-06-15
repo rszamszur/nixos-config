@@ -127,6 +127,12 @@
               self.nixosModules.zerotier
               self.nixosModules.nas
             ];
+            specialArgs = {
+              pkgs-unstable = import inputs.nixpkgs-unstable {
+                system = "x86_64-linux";
+                config.allowUnfree = true;
+              };
+            };
           };
           tyr = inputs.nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
