@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, pkgs-unstable, ... }:
 
 {
   imports = [
@@ -23,8 +23,31 @@
   networking.useDHCP = false;
 
   # Lunar lake fixes
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs-unstable.linuxPackages_latest;
   hardware.enableRedistributableFirmware = true;
+  hardware.firmware = [
+    pkgs-unstable.sof-firmware
+    pkgs-unstable.alsa-firmware
+  ];
+  environment.systemPackages = [
+    pkgs-unstable.alsa-topology-conf
+    pkgs.my-alsa-ucm-conf
+    pkgs-unstable.alsa-utils
+    pkgs.my-intel-media-driver
+  ];
+
+  environment.variables = {
+    ALSA_CONFIG_UCM = "${pkgs.my-alsa-ucm-conf}/share/alsa/ucm";
+    ALSA_CONFIG_UCM2 = "${pkgs.my-alsa-ucm-conf}/share/alsa/ucm2";
+  };
+  environment.sessionVariables = {
+    ALSA_CONFIG_UCM = "${pkgs.my-alsa-ucm-conf}/share/alsa/ucm";
+    ALSA_CONFIG_UCM2 = "${pkgs.my-alsa-ucm-conf}/share/alsa/ucm2";
+  };
+  systemd.user.services.pipewire.environment.ALSA_CONFIG_UCM = config.environment.variables.ALSA_CONFIG_UCM;
+  systemd.user.services.pipewire.environment.ALSA_CONFIG_UCM2 = config.environment.variables.ALSA_CONFIG_UCM2;
+  systemd.user.services.wireplumber.environment.ALSA_CONFIG_UCM = config.environment.variables.ALSA_CONFIG_UCM;
+  systemd.user.services.wireplumber.environment.ALSA_CONFIG_UCM2 = config.environment.variables.ALSA_CONFIG_UCM2;
 
   # Sops secrets
   sops.age.keyFile = "/root/.config/age/sops/key.txt";
