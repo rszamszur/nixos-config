@@ -88,6 +88,8 @@
       pkgs.gimp
       pkgs.b3
       pkgs.discord
+      pkgs.k9s
+      pkgs.coder
     ];
   };
   my.vim.enable = true;
