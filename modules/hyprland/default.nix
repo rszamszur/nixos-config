@@ -68,6 +68,7 @@ in
       pkgs.playerctl
       pkgs.ranger
       pkgs.ueberzugpp # image preview for ranger
+      pkgs.eog
       pkgs.swayimg
       pkgs.nautilus
       pkgs.alacritty
