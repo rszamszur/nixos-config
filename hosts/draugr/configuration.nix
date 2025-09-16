@@ -23,7 +23,7 @@
   networking.useDHCP = false;
 
   # Lunar lake fixes
-  boot.kernelPackages = pkgs-unstable.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   hardware.enableRedistributableFirmware = true;
   hardware.firmware = [
     pkgs-unstable.sof-firmware
