@@ -86,7 +86,10 @@
   my.docker.enable = true;
   my.vscode.enable = true;
   my.chrome.enable = true;
-  my.gaming.enable = true;
+  my.gaming = {
+    enable = true;
+    autostart = true;
+  };
   my.cache.enable = true;
   my.comin = {
     enable = true;
