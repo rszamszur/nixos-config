@@ -5,12 +5,22 @@ let
 in
 {
 
-  options.my.gaming.enable = lib.mkEnableOption "Enables gaming related things.";
+  options.my.gaming = {
+    enable = lib.mkEnableOption "Enables gaming related things.";
+    autostart = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = lib.mdDoc ''
+        Open Steam in the background at boot.
+      '';
+    };
+  };
 
   config = lib.mkIf cfg.enable {
 
     programs.steam = {
       enable = true;
+      package = pkgs.steam;
       remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
       dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
     };
@@ -52,6 +62,16 @@ in
       package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
 
+    systemd.user.services.steam = {
+      enable = cfg.autostart;
+      description = "Open Steam in the background at boot";
+      serviceConfig = {
+        ExecStart = "${pkgs.steam}/bin/steam -nochatui -nofriendsui -silent %U";
+        wantedBy = [ "graphical-session.target" ];
+        Restart = "on-failure";
+        RestartSec = "5s";
+      };
+    };
   };
 
 }
