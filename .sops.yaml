@@ -13,3 +13,7 @@ creation_rules:
     key_groups:
       - age:
         - *host_default
+  - path_regex: nixgard/secrets/[^/]+\.(yaml|json)$
+    key_groups:
+      - age:
+        - *host_default

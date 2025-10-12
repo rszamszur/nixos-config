@@ -155,6 +155,21 @@
               self.nixosModules.comin
             ];
           };
+          nixgard = inputs.nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            modules = [
+              {
+                nixpkgs.overlays = [ self.overlays.default ];
+              }
+              ./hosts/nixgard/hardware-configuration.nix
+              ./hosts/nixgard/configuration.nix
+              inputs.sops-nix.nixosModules.sops
+              inputs.comin.nixosModules.comin
+              self.nixosModules.common
+              self.nixosModules.binary-cache
+              self.nixosModules.comin
+            ];
+          };
           installation-iso = inputs.nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
             modules = [
