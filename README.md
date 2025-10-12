@@ -12,6 +12,7 @@ Configuration to setup my NixOS instances.
 | draugr | [![draugr](https://github.com/rszamszur/nixos-config/actions/workflows/draugr.yml/badge.svg)](https://github.com/rszamszur/nixos-config/actions/workflows/draugr.yml) |
 | fenrir | [![fenrir](https://github.com/rszamszur/nixos-config/actions/workflows/fenrir.yml/badge.svg)](https://github.com/rszamszur/nixos-config/actions/workflows/fenrir.yml) |
 | tyr | [![tyr](https://github.com/rszamszur/nixos-config/actions/workflows/tyr.yaml/badge.svg)](https://github.com/rszamszur/nixos-config/actions/workflows/tyr.yaml) |
+| nixgard | [![nixgard](https://github.com/rszamszur/nixos-config/actions/workflows/nixgard.yaml/badge.svg)](https://github.com/rszamszur/nixos-config/actions/workflows/nixgard.yaml) |
 | install-iso | [![install-iso](https://github.com/rszamszur/nixos-config/actions/workflows/install-iso.yaml/badge.svg)](https://github.com/rszamszur/nixos-config/actions/workflows/install-iso.yaml) |
 
 ## Disk setup - encrypted btrfs
