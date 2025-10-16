@@ -38,8 +38,15 @@
       "nginx.service"
     ];
   };
+  sops.secrets.ovh-credentials = {
+    sopsFile = ./secrets/ovh.yaml;
+  };
 
   # My NixOS modules
+  my.acme = {
+    enable = true;
+    ovhCredentialsFile = config.sops.secrets.ovh-credentials.path;
+  };
   my.binary-cache = {
     enable = true;
     binaryCacheKey = config.sops.secrets."cache-priv-key.pem".path;

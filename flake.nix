@@ -166,6 +166,7 @@
               inputs.sops-nix.nixosModules.sops
               inputs.comin.nixosModules.comin
               self.nixosModules.common
+              self.nixosModules.acme
               self.nixosModules.binary-cache
               self.nixosModules.comin
             ];
