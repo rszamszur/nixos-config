@@ -45,6 +45,9 @@
     group = "nixremote";
     mode = "0600";
   };
+  sops.secrets."cache-priv-key.pem" = {
+    sopsFile = ./secrets/cache-key.yaml;
+  };
 
   # Automatic garbage collection
   nix.gc = {
@@ -54,7 +57,10 @@
   };
 
   # My NixOS modules
-  my.cache.enable = true;
+  my.cache = {
+    enable = true;
+    binaryCacheKey = config.sops.secrets."cache-priv-key.pem".path;
+  };
   my.bash.enable = true;
   my.vim.enable = true;
   my.podman.enable = true;
