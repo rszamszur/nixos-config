@@ -62,6 +62,9 @@ in
           enableACME = true;
           extraConfig = ''
             ssl_protocols TLSv1.2 TLSv1.3;
+            client_max_body_size 100G;
+            client_body_timeout 7200s;
+            send_timeout 7200s;
           '';
           locations."/".proxyPass = "http://${config.services.ncps.server.addr}";
         };
