@@ -59,7 +59,7 @@
   # My NixOS modules
   my.cache = {
     enable = true;
-    binaryCacheKey = config.sops.secrets."cache-priv-key.pem".path;
+    cacheSignKey = config.sops.secrets."cache-priv-key.pem".path;
   };
   my.bash.enable = true;
   my.vim.enable = true;

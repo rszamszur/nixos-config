@@ -40,7 +40,7 @@ in
       default = [ ];
       description = "List of extra trusted public keys.";
     };
-    binaryCacheKey = lib.mkOption {
+    cacheSignKey = lib.mkOption {
       type = lib.types.nullOr lib.types.path;
       default = null;
       description = lib.mdDoc ''
@@ -59,8 +59,8 @@ in
           "nixgard.szamszur.cloud:HaXsNyMojj3pVViZDoH8n9uJgqGcoZ6V1yYIFSigOxY="
         ] ++ cfg.extraTrustedPublicKeys;
       };
-      extraOptions = lib.mkIf (cfg.binaryCacheKey != null) ''
-        post-build-hook = ${buildCacheUploadHook cfg.binaryCacheKey}/bin/nixgard-upload
+      extraOptions = lib.mkIf (cfg.cacheSignKey != null) ''
+        post-build-hook = ${buildCacheUploadHook cfg.cacheSignKey}/bin/nixgard-upload
       '';
     };
   };
