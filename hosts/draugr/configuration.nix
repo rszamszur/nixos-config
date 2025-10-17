@@ -106,15 +106,7 @@
     enable = false;
     rbePrivateKey = config.sops.secrets.nixremote.path;
   };
-  my.cache = {
-    enable = false;
-    extraSubstituters = [
-      "ssh-ng://nix-rbe"
-    ];
-    extraTrustedPublicKeys = [
-      "tyr:bbjBCfYPxGt0i2LGCDy802CbgqkRRoRGL2h3u7QVeVg="
-    ];
-  };
+  my.cache.enable = true;
   my.zerotier =
     let
       networkId = builtins.getEnv "ZEROTIER_NET_ID";
