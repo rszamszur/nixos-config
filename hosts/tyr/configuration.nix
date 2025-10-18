@@ -1,5 +1,9 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
+let
+  inherit (lib.strings) trim;
+  inherit (builtins) pathExists readFile;
+in
 {
   imports = [
     # Include the results of the hardware scan.
@@ -12,7 +16,7 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
 
-  networking.hostName = "tyr";
+  networking.hostName = if (pathExists /root/hostname) then trim (readFile /root/hostname) else "tyr";
 
   time.timeZone = "Europe/Warsaw";
 
