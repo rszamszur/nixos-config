@@ -16,7 +16,7 @@ in
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
 
-  networking.hostName = if (pathExists /root/hostname) then trim (readFile /root/hostname) else "tyr";
+  networking.hostName = if (pathExists /etc/init-hostname) then trim (readFile /etc/init-hostname) else "tyr";
 
   time.timeZone = "Europe/Warsaw";
 
