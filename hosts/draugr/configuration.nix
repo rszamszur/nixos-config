@@ -104,7 +104,37 @@
   };
   my.rbe = {
     enable = true;
-    rbePrivateKey = config.sops.secrets.nixremote.path;
+    buildersConfig = {
+      "nix-rbe" = {
+        addToBuildMachines = false;
+        host = "nix-rbe.szamszur.cloud";
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICG1rbLgcCMYEsJ98VQilrOyCGCcYSYZy3zPRxj+g41g";
+        privateKeyPath = config.sops.secrets.nixremote.path;
+        speedFactor = 2;
+        maxJobs = 8;
+      };
+      "pve-nixos-tyr1" = {
+        host = "192.168.20.60";
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICG1rbLgcCMYEsJ98VQilrOyCGCcYSYZy3zPRxj+g41g";
+        privateKeyPath = config.sops.secrets.nixremote.path;
+        speedFactor = 2;
+        maxJobs = 8;
+      };
+      "pve-nixos-tyr2" = {
+        host = "192.168.20.61";
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICG1rbLgcCMYEsJ98VQilrOyCGCcYSYZy3zPRxj+g41g";
+        privateKeyPath = config.sops.secrets.nixremote.path;
+        speedFactor = 2;
+        maxJobs = 8;
+      };
+      "pve-nixos-tyr3" = {
+        host = "192.168.20.62";
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICG1rbLgcCMYEsJ98VQilrOyCGCcYSYZy3zPRxj+g41g";
+        privateKeyPath = config.sops.secrets.nixremote.path;
+        speedFactor = 2;
+        maxJobs = 8;
+      };
+    };
   };
   my.cache.enable = true;
   my.dns = {
