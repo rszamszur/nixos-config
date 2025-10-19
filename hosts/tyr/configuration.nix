@@ -6,6 +6,7 @@ let
 in
 {
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 30;
   boot.loader.efi.canTouchEfiVariables = true;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
