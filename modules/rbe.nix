@@ -25,7 +25,7 @@ in
       description = lib.mdDoc ''
         Defines the maximum number of jobs that Nix will try to build in parallel.
       '';
-      default = 18;
+      default = 24;
     };
     speedFactor = lib.mkOption {
       type = lib.types.int;
