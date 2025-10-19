@@ -23,7 +23,7 @@ in
       description = lib.mdDoc ''
         Defines the maximum number of jobs that Nix will try to build in parallel.
       '';
-      default = 6;
+      default = 8;
     };
     binaryCacheKey = lib.mkOption {
       type = lib.types.path;
