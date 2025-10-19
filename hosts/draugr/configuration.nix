@@ -103,7 +103,7 @@
     credentialsPath = config.sops.secrets.nasCredentials.path;
   };
   my.rbe = {
-    enable = false;
+    enable = true;
     rbePrivateKey = config.sops.secrets.nixremote.path;
   };
   my.cache.enable = true;
