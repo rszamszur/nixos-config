@@ -107,6 +107,10 @@
     rbePrivateKey = config.sops.secrets.nixremote.path;
   };
   my.cache.enable = true;
+  my.dns = {
+    enable = true;
+    puqu.enable = true;
+  };
   my.zerotier =
     let
       networkId = builtins.getEnv "ZEROTIER_NET_ID";

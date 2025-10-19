@@ -126,6 +126,7 @@
               self.nixosModules.cache
               self.nixosModules.zerotier
               self.nixosModules.nas
+              self.nixosModules.dns
             ];
             specialArgs = {
               pkgs-unstable = import inputs.nixpkgs-unstable {
