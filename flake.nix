@@ -135,27 +135,6 @@
               };
             };
           };
-          tyr = inputs.nixpkgs.lib.nixosSystem {
-            system = "x86_64-linux";
-            modules = [
-              {
-                nixpkgs.overlays = [ self.overlays.default ];
-              }
-              ./hosts/tyr/hardware-configuration.nix
-              ./hosts/tyr/configuration.nix
-              inputs.home-manager.nixosModules.home-manager
-              inputs.sops-nix.nixosModules.sops
-              inputs.comin.nixosModules.comin
-              self.nixosModules.common
-              self.nixosModules.cache
-              self.nixosModules.bash
-              self.nixosModules.vim
-              self.nixosModules.podman
-              self.nixosModules.github-runners
-              self.nixosModules.remote-builder
-              self.nixosModules.comin
-            ];
-          };
           nixgard = inputs.nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
             modules = [
@@ -185,7 +164,39 @@
               })
             ];
           };
-        };
+        } // inputs.nixpkgs.lib.listToAttrs (
+          inputs.nixpkgs.lib.map
+            (
+              host: {
+                name = host;
+                value = inputs.nixpkgs.lib.nixosSystem {
+                  system = "x86_64-linux";
+                  modules = [
+                    {
+                      nixpkgs.overlays = [ self.overlays.default ];
+                    }
+                    ./hosts/tyr/hardware-configuration.nix
+                    ./hosts/tyr/configuration.nix
+                    { networking.hostName = host; }
+                    inputs.home-manager.nixosModules.home-manager
+                    inputs.sops-nix.nixosModules.sops
+                    inputs.comin.nixosModules.comin
+                    self.nixosModules.common
+                    self.nixosModules.cache
+                    self.nixosModules.bash
+                    self.nixosModules.vim
+                    self.nixosModules.podman
+                    self.nixosModules.github-runners
+                    self.nixosModules.remote-builder
+                    self.nixosModules.comin
+                  ];
+                };
+              }
+            )
+            (
+              [ "tyr" ] ++ inputs.nixpkgs.lib.map (n: "pve-nixos-tyr${builtins.toString n}") (inputs.nixpkgs.lib.range 1 3)
+            )
+        );
         nixosModules = builtins.listToAttrs (map
           (module: {
             name = builtins.replaceStrings [ ".nix" ] [ "" ] (builtins.baseNameOf module);
