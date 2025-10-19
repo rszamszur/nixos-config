@@ -36,7 +36,10 @@ in
       allowDNS=1
       EOF
     '';
-    networking.networkmanager.insertNameservers = [ "192.168.10.5" ];
+    my.dns = {
+      enable = true;
+      puqu.enable = true;
+    };
   };
 
 }
