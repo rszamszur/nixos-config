@@ -11,6 +11,8 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+HOST=${1:-"tyr"}
+
 # EFI system partition on a GUID Partition Table is identified by the partition type GUID C12A7328-F81F-11D2-BA4B-00A0C93EC93B
 sfdisk /dev/sda << EOF
 label: gpt
@@ -38,4 +40,4 @@ mv hardware-configuration.nix /mnt/var/nixos-config/hosts/tyr
 ln -s ../../var/nixos-config/hosts/tyr/hardware-configuration.nix hardware-configuration.nix
 popd
 
-nixos-install --no-root-password --flake /mnt/var/nixos-config#tyr
+nixos-install --no-root-password --flake /mnt/var/nixos-config#$HOST

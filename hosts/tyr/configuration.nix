@@ -16,8 +16,6 @@ in
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
 
-  networking.hostName = if (pathExists /etc/init-hostname) then trim (readFile /etc/init-hostname) else "tyr";
-
   time.timeZone = "Europe/Warsaw";
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
