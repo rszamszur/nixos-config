@@ -156,11 +156,13 @@
             modules = [
               "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
               self.nixosModules.cache
+              self.nixosModules.dns
               ({ pkgs, ... }: {
                 environment.systemPackages = [ pkgs.git ];
                 services.qemuGuest.enable = true;
                 services.openssh.settings.PermitRootLogin = "yes";
                 my.cache.enable = true;
+                my.dns.enable = true;
               })
             ];
           };
