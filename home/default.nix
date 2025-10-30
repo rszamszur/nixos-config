@@ -22,6 +22,14 @@
     ];
   };
 
+  sessionVariables = {
+    # https://github.com/alacritty/alacritty/issues/3360
+    TERM = "xterm-256color";
+  };
+  sessionPath = [
+    "$HOME/.local/bin"
+  ];
+
   programs = {
     # Let Home Manager install and manage itself.
     home-manager.enable = true;
