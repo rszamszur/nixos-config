@@ -1,16 +1,35 @@
 { self, lib, withSystem, ... }:
 
 {
-  perSystem = { config, self', inputs', pkgs, ... }: {
+  perSystem = { config, self', inputs', system, pkgs, ... }: {
+    _module.args.pkgs = import self.inputs.nixpkgs {
+      inherit system;
+      overlays = [ ];
+      config = {
+        allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+          "terraform"
+        ];
+      };
+    };
     packages = {
       cups-remarkable = pkgs.callPackage ./misc/cups/drivers/remarkable { };
       rmview = pkgs.callPackage ../pkgs/applications/misc/remarkable/rmview {
         python3Packages = pkgs.python311Packages;
         wrapQtAppsHook = pkgs.qt5.wrapQtAppsHook;
       };
+      coder-stable = pkgs.callPackage ./by-name/coder {
+        inherit lib;
+        inherit (pkgs) fetchurl installShellFiles makeBinaryWrapper terraform stdenvNoCC unzip;
+        channel = "stable";
+      };
+      coder-mainline = pkgs.callPackage ./by-name/coder {
+        inherit lib;
+        inherit (pkgs) fetchurl installShellFiles makeBinaryWrapper terraform stdenvNoCC unzip;
+        channel = "mainline";
+      };
     };
     overlayAttrs = {
-      inherit (config.packages) cups-remarkable rmview;
+      inherit (config.packages) cups-remarkable rmview coder-mainline coder-stable;
     };
   };
   flake = {
