@@ -89,7 +89,7 @@
       pkgs.b3
       pkgs.discord
       pkgs.k9s
-      pkgs.coder
+      pkgs.coder-mainline
     ];
   };
   my.vim.enable = true;
