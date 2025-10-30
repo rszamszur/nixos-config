@@ -21,7 +21,7 @@ let
       pythons);
 in
 {
-  perSystem = { config, self', inputs', pkgs, ... }: {
+  perSystem = { config, pkgs, ... }: {
     devShells = {
       default = import ./default.nix { inherit pkgs; };
       nodejs = import ./js.nix { inherit pkgs; };

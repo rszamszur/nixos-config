@@ -1,7 +1,7 @@
 { self, lib, withSystem, ... }:
 
 {
-  perSystem = { config, self', inputs', system, pkgs, ... }: {
+  perSystem = { config, system, pkgs, ... }: {
     _module.args.pkgs = import self.inputs.nixpkgs {
       inherit system;
       overlays = [ ];
