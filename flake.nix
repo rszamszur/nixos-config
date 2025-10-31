@@ -196,7 +196,7 @@
               }
             )
             (
-              [ "tyr" ] ++ inputs.nixpkgs.lib.map (n: "pve-nixos-tyr${builtins.toString n}") (inputs.nixpkgs.lib.range 1 3)
+              [ "tyr" ] ++ inputs.nixpkgs.lib.map (n: "pve-nixos-tyr${builtins.toString n}") (inputs.nixpkgs.lib.range 1 6)
             )
         );
         nixosModules = builtins.listToAttrs (map
