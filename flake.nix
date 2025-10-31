@@ -20,12 +20,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     flake-parts.url = "github:hercules-ci/flake-parts";
-    fastapi-mvc.url = "github:fastapi-mvc/fastapi-mvc";
     rcu.url = "github:rszamszur/pkg-rcu";
     b3.url = "github:rszamszur/b3-flake";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, sops-nix, comin, flake-parts, fastapi-mvc, rcu, b3 }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, sops-nix, comin, flake-parts, rcu, b3 }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
@@ -36,12 +35,11 @@
       systems = [ "x86_64-linux" "aarch64-linux" ];
       perSystem = { config, pkgs, system, ... }: {
         packages = {
-          fastapi-mvc = fastapi-mvc.packages.${system}.default;
           rcu = rcu.packages.${system}.rcu;
           b3 = b3.packages.${system}.default;
         };
         overlayAttrs = {
-          inherit (config.packages) fastapi-mvc rcu b3;
+          inherit (config.packages) rcu b3;
           mylib = import ./lib { lib = pkgs.lib; };
         };
       };
