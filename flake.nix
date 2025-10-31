@@ -167,17 +167,21 @@
         } // inputs.nixpkgs.lib.listToAttrs (
           inputs.nixpkgs.lib.map
             (
-              host: {
-                name = host;
+              replica: {
+                name = replica.name;
                 value = inputs.nixpkgs.lib.nixosSystem {
                   system = "x86_64-linux";
                   modules = [
                     {
                       nixpkgs.overlays = [ self.overlays.default ];
                     }
-                    ./hosts/tyr/hardware-configuration.nix
                     ./hosts/tyr/configuration.nix
-                    { networking.hostName = host; }
+                    {
+                      imports = [
+                        replica.hardware-configuration-variant
+                      ];
+                      networking.hostName = replica.name;
+                    }
                     inputs.home-manager.nixosModules.home-manager
                     inputs.sops-nix.nixosModules.sops
                     inputs.comin.nixosModules.comin
@@ -193,9 +197,36 @@
                 };
               }
             )
-            (
-              [ "tyr" ] ++ inputs.nixpkgs.lib.map (n: "pve-nixos-tyr${builtins.toString n}") (inputs.nixpkgs.lib.range 1 6)
-            )
+            [
+              {
+                name = "tyr";
+                hardware-configuration-variant = ./hosts/tyr/hardware-configuration.nix;
+              }
+              {
+                name = "pve-nixos-tyr1";
+                hardware-configuration-variant = ./hosts/tyr/hardware-configuration.nix;
+              }
+              {
+                name = "pve-nixos-tyr2";
+                hardware-configuration-variant = ./hosts/tyr/hardware-configuration.nix;
+              }
+              {
+                name = "pve-nixos-tyr3";
+                hardware-configuration-variant = ./hosts/tyr/hardware-configuration.nix;
+              }
+              {
+                name = "pve-nixos-tyr4";
+                hardware-configuration-variant = ./hosts/tyr/hardware-configuration-n4-6.nix;
+              }
+              {
+                name = "pve-nixos-tyr5";
+                hardware-configuration-variant = ./hosts/tyr/hardware-configuration-n4-6.nix;
+              }
+              {
+                name = "pve-nixos-tyr6";
+                hardware-configuration-variant = ./hosts/tyr/hardware-configuration-n4-6.nix;
+              }
+            ]
         );
         nixosModules = builtins.listToAttrs (map
           (module: {
