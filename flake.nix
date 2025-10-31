@@ -263,6 +263,8 @@
             ];
           };
         };
+        # https://github.com/NixOS/nix/issues/7165#issuecomment-3396300462
+        checks = inputs.nixpkgs.lib.attrsets.unionOfDisjoint { /* Actual checks */ } self.packages;
       };
     };
 }
