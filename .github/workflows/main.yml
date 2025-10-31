@@ -9,7 +9,7 @@ on:
       - master
 
 env:
-  NIX_CHANNEL: nixpkgs=channel:nixos-25.05
+  NIX_PATH: nixpkgs=channel:nixos-25.05
 
 jobs:
   # This job checks if an identical workflow is being triggered by different
@@ -29,24 +29,18 @@ jobs:
   nixpkgs-fmt:
     needs: pre_job
     if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
-    runs-on: ubuntu-latest
+    runs-on: nixos
 
     steps:
-    - uses: cachix/install-nix-action@v31
-      with:
-        nix_path: ${{ env.NIX_CHANNEL }}
     - uses: actions/checkout@v4
     - name: Check format
       run: nix-shell -p nixpkgs-fmt --run 'nixpkgs-fmt --check .'
   nix-flake-check:
     needs: pre_job
     if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
-    runs-on: ubuntu-latest
+    runs-on: nixos
 
     steps:
-    - uses: cachix/install-nix-action@v31
-      with:
-        nix_path: ${{ env.NIX_CHANNEL }}
     - uses: actions/checkout@v4
     - name: Run nix flake check
       run: nix flake check
