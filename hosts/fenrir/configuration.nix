@@ -53,13 +53,6 @@
       ];
     };
 
-  services.cron = {
-    enable = true;
-    systemCronJobs = [
-      "30 22 * * *      root    systemctl poweroff >> /tmp/cron.log"
-    ];
-  };
-
   my.awesome = {
     enable = true;
     rclua = ./rc.lua;
