@@ -82,7 +82,7 @@
   my.chrome.enable = true;
   my.gaming = {
     enable = true;
-    autostart = true;
+    autostart = false;
   };
   my.cache.enable = true;
   my.comin = {
@@ -112,6 +112,10 @@
       };
     };
     ingressFQDN = "goto.fail";
+  };
+  my.remote-gaming = {
+    enable = true;
+    gpuType = "nvidia";
   };
 
   # This value determines the NixOS release from which the default
