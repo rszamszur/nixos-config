@@ -135,6 +135,27 @@
         speedFactor = 2;
         maxJobs = 8;
       };
+      "pve-nixos-tyr4" = {
+        host = "192.168.20.63";
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICG1rbLgcCMYEsJ98VQilrOyCGCcYSYZy3zPRxj+g41g";
+        privateKeyPath = config.sops.secrets.nixremote.path;
+        speedFactor = 2;
+        maxJobs = 8;
+      };
+      "pve-nixos-tyr5" = {
+        host = "192.168.20.64";
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICG1rbLgcCMYEsJ98VQilrOyCGCcYSYZy3zPRxj+g41g";
+        privateKeyPath = config.sops.secrets.nixremote.path;
+        speedFactor = 2;
+        maxJobs = 8;
+      };
+      "pve-nixos-tyr6" = {
+        host = "192.168.20.65";
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICG1rbLgcCMYEsJ98VQilrOyCGCcYSYZy3zPRxj+g41g";
+        privateKeyPath = config.sops.secrets.nixremote.path;
+        speedFactor = 2;
+        maxJobs = 8;
+      };
     };
   };
   my.cache.enable = true;
