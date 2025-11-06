@@ -171,6 +171,10 @@
       enable = if networkId == "" then false else true;
       inherit networkId;
     };
+  my.gaming = {
+    enable = true;
+    gpuType = "intel-lunar-lake";
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
