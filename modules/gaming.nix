@@ -39,6 +39,32 @@ in
     };
     hardware.steam-hardware.enable = true;
 
+    ###########################
+    # Connect xbox controller #
+    ###########################
+
+    # Enable the xpadneo driver for Xbox One wireless controllers
+    hardware.xpadneo.enable = config.hardware.bluetooth.enable;
+    hardware.bluetooth = lib.mkIf config.hardware.bluetooth.enable {
+      settings = {
+        General = {
+          # show battery
+          experimental = true;
+
+          # https://www.reddit.com/r/NixOS/comments/1ch5d2p/comment/lkbabax/
+          # for pairing bluetooth controller
+          Privacy = "device";
+          JustWorksRepairing = "always";
+          Class = "0x000100";
+          FastConnectable = true;
+        };
+      };
+    };
+    boot.extraModulePackages = lib.mkIf config.hardware.bluetooth.enable [ config.boot.kernelPackages.xpadneo ];
+    boot.extraModprobeConfig = lib.mkIf config.hardware.bluetooth.enable ''
+      options bluetooth disable_ertm=Y
+    '';
+
     ####################
     # GPU Type: Nvidia #
     ####################
