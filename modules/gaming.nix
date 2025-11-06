@@ -7,6 +7,16 @@ in
 
   options.my.gaming = {
     enable = lib.mkEnableOption "Enables gaming related things.";
+    gpuType = lib.mkOption {
+      type = lib.types.enum [
+        "nvidia"
+        "intel-lunar-lake"
+      ];
+      default = "nvidia";
+      description = ''
+        Which GPU backend to use.
+      '';
+    };
     autostart = lib.mkOption {
       type = lib.types.bool;
       default = false;
@@ -17,6 +27,9 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    ##########
+    # Common #
+    ##########
 
     programs.steam = {
       enable = true;
@@ -24,14 +37,15 @@ in
       remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
       dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
     };
-
     hardware.steam-hardware.enable = true;
 
+    ####################
+    # GPU Type: Nvidia #
+    ####################
+
     # Load nvidia driver for Xorg and Wayland
-    services.xserver.videoDrivers = [ "nvidia" ];
-
-    hardware.nvidia = {
-
+    services.xserver.videoDrivers = lib.mkIf (cfg.gpuType == "nvidia") [ "nvidia" ];
+    hardware.nvidia = lib.mkIf (cfg.gpuType == "nvidia") {
       # Modesetting is required.
       modesetting.enable = true;
 
@@ -61,6 +75,26 @@ in
       # Optionally, you may need to select the appropriate driver version for your specific GPU.
       package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
+
+    ##############################
+    # GPU Type: Intel Lunar Lake #
+    ##############################
+
+    hardware.graphics = lib.mkIf (cfg.gpuType == "intel-lunar-lake") {
+      enable = true;
+      extraPackages = [
+        pkgs.vpl-gpu-rt
+        pkgs.my-intel-media-driver
+        pkgs.intel-vaapi-driver
+        pkgs.libvdpau-va-gl
+        pkgs.vaapiIntel
+      ];
+    };
+    boot.kernelParams = lib.mkIf (cfg.gpuType == "intel-lunar-lake") [ "i915.force_probe=64a0" ];
+
+    ###################
+    # Steam autostart #
+    ###################
 
     systemd.user.services.steam = lib.mkIf cfg.autostart {
       enable = true;
