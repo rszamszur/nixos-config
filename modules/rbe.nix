@@ -96,7 +96,7 @@ in
         );
       in
       {
-        knownHosts = builtins.mapAttrs (_: v: { publicKey = v.publicKey; }) cfg.buildersConfig;
+        knownHosts = lib.mapAttrs' (_: v: lib.nameValuePair v.host { publicKey = v.publicKey; }) cfg.buildersConfig;
         extraConfig = ''
           ${buildConfigText}
         '';
