@@ -113,7 +113,6 @@ in
         pkgs.my-intel-media-driver
         pkgs.intel-vaapi-driver
         pkgs.libvdpau-va-gl
-        pkgs.vaapiIntel
       ];
     };
     boot.kernelParams = lib.mkIf (cfg.gpuType == "intel-lunar-lake") [ "i915.force_probe=64a0" ];

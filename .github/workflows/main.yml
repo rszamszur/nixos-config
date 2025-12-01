@@ -9,7 +9,7 @@ on:
       - master
 
 env:
-  NIX_PATH: nixpkgs=channel:nixos-25.05
+  NIX_PATH: nixpkgs=channel:nixos-25.11
 
 jobs:
   # This job checks if an identical workflow is being triggered by different
