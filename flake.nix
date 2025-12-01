@@ -5,10 +5,10 @@
   };
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sops-nix = {
@@ -245,7 +245,7 @@
                 home = {
                   username = "coder";
                   homeDirectory = "/home/coder";
-                  stateVersion = "25.05";
+                  stateVersion = "25.11";
                 };
               }
             ];
@@ -259,7 +259,7 @@
                 home = {
                   username = "rszamszur";
                   homeDirectory = "/home/rszamszur";
-                  stateVersion = "25.05";
+                  stateVersion = "25.11";
                 };
               }
             ];
