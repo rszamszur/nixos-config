@@ -32,7 +32,7 @@ jobs:
     runs-on: nixos
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - name: Check format
       run: nix-shell -p nixpkgs-fmt --run 'nixpkgs-fmt --check .'
   nix-flake-check:
@@ -41,6 +41,6 @@ jobs:
     runs-on: nixos
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - name: Run nix flake check
       run: nix flake check
