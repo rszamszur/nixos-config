@@ -60,7 +60,7 @@ in
 
       # Launcher/menu programs
       pkgs.wofi
-      pkgs.rofi-wayland
+      pkgs.rofi
 
       # Utils used by hyprland
       pkgs.nwg-displays

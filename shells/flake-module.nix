@@ -7,7 +7,7 @@ let
     , pkgs
     , pythons ? [
         "python311"
-        "python312Full"
+        "python312"
         "python313"
         "python314"
       ]
