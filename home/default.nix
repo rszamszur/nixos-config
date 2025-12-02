@@ -46,7 +46,11 @@
 
     bash = {
       enable = true;
-      bashrcExtra = builtins.readFile ../modules/bash/bashrc;
+      bashrcExtra = builtins.readFile ../modules/bash/bashrc + ''
+        if [[ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
+          . "$HOME/.nix-profile/etc/profile.d/nix.sh"
+        fi
+      '';
       shellAliases = {
         "l" = "ls -lah";
       };
