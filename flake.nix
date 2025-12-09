@@ -11,6 +11,10 @@
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    home-manager-unstable = {
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -24,7 +28,7 @@
     b3.url = "github:rszamszur/b3-flake";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, sops-nix, comin, flake-parts, rcu, b3 }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, home-manager-unstable, sops-nix, comin, flake-parts, rcu, b3 }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
@@ -97,7 +101,7 @@
               };
             };
           };
-          draugr = inputs.nixpkgs.lib.nixosSystem {
+          draugr = inputs.nixpkgs-unstable.lib.nixosSystem {
             system = "x86_64-linux";
             modules = [
               {
@@ -108,7 +112,7 @@
               }
               ./hosts/draugr/hardware-configuration.nix
               ./hosts/draugr/configuration.nix
-              inputs.home-manager.nixosModules.home-manager
+              inputs.home-manager-unstable.nixosModules.home-manager
               inputs.sops-nix.nixosModules.sops
               self.nixosModules.common
               self.nixosModules.hyprland
@@ -128,12 +132,6 @@
               self.nixosModules.dns
               self.nixosModules.gaming
             ];
-            specialArgs = {
-              pkgs-unstable = import inputs.nixpkgs-unstable {
-                system = "x86_64-linux";
-                config.allowUnfree = true;
-              };
-            };
           };
           nixgard = inputs.nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";

@@ -1,4 +1,4 @@
-{ config, pkgs, pkgs-unstable, ... }:
+{ config, pkgs, ... }:
 
 {
   imports = [
@@ -27,13 +27,13 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   hardware.enableRedistributableFirmware = true;
   hardware.firmware = [
-    pkgs-unstable.sof-firmware
-    pkgs-unstable.alsa-firmware
+    pkgs.sof-firmware
+    pkgs.alsa-firmware
   ];
   environment.systemPackages = [
-    pkgs-unstable.alsa-topology-conf
+    pkgs.alsa-topology-conf
     pkgs.my-alsa-ucm-conf
-    pkgs-unstable.alsa-utils
+    pkgs.alsa-utils
     pkgs.my-intel-media-driver
   ];
 
