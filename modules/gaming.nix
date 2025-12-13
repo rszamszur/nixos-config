@@ -39,6 +39,10 @@ in
     };
     hardware.steam-hardware.enable = true;
 
+    environment.systemPackages = [
+      pkgs.pkgs.moonlight-qt
+    ];
+
     ###########################
     # Connect xbox controller #
     ###########################
