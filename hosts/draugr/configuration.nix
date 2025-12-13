@@ -91,6 +91,7 @@
       pkgs.discord
       pkgs.k9s
       pkgs.coder-mainline
+      pkgs.moonlight-qt
     ];
   };
   my.vim.enable = true;
