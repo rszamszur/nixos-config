@@ -172,7 +172,7 @@
       inherit networkId;
     };
   my.gaming = {
-    enable = false;
+    enable = true;
     gpuType = "intel-lunar-lake";
   };
 
