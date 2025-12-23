@@ -27,9 +27,24 @@
         inherit (pkgs) fetchurl installShellFiles makeBinaryWrapper terraform stdenvNoCC unzip;
         channel = "mainline";
       };
+      my-portfolio = pkgs.callPackage ./by-name/portfolio {
+        inherit lib;
+        inherit (pkgs) autoPatchelfHook
+          fetchurl
+          glib
+          glib-networking
+          gtk3
+          libsecret
+          makeDesktopItem
+          openjdk21
+          stdenvNoCC
+          webkitgtk_4_1
+          wrapGAppsHook3
+          gitUpdater;
+      };
     };
     overlayAttrs = {
-      inherit (config.packages) cups-remarkable rmview coder-mainline coder-stable;
+      inherit (config.packages) cups-remarkable rmview coder-mainline coder-stable my-portfolio;
     };
   };
   flake = {
