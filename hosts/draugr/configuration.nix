@@ -91,6 +91,7 @@
       pkgs.discord
       pkgs.k9s
       pkgs.coder-mainline
+      pkgs.my-portfolio
     ];
   };
   my.vim.enable = true;
