@@ -1,4 +1,4 @@
-{ config, options, lib, ... }:
+{ config, options, lib, pkgs, ... }:
 
 let
   cfg = config.my.binary-cache;
@@ -6,11 +6,21 @@ in
 {
   options.my.binary-cache = {
     enable = lib.mkEnableOption "Enable self-hosted Nix binary cache.";
+    package = lib.mkPackageOption pkgs "ncps" { };
     binaryCacheKey = lib.mkOption {
       type = lib.types.path;
       description = lib.mdDoc ''
         The full path to a file which contains the binary cache private key.
       '';
+    };
+    database = lib.mkOption {
+      type = lib.types.enum [
+        "sqlite"
+        "postgresql"
+      ];
+      default = "sqlite";
+      example = "postgresql";
+      description = "Which database to use.";
     };
   };
 
@@ -24,8 +34,10 @@ in
 
     services.ncps = {
       enable = true;
+      package = cfg.package;
       cache = {
         hostName = "nixgard";
+        databaseURL = if cfg.database == "postgresql" then "postgresql:///ncps" else "sqlite:/var/lib/ncps/db/db.sqlite";
         lru.schedule = "0 2 * * *";
         maxSize = "900G";
         allowPutVerb = true;
@@ -43,6 +55,27 @@ in
           "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
         ];
       };
+    };
+
+    services.postgresql = lib.mkIf (cfg.database == "postgresql") {
+      enable = true;
+      package = pkgs.postgresql_17;
+      ensureDatabases = [ "ncps" ];
+      ensureUsers = [{
+        name = "ncps";
+        ensureDBOwnership = true;
+      }];
+      identMap = ''
+        # ArbitraryMapName systemUser DBUser
+        superuser_map      root      postgres
+        superuser_map      postgres  postgres
+        # Let other names login as themselves
+        superuser_map      /^(.*)$   \1
+      '';
+      authentication = lib.mkForce ''
+        # TYPE  DATABASE        USER            ADDRESS                 METHOD
+        local   all             all                                     peer
+      '';
     };
 
     services.nginx = {
