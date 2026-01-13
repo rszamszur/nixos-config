@@ -147,7 +147,14 @@
               self.nixosModules.acme
               self.nixosModules.binary-cache
               self.nixosModules.comin
+              self.nixosModules.upstream-overrides
             ];
+            specialArgs = {
+              pkgs-unstable = import inputs.nixpkgs-unstable {
+                system = "x86_64-linux";
+                config.allowUnfree = true;
+              };
+            };
           };
           installation-iso = inputs.nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
