@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, pkgs-unstable, ... }:
 
 {
   imports = [
@@ -50,7 +50,9 @@
   };
   my.binary-cache = {
     enable = true;
+    package = pkgs-unstable.ncps;
     binaryCacheKey = config.sops.secrets."cache-priv-key.pem".path;
+    database = "postgresql";
   };
   my.comin = {
     enable = true;
