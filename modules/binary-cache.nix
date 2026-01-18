@@ -92,7 +92,7 @@ in
             }
           ];
           forceSSL = true;
-          enableACME = true;
+          useACMEHost = "nixgard.szamszur.cloud";
           extraConfig = ''
             ssl_protocols TLSv1.2 TLSv1.3;
             client_max_body_size 100G;
