@@ -42,6 +42,11 @@ in
             id = "cjpalhdlnbpafiamejdnhcphjbkeiagm";
             version = "1.63.0";
           }
+          {
+            # News Feed Eradicator
+            id = "fjcldmjmjhkklehbacihaiopjklihlgg";
+            version = "2.3.3";
+          }
         ];
       };
 
