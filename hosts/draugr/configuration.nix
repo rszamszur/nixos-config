@@ -66,6 +66,12 @@
     group = "root";
     mode = "0600";
   };
+  sops.secrets.wg-private-key = {
+    sopsFile = ./secrets/wireguard.yaml;
+    owner = "root";
+    group = "root";
+    mode = "0600";
+  };
 
   my.hyprland.enable = true;
   my.laptop.enable = true;
@@ -164,13 +170,14 @@
     enable = true;
     puqu.enable = true;
   };
-  my.zerotier =
+  my.wireguard =
     let
-      networkId = builtins.getEnv "ZEROTIER_NET_ID";
+      endpoint = builtins.getEnv "WG_ENDPOINT";
     in
     {
-      enable = if networkId == "" then false else true;
-      inherit networkId;
+      inherit endpoint;
+      enable = if endpoint == "" then false else true;
+      privateKeyFile = config.sops.secrets.wg-private-key.path;
     };
   my.gaming = {
     enable = true;
