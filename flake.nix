@@ -127,7 +127,7 @@
               self.nixosModules.chrome
               self.nixosModules.rbe
               self.nixosModules.cache
-              self.nixosModules.zerotier
+              self.nixosModules.wireguard
               self.nixosModules.nas
               self.nixosModules.dns
               self.nixosModules.gaming
