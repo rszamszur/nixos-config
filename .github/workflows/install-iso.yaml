@@ -42,6 +42,4 @@ jobs:
     steps:
     - uses: actions/checkout@v6
     - name: Build install-iso
-      env:
-        RCU_PRODUCT_KEY: ${{ secrets.RCU_PRODUCT_KEY }}
       run: nix build .#nixosConfigurations.installation-iso.config.system.build.isoImage -L
