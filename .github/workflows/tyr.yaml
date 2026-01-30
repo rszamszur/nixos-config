@@ -44,6 +44,4 @@ jobs:
     steps:
     - uses: actions/checkout@v6
     - name: Build tyr
-      env:
-        RCU_PRODUCT_KEY: ${{ secrets.RCU_PRODUCT_KEY }}
       run: nix build .#nixosConfigurations.tyr.config.system.build.toplevel -L
