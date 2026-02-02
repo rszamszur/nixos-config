@@ -89,7 +89,7 @@
       pkgs.signal-desktop
       pkgs.libreoffice
       pkgs.keepassxc
-      pkgs.jetbrains.pycharm-community
+      pkgs.jetbrains.pycharm-oss
       pkgs.solaar
       pkgs.openvpn
       pkgs.gimp
