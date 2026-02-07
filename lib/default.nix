@@ -5,4 +5,5 @@ let
 in
 {
   trivial = callLibs ./trivial.nix;
+  sources = callLibs ./sources.nix;
 }
