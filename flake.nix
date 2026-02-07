@@ -61,6 +61,12 @@
               Base flake for Python projects using poetry2nix.
             '';
           };
+          uv2nix = {
+            path = ./templates/uv2nix;
+            description = ''
+              Base flake for Python projects using uv2nix.
+            '';
+          };
         };
         overlays = {
           mylib = import ./overlays/mylib.nix;
