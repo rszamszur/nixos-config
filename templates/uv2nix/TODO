@@ -1,0 +1,7 @@
+# After templating TODO
+
+Rename the following literals:
+
+- `MY-PROJECT`
+- `MY_PROJECT_MODULE_NAME`
+- `MY_PROJECT_ENTRYPOINT`

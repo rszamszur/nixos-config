@@ -1,0 +1,25 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "MY-PROJECT"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.10"
+dependencies = [
+]
+
+[project.optional-dependencies]
+test = [
+]
+
+[project.scripts]
+MY_PROJECT_MODULE_NAME_ENTRYPOINT = "MY_PROJECT_MODULE_NAME.cli.cli:cli"
+
+[tool.uv]
+package = true
+
+[tool.uv.build-backend]
+module-name = "MY_PROJECT_MODULE_NAME"
+module-root = ""
