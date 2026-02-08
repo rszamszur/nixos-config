@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.my.rbe;
@@ -7,8 +12,8 @@ in
   options.my.rbe = {
     enable = lib.mkEnableOption "Enable my ghetto Nix RBE.";
     buildersConfig = lib.mkOption {
-      type = lib.types.attrsOf (lib.types.submodule
-        {
+      type = lib.types.attrsOf (
+        lib.types.submodule {
           options = {
             addToBuildMachines = lib.mkOption {
               type = lib.types.bool;
@@ -90,30 +95,33 @@ in
                IdentityFile ${key}
         '';
         buildConfigText = builtins.concatStringsSep "\n" (
-          lib.mapAttrsToList
-            (n: v: sshConfigText n v.host v.user v.privateKeyPath)
-            cfg.buildersConfig
+          lib.mapAttrsToList (n: v: sshConfigText n v.host v.user v.privateKeyPath) cfg.buildersConfig
         );
       in
       {
-        knownHosts = lib.mapAttrs' (_: v: lib.nameValuePair v.host { publicKey = v.publicKey; }) cfg.buildersConfig;
+        knownHosts = lib.mapAttrs' (
+          _: v: lib.nameValuePair v.host { publicKey = v.publicKey; }
+        ) cfg.buildersConfig;
         extraConfig = ''
           ${buildConfigText}
         '';
       };
 
     nix = {
-      buildMachines = lib.mapAttrsToList
-        (n: v: {
-          hostName = n;
-          system = "x86_64-linux";
-          protocol = "ssh-ng";
-          maxJobs = v.maxJobs;
-          speedFactor = v.speedFactor;
-          supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
-          mandatoryFeatures = [ ];
-        })
-        (lib.filterAttrs (_: v: v.addToBuildMachines == true) cfg.buildersConfig);
+      buildMachines = lib.mapAttrsToList (n: v: {
+        hostName = n;
+        system = "x86_64-linux";
+        protocol = "ssh-ng";
+        maxJobs = v.maxJobs;
+        speedFactor = v.speedFactor;
+        supportedFeatures = [
+          "nixos-test"
+          "benchmark"
+          "big-parallel"
+          "kvm"
+        ];
+        mandatoryFeatures = [ ];
+      }) (lib.filterAttrs (_: v: v.addToBuildMachines == true) cfg.buildersConfig);
       distributedBuilds = true;
       extraOptions = ''
         builders-use-substitutes = true

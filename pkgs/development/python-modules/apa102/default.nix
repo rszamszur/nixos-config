@@ -1,9 +1,10 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, setuptools
-, RPiGPIO
-, spidev
+{
+  lib,
+  buildPythonPackage,
+  fetchPypi,
+  setuptools,
+  RPiGPIO,
+  spidev,
 }:
 
 buildPythonPackage rec {

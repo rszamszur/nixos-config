@@ -19,12 +19,19 @@
     };
   };
 
-  outputs = { self, nixpkgs, flake-parts, poetry2nix }@inputs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-parts,
+      poetry2nix,
+    }@inputs:
     let
       mkApp =
-        { drv
-        , name ? drv.pname or drv.name
-        , exePath ? drv.passthru.exePath or "/bin/${name}"
+        {
+          drv,
+          name ? drv.pname or drv.name,
+          exePath ? drv.passthru.exePath or "/bin/${name}",
         }:
         {
           type = "app";
@@ -35,59 +42,75 @@
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
       ];
-      systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
-      perSystem = { config, self', inputs', pkgs, system, ... }: {
-        # Add poetry2nix overrides to nixpkgs
-        _module.args.pkgs = import nixpkgs {
-          inherit system;
-          overlays = [ self.overlays.poetry2nix ];
-        };
-
-        packages =
-          let
-            mkProject =
-              { python ? pkgs.python3
-              }:
-              pkgs.callPackage ./default.nix {
-                inherit python;
-                poetry2nix = pkgs.poetry2nix;
-              };
-          in
-          {
-            default = mkProject { };
-            my-project-py38 = mkProject { python = pkgs.python38; };
-            my-project-py39 = mkProject { python = pkgs.python39; };
-            my-project-py310 = mkProject { python = pkgs.python310; };
-            my-project-py311 = mkProject { python = pkgs.python311; };
-            my-project-dev = pkgs.callPackage ./editable.nix {
-              poetry2nix = pkgs.poetry2nix;
-              python = pkgs.python3;
-            };
-          } // pkgs.lib.optionalAttrs pkgs.stdenv.isLinux {
-            image = pkgs.callPackage ./image.nix {
-              inherit pkgs;
-              app = config.packages.default;
-            };
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
+      perSystem =
+        {
+          config,
+          self',
+          inputs',
+          pkgs,
+          system,
+          ...
+        }:
+        {
+          # Add poetry2nix overrides to nixpkgs
+          _module.args.pkgs = import nixpkgs {
+            inherit system;
+            overlays = [ self.overlays.poetry2nix ];
           };
 
-        overlayAttrs = {
-          inherit (config.packages) default;
-        };
+          packages =
+            let
+              mkProject =
+                {
+                  python ? pkgs.python3,
+                }:
+                pkgs.callPackage ./default.nix {
+                  inherit python;
+                  poetry2nix = pkgs.poetry2nix;
+                };
+            in
+            {
+              default = mkProject { };
+              my-project-py38 = mkProject { python = pkgs.python38; };
+              my-project-py39 = mkProject { python = pkgs.python39; };
+              my-project-py310 = mkProject { python = pkgs.python310; };
+              my-project-py311 = mkProject { python = pkgs.python311; };
+              my-project-dev = pkgs.callPackage ./editable.nix {
+                poetry2nix = pkgs.poetry2nix;
+                python = pkgs.python3;
+              };
+            }
+            // pkgs.lib.optionalAttrs pkgs.stdenv.isLinux {
+              image = pkgs.callPackage ./image.nix {
+                inherit pkgs;
+                app = config.packages.default;
+              };
+            };
 
-        apps = {
-          my-project = mkApp { drv = config.packages.default; };
-        };
+          overlayAttrs = {
+            inherit (config.packages) default;
+          };
 
-        devShells = {
-          default = config.packages.my-project-dev.env.overrideAttrs (oldAttrs: {
-            buildInputs = [
-              pkgs.poetry
-              pkgs.coreutils
-            ];
-          });
-          poetry = import ./shell.nix { inherit pkgs; };
+          apps = {
+            my-project = mkApp { drv = config.packages.default; };
+          };
+
+          devShells = {
+            default = config.packages.my-project-dev.env.overrideAttrs (oldAttrs: {
+              buildInputs = [
+                pkgs.poetry
+                pkgs.coreutils
+              ];
+            });
+            poetry = import ./shell.nix { inherit pkgs; };
+          };
         };
-      };
       flake = {
         overlays.poetry2nix = nixpkgs.lib.composeManyExtensions [
           poetry2nix.overlay

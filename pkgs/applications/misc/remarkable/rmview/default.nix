@@ -1,4 +1,9 @@
-{ lib, fetchFromGitHub, python3Packages, wrapQtAppsHook }:
+{
+  lib,
+  fetchFromGitHub,
+  python3Packages,
+  wrapQtAppsHook,
+}:
 
 python3Packages.buildPythonApplication rec {
   pname = "rmview";
@@ -13,8 +18,15 @@ python3Packages.buildPythonApplication rec {
 
   pyproject = true;
   build-system = with python3Packages; [ setuptools ];
-  nativeBuildInputs = with python3Packages; [ pyqt5 wrapQtAppsHook ];
-  propagatedBuildInputs = with python3Packages; [ pyqt5 paramiko twisted ];
+  nativeBuildInputs = with python3Packages; [
+    pyqt5
+    wrapQtAppsHook
+  ];
+  propagatedBuildInputs = with python3Packages; [
+    pyqt5
+    paramiko
+    twisted
+  ];
 
   preBuild = ''
     pyrcc5 -o src/rmview/resources.py resources.qrc

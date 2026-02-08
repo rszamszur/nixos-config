@@ -1,14 +1,26 @@
-{ config, options, lib, pkgs, ... }:
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   inherit (pkgs.nix-utils.trivial) inheritAllExcept filterRemovedOptions;
   cfg = config.my.local-llm;
-  tls-cert = { alt ? [ ] }: (pkgs.runCommand "selfSignedCert" { buildInputs = [ pkgs.openssl ]; } ''
-    mkdir -p $out
-    openssl req -x509 -newkey ec -pkeyopt ec_paramgen_curve:secp384r1 -days 365 -nodes \
-      -keyout $out/cert.key -out $out/cert.crt \
-      -subj "/CN=localhost" -addext "subjectAltName=DNS:localhost,${builtins.concatStringsSep "," (["IP:127.0.0.1"] ++ alt)}"
-  '');
+  tls-cert =
+    {
+      alt ? [ ],
+    }:
+    (pkgs.runCommand "selfSignedCert" { buildInputs = [ pkgs.openssl ]; } ''
+      mkdir -p $out
+      openssl req -x509 -newkey ec -pkeyopt ec_paramgen_curve:secp384r1 -days 365 -nodes \
+        -keyout $out/cert.key -out $out/cert.crt \
+        -subj "/CN=localhost" -addext "subjectAltName=DNS:localhost,${
+          builtins.concatStringsSep "," ([ "IP:127.0.0.1" ] ++ alt)
+        }"
+    '');
 in
 {
   options.my.local-llm = {
@@ -27,10 +39,15 @@ in
 
   config = lib.mkIf cfg.enable rec {
 
-    services.ollama = inheritAllExcept cfg.ollama [ "enable" "acceleration" ] // {
-      enable = true;
-      acceleration = "cuda";
-    };
+    services.ollama =
+      inheritAllExcept cfg.ollama [
+        "enable"
+        "acceleration"
+      ]
+      // {
+        enable = true;
+        acceleration = "cuda";
+      };
 
     services.open-webui = inheritAllExcept cfg.open-webui [ "enable" ] // {
       enable = true;
@@ -81,7 +98,10 @@ in
           };
       };
     };
-    networking.firewall.allowedTCPPorts = lib.mkIf (cfg.ingressFQDN != null) [ 80 443 ];
+    networking.firewall.allowedTCPPorts = lib.mkIf (cfg.ingressFQDN != null) [
+      80
+      443
+    ];
   };
 
 }

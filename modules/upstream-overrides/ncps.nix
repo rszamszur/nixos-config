@@ -1,7 +1,8 @@
-{ config
-, pkgs
-, lib
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  ...
 }:
 let
   cfg = config.services.ncps;
@@ -39,10 +40,9 @@ let
       [
         "--otel-enabled"
       ]
-      ++ (lib.optional
-        (
-          cfg.openTelemetry.grpcURL != null
-        ) "--otel-grpc-url='${cfg.openTelemetry.grpcURL}'")
+      ++ (lib.optional (
+        cfg.openTelemetry.grpcURL != null
+      ) "--otel-grpc-url='${cfg.openTelemetry.grpcURL}'")
     ))
     ++ (lib.optional cfg.prometheus.enable "--prometheus-enabled")
     ++ (lib.optional (!cfg.analytics.reporting.enable) "--analytics-reporting-enabled=false")
@@ -61,30 +61,26 @@ let
         "--cache-redis-db='${builtins.toString cfg.cache.redis.database}'"
         "--cache-redis-pool-size='${builtins.toString cfg.cache.redis.poolSize}'"
       ]
-      ++ (lib.optional
-        (
-          cfg.cache.redis.username != null
-        ) "--cache-redis-username='${cfg.cache.redis.username}'")
-      ++ (lib.optional
-        (
-          cfg.cache.redis.password != null
-        ) "--cache-redis-password='${cfg.cache.redis.password}'")
+      ++ (lib.optional (
+        cfg.cache.redis.username != null
+      ) "--cache-redis-username='${cfg.cache.redis.username}'")
+      ++ (lib.optional (
+        cfg.cache.redis.password != null
+      ) "--cache-redis-password='${cfg.cache.redis.password}'")
       ++ (lib.optional cfg.cache.redis.useTLS "--cache-redis-use-tls")
     ))
-    ++ (lib.optional
-      (
-        cfg.cache.storage.s3 == null
-      ) "--cache-storage-local='${cfg.cache.storage.local}'")
+    ++ (lib.optional (
+      cfg.cache.storage.s3 == null
+    ) "--cache-storage-local='${cfg.cache.storage.local}'")
     ++ (lib.optionals (cfg.cache.storage.s3 != null) (
       [
         "--cache-storage-s3-bucket='${cfg.cache.storage.s3.bucket}'"
         "--cache-storage-s3-endpoint='${cfg.cache.storage.s3.endpoint}'"
       ]
       ++ (lib.optional cfg.cache.storage.s3.forcePathStyle "--cache-storage-s3-force-path-style")
-      ++ (lib.optional
-        (
-          cfg.cache.storage.s3.region != null
-        ) "--cache-storage-s3-region='${cfg.cache.storage.s3.region}'")
+      ++ (lib.optional (
+        cfg.cache.storage.s3.region != null
+      ) "--cache-storage-s3-region='${cfg.cache.storage.s3.region}'")
     ))
     ++ (lib.optional cfg.cache.allowDeleteVerb "--cache-allow-delete-verb")
     ++ (lib.optional cfg.cache.allowPutVerb "--cache-allow-put-verb")
@@ -95,14 +91,12 @@ let
     ])
     ++ (lib.optional (cfg.cache.secretKeyPath != null) "--cache-secret-key-path='%d/secretKey'")
     ++ (lib.optional (!cfg.cache.signNarinfo) "--cache-sign-narinfo='false'")
-    ++ (lib.optional
-      (
-        cfg.cache.upstream.dialerTimeout != null
-      ) "--cache-upstream-dialer-timeout='${cfg.cache.upstream.dialerTimeout}'")
-    ++ (lib.optional
-      (
-        cfg.cache.upstream.responseHeaderTimeout != null
-      ) "--cache-upstream-response-header-timeout='${cfg.cache.upstream.responseHeaderTimeout}'")
+    ++ (lib.optional (
+      cfg.cache.upstream.dialerTimeout != null
+    ) "--cache-upstream-dialer-timeout='${cfg.cache.upstream.dialerTimeout}'")
+    ++ (lib.optional (
+      cfg.cache.upstream.responseHeaderTimeout != null
+    ) "--cache-upstream-response-header-timeout='${cfg.cache.upstream.responseHeaderTimeout}'")
     ++ (lib.forEach cfg.cache.upstream.publicKeys (pk: "--cache-upstream-public-key='${pk}'"))
     ++ (lib.forEach cfg.cache.upstream.urls (url: "--cache-upstream-url='${url}'"))
     ++ (lib.optional (cfg.netrcFile != null) "--netrc-file='${cfg.netrcFile}'")

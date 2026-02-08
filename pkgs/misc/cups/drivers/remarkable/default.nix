@@ -1,4 +1,9 @@
-{ lib, stdenv, fetchFromGitHub, coreutils }:
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  coreutils,
+}:
 
 stdenv.mkDerivation rec {
   pname = "cups-remarkable";
@@ -11,7 +16,11 @@ stdenv.mkDerivation rec {
     sha256 = "09288nmhi705a3nbi6wydl7ickcrzhhasvfrby4nav5nbmgvq3cp";
   };
 
-  phases = [ "installPhase" "postInstall" "fixupPhase" ];
+  phases = [
+    "installPhase"
+    "postInstall"
+    "fixupPhase"
+  ];
 
   propagatedBuildInputs = [ coreutils ];
 

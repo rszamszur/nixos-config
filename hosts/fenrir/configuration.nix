@@ -1,4 +1,9 @@
-{ config, pkgs, pkgs-unstable, ... }:
+{
+  config,
+  pkgs,
+  pkgs-unstable,
+  ...
+}:
 
 {
   imports = [
@@ -11,7 +16,10 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "ntfs" ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   nixpkgs.config.allowUnfree = true;
 
   networking.hostName = "fenrir";
@@ -44,14 +52,13 @@
       };
     };
   };
-  fileSystems."/data" =
-    {
-      device = "/dev/disk/by-uuid/7e10094c-e8e7-4763-bb30-562c76dc6ee1";
-      fsType = "btrfs";
-      options = [
-        "nofail"
-      ];
-    };
+  fileSystems."/data" = {
+    device = "/dev/disk/by-uuid/7e10094c-e8e7-4763-bb30-562c76dc6ee1";
+    fsType = "btrfs";
+    options = [
+      "nofail"
+    ];
+  };
 
   my.awesome = {
     enable = true;

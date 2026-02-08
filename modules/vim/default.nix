@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.my.vim;
@@ -8,23 +13,25 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    home-manager.users.rszamszur = { ... }: {
+    home-manager.users.rszamszur =
+      { ... }:
+      {
 
-      programs.vim = {
-        enable = true;
-        extraConfig = builtins.readFile ./vimrc;
-        plugins = [
-          pkgs.vimPlugins.YouCompleteMe
-          pkgs.vimPlugins.syntastic
-          pkgs.vimPlugins.vim-flake8
-          pkgs.vimPlugins.nerdtree
-          pkgs.vimPlugins.vim-airline
-          pkgs.vimPlugins.gruvbox
-          pkgs.vimPlugins.vim-nix
-        ];
+        programs.vim = {
+          enable = true;
+          extraConfig = builtins.readFile ./vimrc;
+          plugins = [
+            pkgs.vimPlugins.YouCompleteMe
+            pkgs.vimPlugins.syntastic
+            pkgs.vimPlugins.vim-flake8
+            pkgs.vimPlugins.nerdtree
+            pkgs.vimPlugins.vim-airline
+            pkgs.vimPlugins.gruvbox
+            pkgs.vimPlugins.vim-nix
+          ];
+        };
+
       };
-
-    };
 
   };
 }

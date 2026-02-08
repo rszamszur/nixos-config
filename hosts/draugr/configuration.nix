@@ -11,7 +11,10 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "ntfs" ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   nixpkgs.config.allowUnfree = true;
 
   networking.hostName = "draugr";
@@ -45,10 +48,14 @@
     ALSA_CONFIG_UCM = "${pkgs.my-alsa-ucm-conf}/share/alsa/ucm";
     ALSA_CONFIG_UCM2 = "${pkgs.my-alsa-ucm-conf}/share/alsa/ucm2";
   };
-  systemd.user.services.pipewire.environment.ALSA_CONFIG_UCM = config.environment.variables.ALSA_CONFIG_UCM;
-  systemd.user.services.pipewire.environment.ALSA_CONFIG_UCM2 = config.environment.variables.ALSA_CONFIG_UCM2;
-  systemd.user.services.wireplumber.environment.ALSA_CONFIG_UCM = config.environment.variables.ALSA_CONFIG_UCM;
-  systemd.user.services.wireplumber.environment.ALSA_CONFIG_UCM2 = config.environment.variables.ALSA_CONFIG_UCM2;
+  systemd.user.services.pipewire.environment.ALSA_CONFIG_UCM =
+    config.environment.variables.ALSA_CONFIG_UCM;
+  systemd.user.services.pipewire.environment.ALSA_CONFIG_UCM2 =
+    config.environment.variables.ALSA_CONFIG_UCM2;
+  systemd.user.services.wireplumber.environment.ALSA_CONFIG_UCM =
+    config.environment.variables.ALSA_CONFIG_UCM;
+  systemd.user.services.wireplumber.environment.ALSA_CONFIG_UCM2 =
+    config.environment.variables.ALSA_CONFIG_UCM2;
 
   # Sops secrets
   sops.age.keyFile = "/root/.config/age/sops/key.txt";
