@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.my.remarkable;
@@ -24,35 +29,37 @@ in
       }
     ];
 
-    home-manager.users.rszamszur = { ... }: {
+    home-manager.users.rszamszur =
+      { ... }:
+      {
 
-      home.file = {
+        home.file = {
 
-        ".config/rmview.json" = {
-          text = ''
-            {
-                "ssh": {
-                    "address": [
-                        "192.168.0.189"
-                    ],
-                    "auth_method": "password"
-                },
-                "orientation": "portrait",
-                "pen_size": 15,
-                "pen_color": "red",
-                "pen_trail": 200
-            }
-          '';
+          ".config/rmview.json" = {
+            text = ''
+              {
+                  "ssh": {
+                      "address": [
+                          "192.168.0.189"
+                      ],
+                      "auth_method": "password"
+                  },
+                  "orientation": "portrait",
+                  "pen_size": 15,
+                  "pen_color": "red",
+                  "pen_trail": 200
+              }
+            '';
+          };
+
         };
 
+        home.packages = [
+          pkgs.rmview
+          pkgs.rcu
+        ];
+
       };
-
-      home.packages = [
-        pkgs.rmview
-        pkgs.rcu
-      ];
-
-    };
 
   };
 

@@ -38,7 +38,10 @@ in
         home = "/home/rszamszur";
         createHome = true;
         group = "users";
-        extraGroups = [ "networkmanager" "wheel" ];
+        extraGroups = [
+          "networkmanager"
+          "wheel"
+        ];
         hashedPassword = passHash;
       };
 

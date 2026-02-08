@@ -34,12 +34,22 @@
     };
   };
 
-  outputs = { self, nixpkgs, flake-parts, pyproject-nix, uv2nix, pyproject-build-systems, nix-utils }@inputs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-parts,
+      pyproject-nix,
+      uv2nix,
+      pyproject-build-systems,
+      nix-utils,
+    }@inputs:
     let
       mkApp =
-        { drv
-        , name ? drv.pname or drv.name
-        , exePath ? drv.passthru.exePath or "/bin/${name}"
+        {
+          drv,
+          name ? drv.pname or drv.name,
+          exePath ? drv.passthru.exePath or "/bin/${name}",
         }:
         {
           type = "app";
@@ -50,102 +60,128 @@
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
       ];
-      systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
-      perSystem = { config, self', inputs', pkgs, system, ... }: {
-        packages =
-          let
-            mkProject =
-              { python ? pkgs.python3
-              }:
-              let
-                build = pkgs.callPackage ./build.nix {
-                  inherit python pkgs src uv2nix pyproject-nix pyproject-build-systems;
-                  lib = pkgs.lib;
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
+      perSystem =
+        {
+          config,
+          self',
+          inputs',
+          pkgs,
+          system,
+          ...
+        }:
+        {
+          packages =
+            let
+              mkProject =
+                {
+                  python ? pkgs.python3,
+                }:
+                let
+                  build = pkgs.callPackage ./build.nix {
+                    inherit
+                      python
+                      pkgs
+                      src
+                      uv2nix
+                      pyproject-nix
+                      pyproject-build-systems
+                      ;
+                    lib = pkgs.lib;
+                  };
+                in
+                {
+                  "MY-PROJECT-${python.sourceVersion.major}${python.sourceVersion.minor}-wheel" = build.wheel;
+                  "MY-PROJECT-${python.sourceVersion.major}${python.sourceVersion.minor}-sdist" = build.sdist;
+                  "MY-PROJECT-${python.sourceVersion.major}${python.sourceVersion.minor}-venv" = build.virtualenv;
+                  "MY-PROJECT-${python.sourceVersion.major}${python.sourceVersion.minor}-app" = build.application;
                 };
-              in
-              {
-                "MY-PROJECT-${python.sourceVersion.major}${python.sourceVersion.minor}-wheel" = build.wheel;
-                "MY-PROJECT-${python.sourceVersion.major}${python.sourceVersion.minor}-sdist" = build.sdist;
-                "MY-PROJECT-${python.sourceVersion.major}${python.sourceVersion.minor}-venv" = build.virtualenv;
-                "MY-PROJECT-${python.sourceVersion.major}${python.sourceVersion.minor}-app" = build.application;
+
+              src = nix-utils.lib.sources.filterPythonSources {
+                path = ./.;
+              };
+            in
+            {
+              default = self'.packages.MY-PROJECT-311-venv;
+            }
+            // (mkProject { python = pkgs.python311; })
+            // (mkProject { python = pkgs.python312; })
+            // (mkProject { python = pkgs.python313; })
+            // pkgs.lib.optionalAttrs pkgs.stdenv.isLinux {
+              image = pkgs.callPackage ./image.nix {
+                inherit pkgs;
+                MY-PROJECT = self'.packages.MY-PROJECT-311-app;
+              };
+            };
+
+          overlayAttrs = {
+            inherit (config.packages) default;
+            nix-utils = nix-utils.lib;
+          };
+
+          apps = {
+            MY-PROJECT = mkApp { drv = self'.packages.default; };
+            checks = {
+              type = "app";
+              program = toString (
+                pkgs.writeScript "checks" ''
+                  #!${pkgs.bash}/bin/bash
+                  export PATH="${
+                    pkgs.lib.makeBinPath [
+                      self'.packages.default
+                    ]
+                  }"
+                  echo "[checks] Run some checks under Nix env."
+                ''
+              );
+            };
+          };
+
+          devShells = {
+            default = self'.devShells.virtualenv;
+            virtualenv = pkgs.mkShell {
+              name = "MY-PROJECT-venv";
+              packages = [
+                self'.packages.default
+                pkgs.uv
+              ];
+
+              env = {
+                UV_NO_SYNC = "1";
+                UV_PYTHON = "${self'.packages.default}/bin/python";
+                UV_PYTHON_DOWNLOADS = "never";
               };
 
-            src = nix-utils.lib.sources.filterPythonSources {
-              path = ./.;
+              shellHook = ''
+                # Undo dependency propagation by nixpkgs.
+                unset PYTHONPATH
+                # Get repository root using git. This is expanded at runtime by the editable `.pth` machinery.
+                export REPO_ROOT=$(git rev-parse --show-toplevel)
+              '';
             };
-          in
-          {
-            default = self'.packages.MY-PROJECT-311-venv;
-          }
-          // (mkProject { python = pkgs.python311; })
-          // (mkProject { python = pkgs.python312; })
-          // (mkProject { python = pkgs.python313; })
-          // pkgs.lib.optionalAttrs pkgs.stdenv.isLinux {
-            image = pkgs.callPackage ./image.nix {
-              inherit pkgs;
-              MY-PROJECT = self'.packages.MY-PROJECT-311-app;
+            dev-shell = pkgs.mkShell {
+              name = "MY-PROJECT-dev-shell";
+              packages = [
+                pkgs.python3
+                pkgs.uv
+              ];
+
+              env = {
+                UV_PYTHON = pkgs.python3.interpreter;
+                UV_PYTHON_DOWNLOADS = "never";
+              };
+
+              shellHook = ''
+                unset PYTHONPATH
+              '';
             };
-          };
-
-        overlayAttrs = {
-          inherit (config.packages) default;
-          nix-utils = nix-utils.lib;
-        };
-
-        apps = {
-          MY-PROJECT = mkApp { drv = self'.packages.default; };
-          checks = {
-            type = "app";
-            program = toString (pkgs.writeScript "checks" ''
-              #!${pkgs.bash}/bin/bash
-              export PATH="${pkgs.lib.makeBinPath [
-                  self'.packages.default
-              ]}"
-              echo "[checks] Run some checks under Nix env."
-            '');
           };
         };
-
-        devShells = {
-          default = self'.devShells.virtualenv;
-          virtualenv = pkgs.mkShell {
-            name = "MY-PROJECT-venv";
-            packages = [
-              self'.packages.default
-              pkgs.uv
-            ];
-
-            env = {
-              UV_NO_SYNC = "1";
-              UV_PYTHON = "${self'.packages.default}/bin/python";
-              UV_PYTHON_DOWNLOADS = "never";
-            };
-
-            shellHook = ''
-              # Undo dependency propagation by nixpkgs.
-              unset PYTHONPATH
-              # Get repository root using git. This is expanded at runtime by the editable `.pth` machinery.
-              export REPO_ROOT=$(git rev-parse --show-toplevel)
-            '';
-          };
-          dev-shell = pkgs.mkShell {
-            name = "MY-PROJECT-dev-shell";
-            packages = [
-              pkgs.python3
-              pkgs.uv
-            ];
-
-            env = {
-              UV_PYTHON = pkgs.python3.interpreter;
-              UV_PYTHON_DOWNLOADS = "never";
-            };
-
-            shellHook = ''
-              unset PYTHONPATH
-            '';
-          };
-        };
-      };
       flake = { };
     };
 }

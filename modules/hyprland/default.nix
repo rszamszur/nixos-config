@@ -1,14 +1,23 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.my.hyprland;
-  pluginsToHyprconf = plugins: (builtins.concatStringsSep "\n" (builtins.map
-    (entry:
-      if lib.types.package.check entry then
-        "plugin = ${entry}/lib/lib${entry.pname}.so"
-      else
-        "plugin = ${entry}")
-    plugins));
+  pluginsToHyprconf =
+    plugins:
+    (builtins.concatStringsSep "\n" (
+      builtins.map (
+        entry:
+        if lib.types.package.check entry then
+          "plugin = ${entry}/lib/lib${entry.pname}.so"
+        else
+          "plugin = ${entry}"
+      ) plugins
+    ));
 in
 {
   options = {
@@ -41,7 +50,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-
 
     programs.hyprland = {
       enable = true;
@@ -101,28 +109,34 @@ in
       gvfs.enable = true;
     };
 
-    home-manager.users.rszamszur = { ... }: {
+    home-manager.users.rszamszur =
+      { ... }:
+      {
 
-      home = {
-        file = {
-          ".config/hypr/hyprlock.conf".source = ./hypr/hyprlock.conf;
-          ".config/hypr/hypridle.conf".source = ./hypr/hypridle.conf;
-          ".config/waybar/config.jsonc".source = ./waybar/config.jsonc;
-          ".config/waybar/style.css".source = ./waybar/style.css;
-          ".config/waybar/scripts/power-menu.sh".source = ./waybar/scripts/power-menu.sh;
-          ".config/rofi/theme.rasi".source = ./rofi/theme.rasi;
-          ".config/rofi/power-menu.rasi".source = ./rofi/power-menu.rasi;
-          ".config/ranger/rc.conf".source = ./ranger/rc.conf;
-          ".config/alacritty/alacritty.toml".source = ./alacritty/alacritty.toml;
-          ".local/share/icons/Bibata-Modern-Classic".source = "${pkgs.bibata-cursors}/share/icons/Bibata-Modern-Classic";
+        home = {
+          file = {
+            ".config/hypr/hyprlock.conf".source = ./hypr/hyprlock.conf;
+            ".config/hypr/hypridle.conf".source = ./hypr/hypridle.conf;
+            ".config/waybar/config.jsonc".source = ./waybar/config.jsonc;
+            ".config/waybar/style.css".source = ./waybar/style.css;
+            ".config/waybar/scripts/power-menu.sh".source = ./waybar/scripts/power-menu.sh;
+            ".config/rofi/theme.rasi".source = ./rofi/theme.rasi;
+            ".config/rofi/power-menu.rasi".source = ./rofi/power-menu.rasi;
+            ".config/ranger/rc.conf".source = ./ranger/rc.conf;
+            ".config/alacritty/alacritty.toml".source = ./alacritty/alacritty.toml;
+            ".local/share/icons/Bibata-Modern-Classic".source =
+              "${pkgs.bibata-cursors}/share/icons/Bibata-Modern-Classic";
 
-          ".config/wallpapers".source = ../awesome/wallpapers;
-        } // cfg.configOverrides // {
-          ".config/hypr/hyprland.conf".text = pluginsToHyprconf cfg.plugins + "\n" + (builtins.readFile cfg.hyprlandConf);
+            ".config/wallpapers".source = ../awesome/wallpapers;
+          }
+          // cfg.configOverrides
+          // {
+            ".config/hypr/hyprland.conf".text =
+              pluginsToHyprconf cfg.plugins + "\n" + (builtins.readFile cfg.hyprlandConf);
+          };
         };
-      };
 
-    };
+      };
 
   };
 

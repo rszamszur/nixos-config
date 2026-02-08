@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.my.sound;
@@ -31,14 +36,13 @@ in
         };
         hsphfpd.enable = if cfg.driver == "pulseaudio" then true else false;
       };
-    } // lib.optionalAttrs
-      (cfg.driver == "pulseaudio")
-      {
-        pulseaudio = {
-          enable = true;
-          package = pkgs.pulseaudioFull;
-        };
+    }
+    // lib.optionalAttrs (cfg.driver == "pulseaudio") {
+      pulseaudio = {
+        enable = true;
+        package = pkgs.pulseaudioFull;
       };
+    };
 
     services.pipewire = {
       enable = if cfg.driver == "pipewire" then true else false;
@@ -52,18 +56,15 @@ in
     services.blueman.enable = true;
     programs.noisetorch.enable = true;
 
-    environment.systemPackages =
-      [
-        pkgs.alsa-utils
-      ]
-      ++ lib.optionals (cfg.driver == "pulseaudio")
-        [
-          pkgs.pavucontrol
-        ]
-      ++ lib.optionals (cfg.driver == "pipewire")
-        [
-          pkgs.pwvucontrol
-        ];
+    environment.systemPackages = [
+      pkgs.alsa-utils
+    ]
+    ++ lib.optionals (cfg.driver == "pulseaudio") [
+      pkgs.pavucontrol
+    ]
+    ++ lib.optionals (cfg.driver == "pipewire") [
+      pkgs.pwvucontrol
+    ];
 
     security.rtkit.enable = true;
   };

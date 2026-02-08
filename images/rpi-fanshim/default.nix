@@ -1,19 +1,22 @@
-{ pkgs ? import <nixpkgs> { }
-, name ? "rpi-fanshim"
-, tag ? "latest"
-, RPiGPIO
-, fanshim
-, apa102
+{
+  pkgs ? import <nixpkgs> { },
+  name ? "rpi-fanshim",
+  tag ? "latest",
+  RPiGPIO,
+  fanshim,
+  apa102,
 }:
 
 let
   service = pkgs.writeText "run.py" (builtins.readFile ./run.py);
 
-  pyEnv = pkgs.python39.withPackages (ps: with ps; [
-    RPiGPIO
-    fanshim
-    apa102
-  ]);
+  pyEnv = pkgs.python39.withPackages (
+    ps: with ps; [
+      RPiGPIO
+      fanshim
+      apa102
+    ]
+  );
 in
 
 pkgs.dockerTools.buildImage {
@@ -48,6 +51,9 @@ pkgs.dockerTools.buildImage {
     ];
     User = "root";
     WorkingDir = "/workspace";
-    Entrypoint = [ "${pyEnv}/bin/python3" service ];
+    Entrypoint = [
+      "${pyEnv}/bin/python3"
+      service
+    ];
   };
 }

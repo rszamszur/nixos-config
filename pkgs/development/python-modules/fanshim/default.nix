@@ -1,10 +1,11 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, setuptools
-, psutil
-, apa102
-, RPiGPIO
+{
+  lib,
+  buildPythonPackage,
+  fetchPypi,
+  setuptools,
+  psutil,
+  apa102,
+  RPiGPIO,
 }:
 
 buildPythonPackage rec {

@@ -1,31 +1,38 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.my.cache;
-  buildCacheUploadHook = key: pkgs.writeShellApplication {
-    name = "nixgard-upload";
-    runtimeInputs = [ pkgs.nix ];
-    runtimeEnv = {
-      IFS = " ";
-      SIGN_KEY_PATH = key;
+  buildCacheUploadHook =
+    key:
+    pkgs.writeShellApplication {
+      name = "nixgard-upload";
+      runtimeInputs = [ pkgs.nix ];
+      runtimeEnv = {
+        IFS = " ";
+        SIGN_KEY_PATH = key;
+      };
+      bashOptions = [
+        "errexit"
+        "nounset"
+        "noglob"
+      ];
+      excludeShellChecks = [
+        "SC2086"
+      ];
+      text = ''
+        if [[ -n "$OUT_PATHS" ]]; then
+          echo "Signing paths" $OUT_PATHS
+          nix store sign -k "$SIGN_KEY_PATH" $OUT_PATHS
+          echo "Uploading to cache: $OUT_PATHS"
+          exec nix copy --to 'https://nixgard.szamszur.cloud' $OUT_PATHS -vvv
+        fi
+      '';
     };
-    bashOptions = [
-      "errexit"
-      "nounset"
-      "noglob"
-    ];
-    excludeShellChecks = [
-      "SC2086"
-    ];
-    text = ''
-      if [[ -n "$OUT_PATHS" ]]; then
-        echo "Signing paths" $OUT_PATHS
-        nix store sign -k "$SIGN_KEY_PATH" $OUT_PATHS
-        echo "Uploading to cache: $OUT_PATHS"
-        exec nix copy --to 'https://nixgard.szamszur.cloud' $OUT_PATHS -vvv
-      fi
-    '';
-  };
 in
 {
   options.my.cache = {
@@ -54,10 +61,12 @@ in
       settings = {
         substituters = [
           "https://nixgard.szamszur.cloud"
-        ] ++ cfg.extraSubstituters;
+        ]
+        ++ cfg.extraSubstituters;
         trusted-public-keys = [
           "nixgard.szamszur.cloud:HaXsNyMojj3pVViZDoH8n9uJgqGcoZ6V1yYIFSigOxY="
-        ] ++ cfg.extraTrustedPublicKeys;
+        ]
+        ++ cfg.extraTrustedPublicKeys;
       };
       extraOptions = lib.mkIf (cfg.cacheSignKey != null) ''
         post-build-hook = ${buildCacheUploadHook cfg.cacheSignKey}/bin/nixgard-upload

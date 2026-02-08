@@ -1,7 +1,8 @@
-{ pkgs ? import <nixpkgs> { }
-, MY-PROJECT
-, name ? "MY-PROJECT"
-, tag ? "latest"
+{
+  pkgs ? import <nixpkgs> { },
+  MY-PROJECT,
+  name ? "MY-PROJECT",
+  tag ? "latest",
 }:
 
 pkgs.dockerTools.buildImage {

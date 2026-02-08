@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.my.vscode;
@@ -97,13 +102,15 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    home-manager.users.rszamszur = { ... }: {
+    home-manager.users.rszamszur =
+      { ... }:
+      {
 
-      home.packages = [
-        vscode
-      ];
+        home.packages = [
+          vscode
+        ];
 
-    };
+      };
 
   };
 

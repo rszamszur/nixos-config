@@ -1,6 +1,7 @@
-{ lib
-, python
-, poetry2nix
+{
+  lib,
+  python,
+  poetry2nix,
 }:
 
 poetry2nix.mkPoetryApplication {
@@ -11,7 +12,6 @@ poetry2nix.mkPoetryApplication {
   poetrylock = ./poetry.lock;
 
   pythonImportsCheck = [ "your_project_module_name" ];
-
 
   meta = with lib; {
     homepage = "https://url.for.the.project";

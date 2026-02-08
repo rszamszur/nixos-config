@@ -1,11 +1,11 @@
-{ pkgs
-, lib
-, src
-, python
-, uv2nix
-, pyproject-nix
-, pyproject-build-systems
-,
+{
+  pkgs,
+  lib,
+  src,
+  python,
+  uv2nix,
+  pyproject-nix,
+  pyproject-build-systems,
 }:
 
 let
@@ -99,9 +99,7 @@ let
           # This behaviour is documented in PEP-660
           #
           # With Nix the dependency needs to be explicitly declared.
-          nativeBuildInputs =
-            old.nativeBuildInputs
-            ++ final.resolveBuildSystem { editables = [ ]; };
+          nativeBuildInputs = old.nativeBuildInputs ++ final.resolveBuildSystem { editables = [ ]; };
         });
       })
     ]
@@ -112,21 +110,31 @@ let
   # Enable all optional dependencies for development.
   virtualenv = editablePythonSet.mkVirtualEnv "MY-PROJECT-dev-env" workspace.deps.all;
 
-  sdist = (pythonSet.MY-PROJECT.override {
-    pyprojectHook = pythonSet.pyprojectDistHook;
-  }).overrideAttrs (_: {
-    env.uvBuildType = "sdist";
-  });
+  sdist =
+    (pythonSet.MY-PROJECT.override {
+      pyprojectHook = pythonSet.pyprojectDistHook;
+    }).overrideAttrs
+      (_: {
+        env.uvBuildType = "sdist";
+      });
   wheel = pythonSet.MY-PROJECT.override {
     pyprojectHook = pythonSet.pyprojectDistHook;
   };
 
-  util = pyproject-nix.build.util { runCommand = pkgs.runCommand; python3 = pythonSet.python; };
+  util = pyproject-nix.build.util {
+    runCommand = pkgs.runCommand;
+    python3 = pythonSet.python;
+  };
   application = util.mkApplication {
     venv = pythonSet.mkVirtualEnv "application-env" workspace.deps.default;
     package = pythonSet.MY-PROJECT;
   };
 in
 {
-  inherit sdist wheel virtualenv application;
+  inherit
+    sdist
+    wheel
+    virtualenv
+    application
+    ;
 }

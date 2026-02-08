@@ -1,4 +1,10 @@
-{ config, options, lib, pkgs, ... }:
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.my.binary-cache;
@@ -37,7 +43,8 @@ in
       package = cfg.package;
       cache = {
         hostName = "nixgard";
-        databaseURL = if cfg.database == "postgresql" then "postgresql:///ncps" else "sqlite:/var/lib/ncps/db/db.sqlite";
+        databaseURL =
+          if cfg.database == "postgresql" then "postgresql:///ncps" else "sqlite:/var/lib/ncps/db/db.sqlite";
         lru.schedule = "0 2 * * *";
         maxSize = "900G";
         allowPutVerb = true;
@@ -61,10 +68,12 @@ in
       enable = true;
       package = pkgs.postgresql_17;
       ensureDatabases = [ "ncps" ];
-      ensureUsers = [{
-        name = "ncps";
-        ensureDBOwnership = true;
-      }];
+      ensureUsers = [
+        {
+          name = "ncps";
+          ensureDBOwnership = true;
+        }
+      ];
       identMap = ''
         # ArbitraryMapName systemUser DBUser
         superuser_map      root      postgres

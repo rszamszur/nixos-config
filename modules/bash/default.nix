@@ -1,16 +1,19 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.my.bash;
 
-  comma = import
-    (pkgs.fetchFromGitHub {
-      owner = "Shopify";
-      repo = "comma";
-      rev = "67f26046b946f1eceb7e4df36875fef91cf39a04";
-      sha256 = "sha256-ZRfyv46N3oQbpDwobXMPp9PDnAyceN+9GoOeHj4oWWk=";
-    })
-    { };
+  comma = import (pkgs.fetchFromGitHub {
+    owner = "Shopify";
+    repo = "comma";
+    rev = "67f26046b946f1eceb7e4df36875fef91cf39a04";
+    sha256 = "sha256-ZRfyv46N3oQbpDwobXMPp9PDnAyceN+9GoOeHj4oWWk=";
+  }) { };
 in
 {
 
@@ -43,57 +46,61 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    home-manager.users.rszamszur = { ... }: {
+    home-manager.users.rszamszur =
+      { ... }:
+      {
 
-      home = {
-        stateVersion = lib.attrByPath [ "system" "stateVersion" ] "25.11" config;
-        packages = [
-          pkgs.nmap
-          pkgs.zip
-          pkgs.unzip
-          pkgs.gnumake
-          pkgs.gcc
-          pkgs.htop
-          pkgs.flameshot
-          pkgs.nixpkgs-fmt
-          pkgs.nix-index
-          pkgs.hydra-check
-          pkgs.fzf
-          pkgs.kubectl
-          pkgs.kubectx
-          pkgs.kubernetes-helm
-          pkgs.manix
-        ] ++ cfg.homepkgs ++ lib.optionals cfg.comma [ comma ];
-      };
-
-      programs = {
-        direnv = {
-          enable = true;
-          enableBashIntegration = true;
-          nix-direnv.enable = true;
+        home = {
+          stateVersion = lib.attrByPath [ "system" "stateVersion" ] "25.11" config;
+          packages = [
+            pkgs.nmap
+            pkgs.zip
+            pkgs.unzip
+            pkgs.gnumake
+            pkgs.gcc
+            pkgs.htop
+            pkgs.flameshot
+            pkgs.nixpkgs-fmt
+            pkgs.nix-index
+            pkgs.hydra-check
+            pkgs.fzf
+            pkgs.kubectl
+            pkgs.kubectx
+            pkgs.kubernetes-helm
+            pkgs.manix
+          ]
+          ++ cfg.homepkgs
+          ++ lib.optionals cfg.comma [ comma ];
         };
 
-        bash = {
-          enable = true;
-          bashrcExtra = builtins.readFile ./bashrc;
-        };
+        programs = {
+          direnv = {
+            enable = true;
+            enableBashIntegration = true;
+            nix-direnv.enable = true;
+          };
 
-        git = {
-          enable = true;
-          userName = cfg.gitUser;
-          userEmail = cfg.gitEmail;
-          extraConfig = {
-            init = {
-              defaultBranch = "master";
-            };
-            core = {
-              editor = "vim";
+          bash = {
+            enable = true;
+            bashrcExtra = builtins.readFile ./bashrc;
+          };
+
+          git = {
+            enable = true;
+            userName = cfg.gitUser;
+            userEmail = cfg.gitEmail;
+            extraConfig = {
+              init = {
+                defaultBranch = "master";
+              };
+              core = {
+                editor = "vim";
+              };
             };
           };
         };
-      };
 
-    };
+      };
 
   };
 

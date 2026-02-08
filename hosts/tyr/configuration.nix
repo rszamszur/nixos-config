@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
   inherit (lib.strings) trim;
@@ -9,7 +14,10 @@ in
   boot.loader.systemd-boot.configurationLimit = 30;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   nixpkgs.config.allowUnfree = true;
 
   time.timeZone = "Europe/Warsaw";
@@ -33,7 +41,9 @@ in
   sops.age.generateKey = true;
   sops.secrets.gh-runners-token = {
     sopsFile = ./secrets/gh-runners.yaml;
-    restartUnits = lib.mapAttrsToList (n: _: "github-runner-${n}.service") config.my.github-runners.runners;
+    restartUnits = lib.mapAttrsToList (
+      n: _: "github-runner-${n}.service"
+    ) config.my.github-runners.runners;
   };
   sops.secrets.binary-cache-key = {
     sopsFile = ./secrets/remote-builder.yaml;
@@ -68,7 +78,10 @@ in
         name = "${config.networking.hostName}";
         url = "https://github.com/rszamszur/nixos-config";
         tokenFile = config.sops.secrets.gh-runners-token.path;
-        extraLabels = [ "nixos" config.networking.hostName ];
+        extraLabels = [
+          "nixos"
+          config.networking.hostName
+        ];
         extraPackages = [
           pkgs.cachix
           pkgs.git
@@ -79,7 +92,10 @@ in
         name = "${config.networking.hostName}";
         url = "https://github.com/rszamszur/nix-utils";
         tokenFile = config.sops.secrets.gh-runners-token.path;
-        extraLabels = [ "nixos" config.networking.hostName ];
+        extraLabels = [
+          "nixos"
+          config.networking.hostName
+        ];
         extraPackages = [
           pkgs.cachix
           pkgs.git

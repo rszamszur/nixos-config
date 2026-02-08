@@ -1,5 +1,6 @@
-{ pkgs ? import <nixpkgs> { }
-, python ? "python3"
+{
+  pkgs ? import <nixpkgs> { },
+  python ? "python3",
 }:
 
 let

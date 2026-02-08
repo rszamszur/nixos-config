@@ -1,5 +1,6 @@
-{ python
-, poetry2nix
+{
+  python,
+  poetry2nix,
 }:
 
 poetry2nix.mkPoetryEnv {
