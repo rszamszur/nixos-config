@@ -33,10 +33,7 @@ in
   sops.age.generateKey = true;
   sops.secrets.gh-runners-token = {
     sopsFile = ./secrets/gh-runners.yaml;
-    restartUnits = [
-      "github-runner-${config.my.github-runners.runners.nixos-config.name}.service"
-      "github-runner-${config.my.github-runners.runners.nix-utils.name}.service"
-    ];
+    restartUnits = lib.mapAttrsToList (n: _: "github-runner-${n}.service") config.my.github-runners.runners;
   };
   sops.secrets.binary-cache-key = {
     sopsFile = ./secrets/remote-builder.yaml;
@@ -68,7 +65,7 @@ in
     runners = {
       nixos-config = {
         replace = true;
-        name = "nixos-config-${config.networking.hostName}";
+        name = "${config.networking.hostName}";
         url = "https://github.com/rszamszur/nixos-config";
         tokenFile = config.sops.secrets.gh-runners-token.path;
         extraLabels = [ "nixos" config.networking.hostName ];
@@ -79,7 +76,7 @@ in
       };
       nix-utils = {
         replace = true;
-        name = "nix-utils-${config.networking.hostName}";
+        name = "${config.networking.hostName}";
         url = "https://github.com/rszamszur/nix-utils";
         tokenFile = config.sops.secrets.gh-runners-token.path;
         extraLabels = [ "nixos" config.networking.hostName ];
