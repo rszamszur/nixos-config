@@ -7,6 +7,10 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nix-utils = {
+      url = "github:rszamszur/nix-utils";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -28,7 +32,7 @@
     b3.url = "github:rszamszur/b3-flake";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, home-manager-unstable, sops-nix, comin, flake-parts, rcu, b3 }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, nix-utils, home-manager, home-manager-unstable, sops-nix, comin, flake-parts, rcu, b3 }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
@@ -44,7 +48,7 @@
         };
         overlayAttrs = {
           inherit (config.packages) rcu b3;
-          mylib = import ./lib { lib = pkgs.lib; };
+          nix-utils = nix-utils.lib;
         };
       };
       flake = {
@@ -69,7 +73,6 @@
           };
         };
         overlays = {
-          mylib = import ./overlays/mylib.nix;
           poetry2nix = import ./overlays/poetry2nix.nix;
           lunar-lake-firmware-fix = import ./overlays/lunar-lake-firmware-fix.nix;
         };

@@ -335,6 +335,26 @@
         "type": "indirect"
       }
     },
+    "nix-utils": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1770550604,
+        "narHash": "sha256-zMMbu90sI+yDmTKmlwuRCRUmQJD37JjgMnydTtpIJ/c=",
+        "owner": "rszamszur",
+        "repo": "nix-utils",
+        "rev": "4956d4f05a1233deb266c96edb4db3a8db1c374c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rszamszur",
+        "repo": "nix-utils",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1665580254,
@@ -484,6 +504,7 @@
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
         "home-manager-unstable": "home-manager-unstable",
+        "nix-utils": "nix-utils",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "rcu": "rcu",

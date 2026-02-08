@@ -1,7 +1,7 @@
 { config, options, lib, pkgs, ... }:
 
 let
-  inherit (pkgs.mylib.trivial) inheritAllExcept filterRemovedOptions;
+  inherit (pkgs.nix-utils.trivial) inheritAllExcept filterRemovedOptions;
   cfg = config.my.local-llm;
   tls-cert = { alt ? [ ] }: (pkgs.runCommand "selfSignedCert" { buildInputs = [ pkgs.openssl ]; } ''
     mkdir -p $out
