@@ -35,6 +35,7 @@ in
     sopsFile = ./secrets/gh-runners.yaml;
     restartUnits = [
       "github-runner-${config.my.github-runners.runners.nixos-config.name}.service"
+      "github-runner-${config.my.github-runners.runners.nix-utils.name}.service"
     ];
   };
   sops.secrets.binary-cache-key = {
@@ -69,6 +70,17 @@ in
         replace = true;
         name = "nixos-config-${config.networking.hostName}";
         url = "https://github.com/rszamszur/nixos-config";
+        tokenFile = config.sops.secrets.gh-runners-token.path;
+        extraLabels = [ "nixos" config.networking.hostName ];
+        extraPackages = [
+          pkgs.cachix
+          pkgs.git
+        ];
+      };
+      nix-utils = {
+        replace = true;
+        name = "nix-utils-${config.networking.hostName}";
+        url = "https://github.com/rszamszur/nix-utils";
         tokenFile = config.sops.secrets.gh-runners-token.path;
         extraLabels = [ "nixos" config.networking.hostName ];
         extraPackages = [
