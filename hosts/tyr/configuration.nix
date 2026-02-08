@@ -34,7 +34,7 @@ in
   sops.secrets.gh-runners-token = {
     sopsFile = ./secrets/gh-runners.yaml;
     restartUnits = [
-      "github-runner-${config.my.github-runners.name}.service"
+      "github-runner-${config.my.github-runners.runners.nixos-config.name}.service"
     ];
   };
   sops.secrets.binary-cache-key = {
@@ -64,16 +64,21 @@ in
   my.podman.enable = true;
   my.github-runners = {
     enable = true;
-    replace = true;
-    name = config.networking.hostName;
-    url = "https://github.com/rszamszur/nixos-config";
-    tokenFile = config.sops.secrets.gh-runners-token.path;
-    extraLabels = [ "nixos" config.networking.hostName ];
-    extraPackages = [
-      pkgs.cachix
-      pkgs.git
-    ];
+    runners = {
+      nixos-config = {
+        replace = true;
+        name = "nixos-config-${config.networking.hostName}";
+        url = "https://github.com/rszamszur/nixos-config";
+        tokenFile = config.sops.secrets.gh-runners-token.path;
+        extraLabels = [ "nixos" config.networking.hostName ];
+        extraPackages = [
+          pkgs.cachix
+          pkgs.git
+        ];
+      };
+    };
   };
+
   my.remote-builder = {
     enable = true;
     authorizedKeys = [
