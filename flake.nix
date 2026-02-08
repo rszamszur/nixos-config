@@ -32,7 +32,20 @@
     b3.url = "github:rszamszur/b3-flake";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nix-utils, home-manager, home-manager-unstable, sops-nix, comin, flake-parts, rcu, b3 }@inputs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      nixpkgs-unstable,
+      nix-utils,
+      home-manager,
+      home-manager-unstable,
+      sops-nix,
+      comin,
+      flake-parts,
+      rcu,
+      b3,
+    }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
@@ -40,17 +53,43 @@
         ./pkgs/flake-module.nix
         ./images/flake-module.nix
       ];
-      systems = [ "x86_64-linux" "aarch64-linux" ];
-      perSystem = { config, pkgs, system, ... }: {
-        packages = {
-          rcu = rcu.packages.${system}.rcu;
-          b3 = b3.packages.${system}.default;
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
+      perSystem =
+        {
+          config,
+          self',
+          pkgs,
+          system,
+          ...
+        }:
+        {
+          packages = {
+            rcu = rcu.packages.${system}.rcu;
+            b3 = b3.packages.${system}.default;
+          };
+          overlayAttrs = {
+            inherit (config.packages) rcu b3;
+            nix-utils = nix-utils.lib;
+          };
+          checks = {
+            treefmt = pkgs.runCommand "treefmt" { } ''
+              ${self'.formatter}/bin/treefmt --ci --working-dir ${self}
+              touch $out
+            '';
+          };
+          formatter = pkgs.writeShellApplication {
+            name = "treefmt";
+            text = ''treefmt "$@"'';
+            runtimeInputs = [
+              pkgs.deadnix
+              pkgs.nixfmt
+              pkgs.treefmt
+            ];
+          };
         };
-        overlayAttrs = {
-          inherit (config.packages) rcu b3;
-          nix-utils = nix-utils.lib;
-        };
-      };
       flake = {
         templates = {
           default = {
@@ -171,48 +210,50 @@
               "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
               self.nixosModules.cache
               self.nixosModules.dns
-              ({ pkgs, ... }: {
-                environment.systemPackages = [ pkgs.git ];
-                services.qemuGuest.enable = true;
-                services.openssh.settings.PermitRootLogin = "yes";
-                my.cache.enable = true;
-                my.dns.enable = true;
-              })
+              (
+                { pkgs, ... }:
+                {
+                  environment.systemPackages = [ pkgs.git ];
+                  services.qemuGuest.enable = true;
+                  services.openssh.settings.PermitRootLogin = "yes";
+                  my.cache.enable = true;
+                  my.dns.enable = true;
+                }
+              )
             ];
           };
-        } // inputs.nixpkgs.lib.listToAttrs (
+        }
+        // inputs.nixpkgs.lib.listToAttrs (
           inputs.nixpkgs.lib.map
-            (
-              replica: {
-                name = replica.name;
-                value = inputs.nixpkgs.lib.nixosSystem {
-                  system = "x86_64-linux";
-                  modules = [
-                    {
-                      nixpkgs.overlays = [ self.overlays.default ];
-                    }
-                    ./hosts/tyr/configuration.nix
-                    {
-                      imports = [
-                        replica.hardware-configuration-variant
-                      ];
-                      networking.hostName = replica.name;
-                    }
-                    inputs.home-manager.nixosModules.home-manager
-                    inputs.sops-nix.nixosModules.sops
-                    inputs.comin.nixosModules.comin
-                    self.nixosModules.common
-                    self.nixosModules.cache
-                    self.nixosModules.bash
-                    self.nixosModules.vim
-                    self.nixosModules.podman
-                    self.nixosModules.github-runners
-                    self.nixosModules.remote-builder
-                    self.nixosModules.comin
-                  ];
-                };
-              }
-            )
+            (replica: {
+              name = replica.name;
+              value = inputs.nixpkgs.lib.nixosSystem {
+                system = "x86_64-linux";
+                modules = [
+                  {
+                    nixpkgs.overlays = [ self.overlays.default ];
+                  }
+                  ./hosts/tyr/configuration.nix
+                  {
+                    imports = [
+                      replica.hardware-configuration-variant
+                    ];
+                    networking.hostName = replica.name;
+                  }
+                  inputs.home-manager.nixosModules.home-manager
+                  inputs.sops-nix.nixosModules.sops
+                  inputs.comin.nixosModules.comin
+                  self.nixosModules.common
+                  self.nixosModules.cache
+                  self.nixosModules.bash
+                  self.nixosModules.vim
+                  self.nixosModules.podman
+                  self.nixosModules.github-runners
+                  self.nixosModules.remote-builder
+                  self.nixosModules.comin
+                ];
+              };
+            })
             [
               {
                 name = "tyr";
@@ -244,12 +285,12 @@
               }
             ]
         );
-        nixosModules = builtins.listToAttrs (map
-          (module: {
+        nixosModules = builtins.listToAttrs (
+          map (module: {
             name = builtins.replaceStrings [ ".nix" ] [ "" ] (builtins.baseNameOf module);
             value = module;
-          })
-          (import ./modules { lib = inputs.nixpkgs.lib; }).imports);
+          }) (import ./modules { lib = inputs.nixpkgs.lib; }).imports
+        );
         homeConfigurations = {
           coder = home-manager.lib.homeManagerConfiguration {
             pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
@@ -280,7 +321,9 @@
           };
         };
         # https://github.com/NixOS/nix/issues/7165#issuecomment-3396300462
-        checks = inputs.nixpkgs.lib.attrsets.unionOfDisjoint { /* Actual checks */ } self.packages;
+        checks = inputs.nixpkgs.lib.attrsets.unionOfDisjoint {
+          # Actual checks
+        } self.packages;
       };
     };
 }
