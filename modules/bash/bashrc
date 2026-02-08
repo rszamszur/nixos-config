@@ -14,7 +14,7 @@ my-bash-help() {
     echo "fzf-store()"
     echo "nix-which() args: PROGRAM_NAME"
     echo "Aliases:"
-    echo "nf -> nixpkgs-fmt"
+    echo "nf -> nixfmt"
     echo "ns -> nix-shell"
     echo "nb -> nix-build"
     echo "gs -> git status"
@@ -57,7 +57,7 @@ nix-which() {
     readlink -f $(which $1)
 }
 
-alias nf="nixpkgs-fmt"
+alias nf="nixfmt"
 alias ns="nix-shell"
 alias nb="nix-build"
 alias gs="git status"
