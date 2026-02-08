@@ -60,7 +60,7 @@ in
             pkgs.gcc
             pkgs.htop
             pkgs.flameshot
-            pkgs.nixpkgs-fmt
+            pkgs.nixfmt
             pkgs.nix-index
             pkgs.hydra-check
             pkgs.fzf
