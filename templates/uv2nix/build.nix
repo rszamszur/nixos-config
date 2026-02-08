@@ -9,7 +9,7 @@
 }:
 
 let
-  inherit (pkgs.mylib.sources)
+  inherit (pkgs.nix-utils.sources)
     filterSources
     languageIgnoreFilesets
     languageFileFilters

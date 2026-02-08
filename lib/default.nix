@@ -1,9 +1,0 @@
-{ lib }:
-
-let
-  callLibs = file: import file { inherit lib; };
-in
-{
-  trivial = callLibs ./trivial.nix;
-  sources = callLibs ./sources.nix;
-}
