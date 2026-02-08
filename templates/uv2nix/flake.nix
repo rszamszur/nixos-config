@@ -76,6 +76,12 @@
           ...
         }:
         {
+          # Optional: Add nix-utils lib overlay to have it globally under pkgs.nix-utils
+          # _module.args.pkgs = import nixpkgs {
+          #   inherit system;
+          #   overlays = [ nix-utils.overlays.default ];
+          # };
+
           packages =
             let
               mkProject =
@@ -93,6 +99,7 @@
                       pyproject-build-systems
                       ;
                     lib = pkgs.lib;
+                    nix-utils = nix-utils.lib;
                   };
                 in
                 {
