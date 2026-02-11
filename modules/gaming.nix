@@ -53,7 +53,10 @@ in
     ###########################
 
     # Enable the xpadneo driver for Xbox One wireless controllers
-    hardware.xpadneo.enable = config.hardware.bluetooth.enable;
+    boot.kernelModules = lib.mkIf config.hardware.bluetooth.enable [ "hid_xpadneo" ];
+    boot.extraModulePackages = lib.mkIf config.hardware.bluetooth.enable [
+      config.boot.kernelPackages.xpadneo
+    ];
     hardware.bluetooth = lib.mkIf config.hardware.bluetooth.enable {
       settings = {
         General = {
@@ -69,12 +72,6 @@ in
         };
       };
     };
-    boot.extraModulePackages = lib.mkIf config.hardware.bluetooth.enable [
-      config.boot.kernelPackages.xpadneo
-    ];
-    boot.extraModprobeConfig = lib.mkIf config.hardware.bluetooth.enable ''
-      options bluetooth disable_ertm=Y
-    '';
 
     ####################
     # GPU Type: Nvidia #
