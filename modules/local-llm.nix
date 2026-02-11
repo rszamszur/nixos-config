@@ -43,8 +43,10 @@ in
       inheritAllExcept cfg.ollama [
         "enable"
         "acceleration"
+        "package"
       ]
       // {
+        package = pkgs.ollama-cuda;
         enable = true;
         acceleration = "cuda";
       };
