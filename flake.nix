@@ -273,15 +273,15 @@
               }
               {
                 name = "pve-nixos-tyr4";
-                hardware-configuration-variant = ./hosts/tyr/hardware-configuration-n4-6.nix;
+                hardware-configuration-variant = ./hosts/tyr/hardware-configuration.nix;
               }
               {
                 name = "pve-nixos-tyr5";
-                hardware-configuration-variant = ./hosts/tyr/hardware-configuration-n4-6.nix;
+                hardware-configuration-variant = ./hosts/tyr/hardware-configuration.nix;
               }
               {
                 name = "pve-nixos-tyr6";
-                hardware-configuration-variant = ./hosts/tyr/hardware-configuration-n4-6.nix;
+                hardware-configuration-variant = ./hosts/tyr/hardware-configuration.nix;
               }
             ]
         );

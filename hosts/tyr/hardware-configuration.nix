@@ -4,6 +4,7 @@
 {
   config,
   lib,
+  pkgs,
   modulesPath,
   ...
 }:
@@ -22,16 +23,16 @@
     "sr_mod"
   ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/ff21c562-08a5-40d0-b8e3-db02e6bfcf27";
+    device = "/dev/disk/by-uuid/9f2ae8f4-215e-4798-bd09-dc5482f18210";
     fsType = "ext4";
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/12CE-A600";
+    device = "/dev/disk/by-uuid/229E-D8C1";
     fsType = "vfat";
     options = [
       "fmask=0022"
