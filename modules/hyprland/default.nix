@@ -65,6 +65,7 @@ in
       pkgs.hyprcursor
       pkgs.swaybg # or hyprpaper?
       pkgs.wlogout # not sure if used?
+      pkgs.mako
 
       # Launcher/menu programs
       pkgs.wofi
