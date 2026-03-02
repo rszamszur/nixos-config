@@ -100,10 +100,10 @@
     ollama = {
       package = pkgs-unstable.ollama;
       loadModels = [
+        "gpt-oss:20b"
+        "gemma3:27b-it-q8_0"
         "llama3.3:70b"
-        "qwen2.5-coder:32b"
-        "deepseek-r1:70b"
-        "deepseek-r1:32b"
+        "qwen3.5:35b"
       ];
       user = "ollama";
       home = "/data/ollama";
