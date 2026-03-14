@@ -21,6 +21,7 @@ in
     pkgs.patchelf
     pkgs.dnsutils
     pkgs.cryptsetup
+    pkgs.networkmanagerapplet
   ];
 
   networking.networkmanager.enable = true;
