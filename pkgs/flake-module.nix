@@ -88,22 +88,22 @@
       ctx@{ pkgs, ... }:
       {
         RPiGPIO = pkgs.callPackage ./development/python-modules/RPi.GPIO {
-          buildPythonPackage = pkgs.python39Packages.buildPythonPackage;
-          fetchPypi = pkgs.python39Packages.fetchPypi;
-          setuptools = pkgs.python39.pkgs.setuptools;
+          buildPythonPackage = pkgs.python310Packages.buildPythonPackage;
+          fetchPypi = pkgs.python310Packages.fetchPypi;
+          setuptools = pkgs.python310.pkgs.setuptools;
         };
         apa102 = pkgs.callPackage ./development/python-modules/apa102 {
-          buildPythonPackage = pkgs.python39Packages.buildPythonPackage;
-          fetchPypi = pkgs.python39Packages.fetchPypi;
-          setuptools = pkgs.python39.pkgs.setuptools;
+          buildPythonPackage = pkgs.python310Packages.buildPythonPackage;
+          fetchPypi = pkgs.python310Packages.fetchPypi;
+          setuptools = pkgs.python310.pkgs.setuptools;
           RPiGPIO = self.packages.aarch64-linux.RPiGPIO;
-          spidev = pkgs.python39.pkgs.spidev;
+          spidev = pkgs.python310.pkgs.spidev;
         };
         fanshim = pkgs.callPackage ./development/python-modules/fanshim {
-          buildPythonPackage = pkgs.python39Packages.buildPythonPackage;
-          fetchPypi = pkgs.python39Packages.fetchPypi;
-          setuptools = pkgs.python39.pkgs.setuptools;
-          psutil = pkgs.python39.pkgs.psutil;
+          buildPythonPackage = pkgs.python310Packages.buildPythonPackage;
+          fetchPypi = pkgs.python310Packages.fetchPypi;
+          setuptools = pkgs.python310.pkgs.setuptools;
+          psutil = pkgs.python310.pkgs.psutil;
           apa102 = self.packages.aarch64-linux.apa102;
           RPiGPIO = self.packages.aarch64-linux.RPiGPIO;
         };
