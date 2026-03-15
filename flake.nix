@@ -112,6 +112,7 @@
           };
         };
         overlays = {
+          hyprland = import ./overlays/hyprland.nix;
           poetry2nix = import ./overlays/poetry2nix.nix;
           lunar-lake-firmware-fix = import ./overlays/lunar-lake-firmware-fix.nix;
         };
@@ -156,6 +157,7 @@
                 nixpkgs.overlays = [
                   self.overlays.default
                   self.overlays.lunar-lake-firmware-fix
+                  self.overlays.hyprland
                 ];
               }
               ./hosts/draugr/hardware-configuration.nix
