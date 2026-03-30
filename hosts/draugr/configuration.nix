@@ -35,18 +35,18 @@
   ];
   environment.systemPackages = [
     pkgs.alsa-topology-conf
-    pkgs.my-alsa-ucm-conf
+    pkgs.alsa-ucm-conf
     pkgs.alsa-utils
-    pkgs.my-intel-media-driver
+    pkgs.intel-media-driver
   ];
 
   environment.variables = {
-    ALSA_CONFIG_UCM = "${pkgs.my-alsa-ucm-conf}/share/alsa/ucm";
-    ALSA_CONFIG_UCM2 = "${pkgs.my-alsa-ucm-conf}/share/alsa/ucm2";
+    ALSA_CONFIG_UCM = "${pkgs.alsa-ucm-conf}/share/alsa/ucm";
+    ALSA_CONFIG_UCM2 = "${pkgs.alsa-ucm-conf}/share/alsa/ucm2";
   };
   environment.sessionVariables = {
-    ALSA_CONFIG_UCM = "${pkgs.my-alsa-ucm-conf}/share/alsa/ucm";
-    ALSA_CONFIG_UCM2 = "${pkgs.my-alsa-ucm-conf}/share/alsa/ucm2";
+    ALSA_CONFIG_UCM = "${pkgs.alsa-ucm-conf}/share/alsa/ucm";
+    ALSA_CONFIG_UCM2 = "${pkgs.alsa-ucm-conf}/share/alsa/ucm2";
   };
   systemd.user.services.pipewire.environment.ALSA_CONFIG_UCM =
     config.environment.variables.ALSA_CONFIG_UCM;
