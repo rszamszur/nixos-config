@@ -118,7 +118,7 @@ in
       enable = true;
       extraPackages = [
         pkgs.vpl-gpu-rt
-        pkgs.my-intel-media-driver
+        pkgs.intel-media-driver
         pkgs.intel-vaapi-driver
         pkgs.libvdpau-va-gl
       ];
