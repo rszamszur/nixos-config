@@ -34,6 +34,7 @@ jobs:
               - ".github/workflows/draugr.yml"
               - "modules/**"
               - "pkgs/**"
+              - "overlays/**"
               - "flake.nix"
               - "flake.lock"
   nix-build:
