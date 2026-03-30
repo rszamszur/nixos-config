@@ -1,11 +1,11 @@
 final: prev: {
   hyprlandPlugins.hyprsplit = prev.hyprlandPlugins.hyprsplit.overrideAttrs (oldAttrs: rec {
-    version = "0.54.1";
+    version = "0.54.3";
     src = final.pkgs.fetchFromGitHub {
       owner = "shezdy";
       repo = "hyprsplit";
       tag = "v${version}";
-      hash = "sha256-IksjbT24cgWl2h6ZV4bPxoORmHCQ7h/M/OLQ4epReAE=";
+      hash = "sha256-iNVMR/Kkory/Km2w7cZGHYABtL4aATFU2pydQOS9xiM=";
     };
   });
 }
