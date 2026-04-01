@@ -13,7 +13,7 @@ jobs:
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@9a59e15a74545c99a626ba594edcd0d02189e670
       - name: Update flake.lock
-        uses: DeterminateSystems/update-flake-lock@e80a657d7603606be0c69b117cfdc240f1e6af88
+        uses: DeterminateSystems/update-flake-lock@3c4f567004c3b0f7bb85177df020f3825028d2b1
         with:
           pr-title: "Update flake.lock"
           pr-assignees: rszamszur
