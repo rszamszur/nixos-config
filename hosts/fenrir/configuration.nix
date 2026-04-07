@@ -91,10 +91,6 @@
     autostart = false;
   };
   my.cache.enable = true;
-  my.comin = {
-    enable = true;
-    openFirewall = true;
-  };
   my.local-llm = {
     enable = true;
     ollama = {
