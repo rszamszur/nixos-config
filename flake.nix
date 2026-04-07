@@ -138,7 +138,6 @@
               self.nixosModules.chrome
               self.nixosModules.gaming
               self.nixosModules.cache
-              self.nixosModules.comin
               self.nixosModules.local-llm
               self.nixosModules.remote-gaming
             ];
