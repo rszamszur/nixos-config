@@ -54,12 +54,38 @@
 
           # Equivalent to  inputs'.nixpkgs.legacyPackages.hello;
           packages.default = pkgs.hello;
+          checks = {
+            treefmt = pkgs.runCommand "treefmt" { } ''
+              ${self'.formatter}/bin/treefmt --ci --working-dir ${self}
+              touch $out
+            '';
+          };
+          formatter = pkgs.writeShellApplication {
+            name = "treefmt";
+            text = ''treefmt "$@"'';
+            runtimeInputs = [
+              pkgs.deadnix
+              pkgs.nixfmt
+              pkgs.treefmt
+            ];
+          };
+          devShells = {
+            default = pkgs.mkShell {
+              packages = [
+                self'.formatter
+              ];
+            };
+          };
         };
       flake = {
         # The usual flake attributes can be defined here, including system-
         # agnostic ones like nixosModule and system-enumerating ones, although
         # those are more easily expressed in perSystem.
 
+        # https://github.com/NixOS/nix/issues/7165#issuecomment-3396300462
+        checks = inputs.nixpkgs.lib.attrsets.unionOfDisjoint {
+          # Actual checks
+        } self.packages;
       };
     };
 }
