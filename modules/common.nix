@@ -16,6 +16,7 @@ in
     pkgs.alacritty
     pkgs.tmux
     pkgs.jq
+    pkgs.fx
     pkgs.gron
     pkgs.file
     pkgs.patchelf
