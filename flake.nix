@@ -248,6 +248,7 @@
                   self.nixosModules.vim
                   self.nixosModules.podman
                   self.nixosModules.github-runners
+                  self.nixosModules.forgejo-runners
                   self.nixosModules.remote-builder
                   self.nixosModules.comin
                 ];

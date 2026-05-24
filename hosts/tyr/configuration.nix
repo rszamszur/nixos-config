@@ -45,6 +45,12 @@ in
       n: _: "github-runner-${n}.service"
     ) config.my.github-runners.runners;
   };
+  sops.secrets.forgejo-runners-token = {
+    sopsFile = ./secrets/forgejo-runners.yaml;
+    restartUnits = lib.mapAttrsToList (
+      n: _: "gitea-runner-${n}.service"
+    ) config.my.forgejo-runners.runners;
+  };
   sops.secrets.binary-cache-key = {
     sopsFile = ./secrets/remote-builder.yaml;
     owner = "nixremote";
@@ -98,6 +104,23 @@ in
         ];
         extraPackages = [
           pkgs.cachix
+          pkgs.git
+        ];
+      };
+    };
+  };
+  my.forgejo-runners = {
+    enable = true;
+    runners = {
+      nixos = {
+        name = "${config.networking.hostName}";
+        url = "https://git.szamszur.cloud";
+        tokenFile = config.sops.secrets.forgejo-runners-token.path;
+        labels = [
+          "nixos"
+          config.networking.hostName
+        ];
+        hostPackages = [
           pkgs.git
         ];
       };
