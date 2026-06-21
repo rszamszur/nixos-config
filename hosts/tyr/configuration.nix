@@ -117,8 +117,8 @@ in
         url = "https://git.szamszur.cloud";
         tokenFile = config.sops.secrets.forgejo-runners-token.path;
         labels = [
-          "nixos"
-          config.networking.hostName
+          "nixos:host"
+          "${config.networking.hostName}:host"
         ];
         hostPackages = [
           pkgs.git
