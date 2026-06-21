@@ -121,6 +121,7 @@ in
           "${config.networking.hostName}:host"
         ];
         hostPackages = [
+          pkgs.nix
           pkgs.git
           pkgs.bash
           pkgs.coreutils
