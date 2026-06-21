@@ -1,0 +1,30 @@
+name: Update flake
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 0'
+
+jobs:
+  lockfile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+      - name: Install Nix
+        uses: https://git.szamszur.cloud/upstream-actions/nix-installer-action@a7ad9c4f0c65208097f4d34f3cfa1913b80cce5c
+      - name: Update flake.lock
+        uses: https://git.szamszur.cloud/actions/update-flake-lock-forgejo@main
+        with:
+          pr-title: "Update flake.lock"
+          pr-assignees: rszamszur
+          commit-msg: "chore: updates flake.lock"
+          token: ${{ secrets.API_FORGEJO_TOKEN }}
+          git-committer-name: Radosław Szamszur
+          git-committer-email: git@rsd.sh
+          pr-labels: |
+            Kind/Dependencies
+          pr-body: |
+            Automated changes by the [update-flake-lock-forgejo](https://git.szamszur.cloud/actions/update-flake-lock-forgejo) GitHub Action.
+            ```
+            {{ env.GIT_COMMIT_MESSAGE }}
+            ```
