@@ -122,7 +122,13 @@ in
         ];
         hostPackages = [
           pkgs.git
+          pkgs.bash
+          pkgs.coreutils
+          pkgs.curl
+          pkgs.gawk
+          pkgs.gnused
           pkgs.nodejs
+          pkgs.wget
         ];
       };
     };
