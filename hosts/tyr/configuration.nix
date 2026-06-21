@@ -122,6 +122,7 @@ in
         ];
         hostPackages = [
           pkgs.git
+          pkgs.nodejs
         ];
       };
     };
