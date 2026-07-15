@@ -36,12 +36,11 @@ in
         };
         hsphfpd.enable = if cfg.driver == "pulseaudio" then true else false;
       };
-    }
-    // lib.optionalAttrs (cfg.driver == "pulseaudio") {
-      pulseaudio = {
-        enable = true;
-        package = pkgs.pulseaudioFull;
-      };
+    };
+
+    services.pulseaudio = {
+      enable = if cfg.driver == "pulseaudio" then true else false;
+      package = pkgs.pulseaudioFull;
     };
 
     services.pipewire = {

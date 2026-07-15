@@ -42,13 +42,11 @@ in
     services.ollama =
       inheritAllExcept cfg.ollama [
         "enable"
-        "acceleration"
         "package"
       ]
       // {
         package = pkgs.ollama-cuda;
         enable = true;
-        acceleration = "cuda";
       };
 
     services.open-webui = inheritAllExcept cfg.open-webui [ "enable" ] // {

@@ -99,13 +99,8 @@ in
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
     services = {
-      xserver = {
-        xkb.layout = "pl";
-        displayManager.gdm = {
-          enable = true;
-          wayland = true;
-        };
-      };
+      xserver.xkb.layout = "pl";
+      displayManager.gdm.enable = true;
       # Needed for nautilus USB devices discovery and mount
       gvfs.enable = true;
     };

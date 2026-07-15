@@ -27,7 +27,7 @@ in
     services.xserver.windowManager.awesome.enable = true;
     # Necessary config to run awesome without desktop
     services.udev.packages =
-      if (lib.trivial.release == "25.11") then
+      if (lib.trivial.release == "26.05") then
         [ pkgs.gnome-settings-daemon ]
       else
         [ pkgs.gnome3.gnome-settings-daemon ];
@@ -36,7 +36,7 @@ in
     services.gvfs.enable = true;
 
     environment.systemPackages =
-      if (lib.trivial.release == "25.11") then
+      if (lib.trivial.release == "26.05") then
         [
           pkgs.eog
           pkgs.adwaita-icon-theme

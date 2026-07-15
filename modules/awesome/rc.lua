@@ -115,7 +115,7 @@ mymainmenu = awful.menu({
         {"open terminal", terminal},
         {"Firefox", "firefox"},
         {"Chrome", "chromium"},
-        {"PyCharm", "pycharm-community"},
+        {"PyCharm", "pycharm-oss"},
         {"KeePass", "keepassxc"},
         {"VSCode", "code"},
         {"Spotify", "spotify"},

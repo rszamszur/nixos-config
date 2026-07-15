@@ -51,7 +51,7 @@ in
       {
 
         home = {
-          stateVersion = lib.attrByPath [ "system" "stateVersion" ] "25.11" config;
+          stateVersion = lib.attrByPath [ "system" "stateVersion" ] "26.05" config;
           packages = [
             pkgs.nmap
             pkgs.zip
@@ -87,9 +87,11 @@ in
 
           git = {
             enable = true;
-            userName = cfg.gitUser;
-            userEmail = cfg.gitEmail;
-            extraConfig = {
+            settings = {
+              user = {
+                name = cfg.gitUser;
+                email = cfg.gitEmail;
+              };
               init = {
                 defaultBranch = "master";
               };

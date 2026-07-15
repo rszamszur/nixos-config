@@ -7,10 +7,10 @@ let
       name,
       pkgs,
       pythons ? [
-        "python311"
         "python312"
         "python313"
         "python314"
+        "python315"
       ],
     }:
     lib.listToAttrs (
