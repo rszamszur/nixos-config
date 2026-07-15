@@ -18,88 +18,135 @@ let
   ];
 
   ncpsWrapper = pkgs.writeShellScript "ncps-wrapper" ''
+    ${lib.optionalString (cfg.cache.secretKeyPath != null) ''
+      export CACHE_SECRET_KEY_PATH="$CREDENTIALS_DIRECTORY/secretKey"
+    ''}
+
     ${lib.optionalString (cfg.cache.storage.s3 != null) ''
       export CACHE_STORAGE_S3_ACCESS_KEY_ID="$(cat "$CREDENTIALS_DIRECTORY/s3AccessKeyId")"
       export CACHE_STORAGE_S3_SECRET_ACCESS_KEY="$(cat "$CREDENTIALS_DIRECTORY/s3SecretAccessKey")"
     ''}
 
-    ${lib.optionalString (cfg.cache.redis != null && cfg.cache.redis.passwordFile != null) ''
-      export CACHE_REDIS_PASSWORD="$(cat "$CREDENTIALS_DIRECTORY/redisPassword")"
-    ''}
+    ${lib.optionalString (cfg.cache.redis != null) (
+      if cfg.cache.redis.passwordFile != null then
+        ''export CACHE_REDIS_PASSWORD="$(cat "$CREDENTIALS_DIRECTORY/redisPassword")"''
+      else if cfg.cache.redis.password != null then
+        ''export CACHE_REDIS_PASSWORD="${cfg.cache.redis.password}"''
+      else
+        ""
+    )}
 
     ${lib.optionalString (cfg.cache.databaseURLFile != null) ''
       export CACHE_DATABASE_URL="$(cat "$CREDENTIALS_DIRECTORY/databaseURL")"
     ''}
 
-    exec ${lib.getExe cfg.package} "$@"
+    ${lib.optionalString (cfg.cache.getTokenFile != null) ''
+      export CACHE_GET_TOKEN="$(cat "$CREDENTIALS_DIRECTORY/getToken")"
+    ''}
+
+    exec ${lib.getExe cfg.package} --config "${configFile}" "$@"
   '';
 
-  globalFlags = lib.concatStringsSep " " (
-    [ "--log-level='${cfg.logLevel}'" ]
-    ++ (lib.optionals cfg.openTelemetry.enable (
-      [
-        "--otel-enabled"
-      ]
-      ++ (lib.optional (
-        cfg.openTelemetry.grpcURL != null
-      ) "--otel-grpc-url='${cfg.openTelemetry.grpcURL}'")
-    ))
-    ++ (lib.optional cfg.prometheus.enable "--prometheus-enabled")
-    ++ (lib.optional (!cfg.analytics.reporting.enable) "--analytics-reporting-enabled=false")
-  );
+  settings = {
+    log.level = cfg.logLevel;
+    opentelemetry = lib.optionalAttrs cfg.openTelemetry.enable {
+      enabled = true;
+      grpc-url = cfg.openTelemetry.grpcURL;
+    };
+    prometheus = lib.optionalAttrs cfg.prometheus.enable {
+      enabled = true;
+    };
+    analytics.reporting = {
+      enabled = cfg.analytics.reporting.enable;
+      samples = cfg.analytics.reporting.samples;
+    };
+    server.addr = cfg.server.addr;
+    cache = {
+      allow-delete-verb = cfg.cache.allowDeleteVerb;
+      allow-put-verb = cfg.cache.allowPutVerb;
+      require-trusted-signature = cfg.cache.requireTrustedSignature;
+      trusted-upload-keys = cfg.cache.trustedUploadKeys;
+      hostname = cfg.cache.hostName;
+      database-url = cfg.cache.databaseURL;
+      database.pool = {
+        max-open-conns = cfg.cache.database.pool.maxOpenConns;
+        max-idle-conns = cfg.cache.database.pool.maxIdleConns;
+      };
+      cdc = {
+        inherit (cfg.cache.cdc)
+          enabled
+          min
+          avg
+          max
+          ;
+        chunk-wait-timeout = cfg.cache.cdc.chunkWaitTimeout;
+        lazy-chunking-enabled = cfg.cache.cdc.lazyChunking;
+        background-workers = cfg.cache.cdc.backgroundWorkers;
+        delete-delay = cfg.cache.cdc.deleteDelay;
+        lazy-recovery-schedule = cfg.cache.cdc.lazyRecoverySchedule;
+        lazy-recovery-batch-size = cfg.cache.cdc.lazyRecoveryBatchSize;
+        lazy-cleanup-schedule = cfg.cache.cdc.lazyCleanupSchedule;
+      };
+      inflight-staging = {
+        enabled = cfg.cache.inflightStaging.enable;
+        retention = cfg.cache.inflightStaging.retention;
+        part-size = cfg.cache.inflightStaging.partSize;
+      };
+      max-size = cfg.cache.maxSize;
+      lru = {
+        schedule = cfg.cache.lru.schedule;
+        timezone = cfg.cache.lru.scheduleTimeZone;
+      };
+      sign-narinfo = cfg.cache.signNarinfo;
+      storage =
+        if cfg.cache.storage.s3 != null then
+          {
+            s3 = {
+              bucket = cfg.cache.storage.s3.bucket;
+              endpoint = cfg.cache.storage.s3.endpoint;
+              region = cfg.cache.storage.s3.region;
+              force-path-style = cfg.cache.storage.s3.forcePathStyle;
+            };
+          }
+        else
+          {
+            local = cfg.cache.storage.local;
+          };
+      temp-path = cfg.cache.tempPath;
+      netrc-file = cfg.netrcFile;
+      upstream = {
+        urls = cfg.cache.upstream.urls;
+        public-keys = cfg.cache.upstream.publicKeys;
+        dialer-timeout = cfg.cache.upstream.dialerTimeout;
+        response-header-timeout = cfg.cache.upstream.responseHeaderTimeout;
+      };
+      lock = {
+        backend = cfg.cache.lock.backend;
+        redis.key-prefix = cfg.cache.lock.redisKeyPrefix;
+        download-lock-ttl = cfg.cache.lock.downloadTTL;
+        lru-lock-ttl = cfg.cache.lock.lruTTL;
+        retry = {
+          max-attempts = cfg.cache.lock.retry.maxAttempts;
+          initial-delay = cfg.cache.lock.retry.initialDelay;
+          max-delay = cfg.cache.lock.retry.maxDelay;
+          jitter = cfg.cache.lock.retry.jitter;
+        };
+        allow-degraded-mode = cfg.cache.lock.allowDegradedMode;
+      };
+      redis = lib.optionalAttrs (cfg.cache.redis != null) {
+        addrs = cfg.cache.redis.addresses;
+        db = cfg.cache.redis.database;
+        username = cfg.cache.redis.username;
+        use-tls = cfg.cache.redis.useTLS;
+        pool-size = cfg.cache.redis.poolSize;
+      };
+    };
+  };
 
-  serveFlags = lib.concatStringsSep " " (
-    [
-      "--cache-hostname='${cfg.cache.hostName}'"
-      "--cache-temp-path='${cfg.cache.tempPath}'"
-      "--server-addr='${cfg.server.addr}'"
-    ]
-    ++ (lib.optional (cfg.cache.databaseURL != null) "--cache-database-url='${cfg.cache.databaseURL}'")
-    ++ (lib.optionals (cfg.cache.redis != null) (
-      [
-        "--cache-redis-addrs='${builtins.concatStringsSep "," cfg.cache.redis.addresses}'"
-        "--cache-redis-db='${builtins.toString cfg.cache.redis.database}'"
-        "--cache-redis-pool-size='${builtins.toString cfg.cache.redis.poolSize}'"
-      ]
-      ++ (lib.optional (
-        cfg.cache.redis.username != null
-      ) "--cache-redis-username='${cfg.cache.redis.username}'")
-      ++ (lib.optional (
-        cfg.cache.redis.password != null
-      ) "--cache-redis-password='${cfg.cache.redis.password}'")
-      ++ (lib.optional cfg.cache.redis.useTLS "--cache-redis-use-tls")
-    ))
-    ++ (lib.optional (
-      cfg.cache.storage.s3 == null
-    ) "--cache-storage-local='${cfg.cache.storage.local}'")
-    ++ (lib.optionals (cfg.cache.storage.s3 != null) (
-      [
-        "--cache-storage-s3-bucket='${cfg.cache.storage.s3.bucket}'"
-        "--cache-storage-s3-endpoint='${cfg.cache.storage.s3.endpoint}'"
-      ]
-      ++ (lib.optional cfg.cache.storage.s3.forcePathStyle "--cache-storage-s3-force-path-style")
-      ++ (lib.optional (
-        cfg.cache.storage.s3.region != null
-      ) "--cache-storage-s3-region='${cfg.cache.storage.s3.region}'")
-    ))
-    ++ (lib.optional cfg.cache.allowDeleteVerb "--cache-allow-delete-verb")
-    ++ (lib.optional cfg.cache.allowPutVerb "--cache-allow-put-verb")
-    ++ (lib.optional (cfg.cache.maxSize != null) "--cache-max-size='${cfg.cache.maxSize}'")
-    ++ (lib.optionals (cfg.cache.lru.schedule != null) [
-      "--cache-lru-schedule='${cfg.cache.lru.schedule}'"
-      "--cache-lru-schedule-timezone='${cfg.cache.lru.scheduleTimeZone}'"
-    ])
-    ++ (lib.optional (cfg.cache.secretKeyPath != null) "--cache-secret-key-path='%d/secretKey'")
-    ++ (lib.optional (!cfg.cache.signNarinfo) "--cache-sign-narinfo='false'")
-    ++ (lib.optional (
-      cfg.cache.upstream.dialerTimeout != null
-    ) "--cache-upstream-dialer-timeout='${cfg.cache.upstream.dialerTimeout}'")
-    ++ (lib.optional (
-      cfg.cache.upstream.responseHeaderTimeout != null
-    ) "--cache-upstream-response-header-timeout='${cfg.cache.upstream.responseHeaderTimeout}'")
-    ++ (lib.forEach cfg.cache.upstream.publicKeys (pk: "--cache-upstream-public-key='${pk}'"))
-    ++ (lib.forEach cfg.cache.upstream.urls (url: "--cache-upstream-url='${url}'"))
-    ++ (lib.optional (cfg.netrcFile != null) "--netrc-file='${cfg.netrcFile}'")
+  configFile = pkgs.writeText "ncps-config.json" (
+    builtins.toJSON (
+      lib.filterAttrsRecursive (_: v: v != null && v != { } && v != "" && v != [ ]) settings
+    )
   );
 
   isSqlite = cfg.cache.databaseURL != null && lib.strings.hasPrefix "sqlite:" cfg.cache.databaseURL;
@@ -128,19 +175,31 @@ in
       "services"
       "ncps"
       "dbmatePackage"
-    ] "dbmate is now wrapped within ncps package, you need to override ncps to change dbmate package")
+    ] "dbmate has been removed; ncps now runs database migrations itself via `ncps migrate up`")
+
+    (lib.mkRemovedOptionModule [
+      "services"
+      "ncps"
+      "cache"
+      "lock"
+      "postgresKeyPrefix"
+    ] "PostgreSQL lock backend was removed upstream")
   ];
 
   options = {
     services.ncps = {
       enable = lib.mkEnableOption "ncps: Nix binary cache proxy service implemented in Go";
 
-      analytics.reporting.enable = lib.mkOption {
-        type = lib.types.bool;
-        default = true;
-        description = ''
-          Enable reporting anonymous usage statistics (DB type, Lock type, Total Size) to the project maintainers.
-        '';
+      analytics.reporting = {
+        enable = lib.mkOption {
+          type = lib.types.bool;
+          default = true;
+          description = ''
+            Enable reporting anonymous usage statistics (DB type, Lock type, Total Size) to the project maintainers.
+          '';
+        };
+
+        samples = lib.mkEnableOption "Enable printing the analytics samples to stdout. This is useful for debugging and verification purposes only.";
       };
 
       package = lib.mkPackageOption pkgs "ncps" { };
@@ -182,6 +241,157 @@ in
           to the cache.
         '';
 
+        requireTrustedSignature = lib.mkEnableOption ''
+          rejecting narinfos uploaded via PUT that do not carry a signature
+          trusted by config.ncps.cache.trustedUploadKeys (fail-closed). Only
+          relevant when config.ncps.cache.allowPutVerb is enabled
+        '';
+
+        trustedUploadKeys = lib.mkOption {
+          type = lib.types.listOf lib.types.str;
+          default = [ ];
+          example = [ "cache.example.com-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" ];
+          description = ''
+            A list of `name:base64` public keys, in nix format, authorizing PUT
+            uploads when config.ncps.cache.requireTrustedSignature is enabled.
+            This is independent of config.ncps.cache.upstream.publicKeys.
+          '';
+        };
+
+        getTokenFile = lib.mkOption {
+          type = lib.types.nullOr lib.types.path;
+          default = null;
+          description = ''
+            File containing a bearer token required to access the GET and HEAD
+            routes. When set, requests without a matching
+            `Authorization: Bearer <token>` header are rejected with 401
+            Unauthorized. The /healthz and /metrics routes are always exempt.
+          '';
+        };
+
+        cdc = {
+          enabled = lib.mkEnableOption ''
+            Whether to enable Content-Defined Chunking (CDC) for deduplication (experimental).
+          '';
+
+          min = lib.mkOption {
+            type = lib.types.ints.u32;
+            default = 16384;
+            description = ''
+              The minimum chunk size for CDC in bytes.
+            '';
+          };
+
+          avg = lib.mkOption {
+            type = lib.types.ints.u32;
+            default = 65536;
+            description = ''
+              The average chunk size for CDC in bytes.
+            '';
+          };
+
+          max = lib.mkOption {
+            type = lib.types.ints.u32;
+            default = 262144;
+            description = ''
+              The maximum chunk size for CDC in bytes.
+            '';
+          };
+
+          chunkWaitTimeout = lib.mkOption {
+            type = lib.types.str;
+            default = "30s";
+            description = ''
+              Maximum time progressive CDC streaming waits for the next chunk
+              to be produced/become readable before failing the transfer. Keep
+              it below your reverse-proxy gateway timeout so a stalled chunk on
+              high-latency storage surfaces as a retryable error to the client
+              rather than a gateway 504.
+            '';
+          };
+
+          lazyChunking = lib.mkEnableOption ''
+            lazy chunking: store the compressed NAR first and chunk it in the
+            background instead of synchronously on upload
+          '';
+
+          backgroundWorkers = lib.mkOption {
+            type = lib.types.nullOr lib.types.int;
+            default = null;
+            description = ''
+              Number of background workers for lazy chunking. When null, ncps
+              defaults to the number of CPUs.
+            '';
+          };
+
+          deleteDelay = lib.mkOption {
+            type = lib.types.nullOr lib.types.str;
+            default = null;
+            example = "24h";
+            description = ''
+              Delay before deleting the compressed NAR files after chunking
+              completes. When null, ncps uses its default (24h).
+            '';
+          };
+
+          lazyRecoverySchedule = lib.mkOption {
+            type = lib.types.nullOr lib.types.str;
+            default = null;
+            example = "@every 5m";
+            description = ''
+              Cron schedule for recovering stuck CDC NARs. When null, ncps uses
+              its default (@every 5m).
+            '';
+          };
+
+          lazyRecoveryBatchSize = lib.mkOption {
+            type = lib.types.nullOr lib.types.int;
+            default = null;
+            description = ''
+              Maximum number of stuck NARs to process per recovery cron run.
+              When null, ncps uses its default (100).
+            '';
+          };
+
+          lazyCleanupSchedule = lib.mkOption {
+            type = lib.types.nullOr lib.types.str;
+            default = null;
+            example = "@every 1h";
+            description = ''
+              Cron schedule for cleaning up deleted NAR files after lazy
+              chunking. When null, ncps uses its default (@every 1h).
+            '';
+          };
+        };
+
+        inflightStaging = {
+          enable = lib.mkEnableOption ''
+            in-flight NAR staging: serve a NAR cross-instance while it is still
+            downloading by staging it to shared storage as part-objects once
+            another replica waits for it. An HA-safe alternative to CDC; only
+            active with a distributed (Redis) lock backend
+          '';
+
+          retention = lib.mkOption {
+            type = lib.types.str;
+            default = "5m";
+            description = ''
+              Grace period to retain in-flight staging part-objects after the
+              NAR's final representation is committed, so in-flight readers
+              drain before reclamation.
+            '';
+          };
+
+          partSize = lib.mkOption {
+            type = lib.types.ints.positive;
+            default = 8388608;
+            description = ''
+              Size in bytes of each in-flight staging part-object (a transport
+              unit, distinct from CDC chunk sizes). Defaults to 8 MiB.
+            '';
+          };
+        };
+
         hostName = lib.mkOption {
           type = lib.types.str;
           description = ''
@@ -207,6 +417,28 @@ in
           '';
         };
 
+        database = {
+          pool = {
+            maxOpenConns = lib.mkOption {
+              type = lib.types.int;
+              default = 0;
+              description = ''
+                Maximum number of open connections to the database (0 = use
+                database-specific defaults).
+              '';
+            };
+
+            maxIdleConns = lib.mkOption {
+              type = lib.types.int;
+              default = 0;
+              description = ''
+                Maximum number of idle connections in the pool (0 = use
+                database-specific defaults).
+              '';
+            };
+          };
+        };
+
         lru = {
           schedule = lib.mkOption {
             type = lib.types.nullOr lib.types.str;
@@ -228,6 +460,89 @@ in
               The name of the timezone to use for the cron schedule. See
               <https://en.wikipedia.org/wiki/List_of_tz_database_time_zones>
               for a comprehensive list of possible values for this setting.
+            '';
+          };
+        };
+
+        lock = {
+          backend = lib.mkOption {
+            type = lib.types.enum [
+              "local"
+              "redis"
+            ];
+            default = "local";
+            description = ''
+              Lock backend to use: 'local' (single instance), 'redis'
+              (distributed).
+            '';
+          };
+
+          redisKeyPrefix = lib.mkOption {
+            type = lib.types.str;
+            default = "ncps:lock:";
+            description = ''
+              Prefix for all Redis lock keys (only used when Redis is
+              configured).
+            '';
+          };
+
+          downloadTTL = lib.mkOption {
+            type = lib.types.str;
+            default = "5m0s";
+            description = ''
+              TTL for download locks (per-hash locks).
+            '';
+          };
+
+          lruTTL = lib.mkOption {
+            type = lib.types.str;
+            default = "30m0s";
+            description = ''
+              TTL for LRU lock (global exclusive lock).
+            '';
+          };
+
+          retry = {
+            maxAttempts = lib.mkOption {
+              type = lib.types.int;
+              default = 3;
+              description = ''
+                Maximum number of retry attempts for distributed locks.
+              '';
+            };
+
+            initialDelay = lib.mkOption {
+              type = lib.types.str;
+              default = "100ms";
+              description = ''
+                Initial retry delay for distributed locks.
+              '';
+            };
+
+            maxDelay = lib.mkOption {
+              type = lib.types.str;
+              default = "2s";
+              description = ''
+                Maximum retry delay for distributed locks (exponential backoff
+                caps at this).
+              '';
+            };
+
+            jitter = lib.mkOption {
+              type = lib.types.bool;
+              default = true;
+              description = ''
+                Enable jitter in retry delays to prevent thundering herd.
+              '';
+            };
+          };
+
+          allowDegradedMode = lib.mkOption {
+            type = lib.types.bool;
+            default = false;
+            description = ''
+              Allow falling back to local locks if Redis is unavailable (WARNING:
+              breaks HA guarantees).
             '';
           };
         };
@@ -404,7 +719,7 @@ in
         signNarinfo = lib.mkOption {
           type = lib.types.bool;
           default = true;
-          example = "false";
+          example = false;
           description = ''
             Whether to sign narInfo files or passthru as-is from upstream
           '';
@@ -487,6 +802,18 @@ in
           cfg.cache.redis == null || cfg.cache.redis.password == null || cfg.cache.redis.passwordFile == null;
         message = "You cannot specify both config.ncps.cache.redis.password and config.ncps.cache.redis.passwordFile";
       }
+      {
+        assertion = cfg.cache.lock.backend == "redis" -> cfg.cache.redis != null;
+        message = "You must specify config.ncps.cache.redis when config.ncps.cache.lock.backend is set to 'redis'";
+      }
+      {
+        assertion = cfg.cache.redis != null -> cfg.cache.lock.backend == "redis";
+        message = "You must set config.ncps.cache.lock.backend to 'redis' when config.ncps.cache.redis is set";
+      }
+      {
+        assertion = cfg.cache.requireTrustedSignature -> cfg.cache.trustedUploadKeys != [ ];
+        message = "You must specify config.ncps.cache.trustedUploadKeys when config.ncps.cache.requireTrustedSignature is enabled";
+      }
     ];
 
     users.users.ncps = {
@@ -522,18 +849,17 @@ in
 
       preStart = ''
         ${lib.optionalString (cfg.cache.databaseURLFile != null) ''
-          export DATABASE_URL="$(cat "$CREDENTIALS_DIRECTORY/databaseURL")"
+          export CACHE_DATABASE_URL="$(cat "$CREDENTIALS_DIRECTORY/databaseURL")"
         ''}
         ${lib.optionalString (cfg.cache.databaseURL != null) ''
-          export DATABASE_URL="${cfg.cache.databaseURL}"
+          export CACHE_DATABASE_URL="${cfg.cache.databaseURL}"
         ''}
-        echo ${cfg.package}/bin/dbmate-ncps up
-        ${cfg.package}/bin/dbmate-ncps up
+        ${lib.getExe cfg.package} migrate up
       '';
 
       serviceConfig = lib.mkMerge [
         {
-          ExecStart = "${ncpsWrapper} ${globalFlags} serve ${serveFlags}";
+          ExecStart = "${ncpsWrapper} serve";
           User = "ncps";
           Group = "ncps";
           Restart = "on-failure";
@@ -560,6 +886,11 @@ in
 
         (lib.mkIf (cfg.cache.databaseURLFile != null) {
           LoadCredential = lib.singleton "databaseURL:${cfg.cache.databaseURLFile}";
+        })
+
+        # credentials for cache.getTokenFile
+        (lib.mkIf (cfg.cache.getTokenFile != null) {
+          LoadCredential = lib.singleton "getToken:${cfg.cache.getTokenFile}";
         })
 
         # ensure permissions on required directories

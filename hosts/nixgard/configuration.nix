@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  pkgs-unstable,
   ...
 }:
 
@@ -58,7 +57,7 @@
   };
   my.binary-cache = {
     enable = true;
-    package = pkgs-unstable.ncps;
+    package = pkgs.ncps;
     binaryCacheKey = config.sops.secrets."cache-priv-key.pem".path;
     database = "postgresql";
   };

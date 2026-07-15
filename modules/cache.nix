@@ -29,7 +29,7 @@ let
           echo "Signing paths" $OUT_PATHS
           nix store sign -k "$SIGN_KEY_PATH" $OUT_PATHS
           echo "Uploading to cache: $OUT_PATHS"
-          exec nix copy --to 'https://nixgard.szamszur.cloud' $OUT_PATHS -vvv
+          exec nix copy --to 'https://nixgard.szamszur.cloud/upload' $OUT_PATHS -vvv
         fi
       '';
     };
@@ -65,6 +65,7 @@ in
         ++ cfg.extraSubstituters;
         trusted-public-keys = [
           "nixgard.szamszur.cloud:HaXsNyMojj3pVViZDoH8n9uJgqGcoZ6V1yYIFSigOxY="
+          "tyr:bbjBCfYPxGt0i2LGCDy802CbgqkRRoRGL2h3u7QVeVg="
         ]
         ++ cfg.extraTrustedPublicKeys;
       };

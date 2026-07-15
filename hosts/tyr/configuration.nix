@@ -51,14 +51,11 @@ in
       n: _: "gitea-runner-${n}.service"
     ) config.my.forgejo-runners.runners;
   };
-  sops.secrets.binary-cache-key = {
+  sops.secrets.binary-cache-key-priv = {
     sopsFile = ./secrets/remote-builder.yaml;
     owner = "nixremote";
     group = "nixremote";
     mode = "0600";
-  };
-  sops.secrets."cache-priv-key.pem" = {
-    sopsFile = ./secrets/cache-key.yaml;
   };
 
   # Automatic garbage collection
@@ -71,7 +68,7 @@ in
   # My NixOS modules
   my.cache = {
     enable = true;
-    cacheSignKey = config.sops.secrets."cache-priv-key.pem".path;
+    cacheSignKey = config.sops.secrets.binary-cache-key-priv.path;
   };
   my.bash.enable = true;
   my.vim.enable = true;
@@ -140,7 +137,7 @@ in
     authorizedKeys = [
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCrV5PuqdHzkTDzoWB3JA6377lNzPooNx+Rt4Bx9CkZP1uCiGQzvdrfGcBCkWeJGQcyP2J0AqJ+wJjdQKyrOfHXXPXkwvaudReU/wIc0FSVbOGr3bsa2FF4mHhezW+0N4FHWpFpqlhp4cGY5Lw9nT8J6s0mEe3Z+VzaGhAETvJON+rDtl9Z8IhRJ2QvcTDGkh2rHvF5+87hmzIgCzyWTUNX8VTunYiznBGCFo7N4TRoF+N1RPZM3AGsUuVwI00iOkgFdK5cXy2N3bomHNuFH8jvinp0g2jZUw2pRFlIuN95obPvdkAPnAsSM+iqKG37kFBhqkPM5bup9+dM1pRynnAIjiuOAQGRPJJfGJUt+dF1KuJqQ0VNLOPW0Gkq7eK1Q5AhrI7dTd4e9edUTGh3If4HIqDyU7+LaxjkB6lsXW6JcYE5dQed9cgihWi4iWHosiDdQmx5TTfZTjk/VtbAUV3dGHjq8ScObz+FU/V6tEPI6awfTCpFOMxUW+CuPbG/PPFZjaR0iNcuiFyP1+Wx9EyBYHEY5eW4Z1PrkhQ/yKKGhcJmUwCM+4GbjO0WgSqMQBacyA/L2Nz102SZbzmEw/UMA9ly8MBrgo+dXDpZUJs6QPAWsxPg9uXURyyB7LGfnSilKTJoNNZvqH/YY1pWcE9uLGfl3q3cGJIYbt668BChLw== rszamszur@fenrir"
     ];
-    binaryCacheKey = config.sops.secrets.binary-cache-key.path;
+    binaryCacheKey = config.sops.secrets.binary-cache-key-priv.path;
   };
   my.comin = {
     enable = true;

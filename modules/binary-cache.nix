@@ -44,7 +44,10 @@ in
       cache = {
         hostName = "nixgard";
         databaseURL =
-          if cfg.database == "postgresql" then "postgresql:///ncps" else "sqlite:/var/lib/ncps/db/db.sqlite";
+          if cfg.database == "postgresql" then
+            "postgres://ncps@/ncps?host=/run/postgresql"
+          else
+            "sqlite:/var/lib/ncps/db/db.sqlite";
         lru.schedule = "0 2 * * *";
         maxSize = "900G";
         allowPutVerb = true;

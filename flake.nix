@@ -114,6 +114,7 @@
         overlays = {
           hyprland = import ./overlays/hyprland.nix;
           poetry2nix = import ./overlays/poetry2nix.nix;
+          ncps = import ./overlays/ncps.nix;
         };
         nixosConfigurations = {
           fenrir = inputs.nixpkgs.lib.nixosSystem {
@@ -184,7 +185,10 @@
             system = "x86_64-linux";
             modules = [
               {
-                nixpkgs.overlays = [ self.overlays.default ];
+                nixpkgs.overlays = [
+                  self.overlays.default
+                  self.overlays.ncps
+                ];
               }
               ./hosts/nixgard/hardware-configuration.nix
               ./hosts/nixgard/configuration.nix
@@ -196,12 +200,6 @@
               self.nixosModules.comin
               self.nixosModules.upstream-overrides
             ];
-            specialArgs = {
-              pkgs-unstable = import inputs.nixpkgs-unstable {
-                system = "x86_64-linux";
-                config.allowUnfree = true;
-              };
-            };
           };
           installation-iso = inputs.nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
