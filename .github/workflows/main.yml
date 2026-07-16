@@ -32,6 +32,6 @@ jobs:
     runs-on: nixos
 
     steps:
-    - uses: actions/checkout@1cce3390c2bfda521930d01229c073c7ff920824
+    - uses: actions/checkout@12cd2235efa0937479335606d7c3ac9f6c0973b1
     - name: Run nix flake check
       run: nix flake check
