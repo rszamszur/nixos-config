@@ -18,7 +18,6 @@ final: prev: {
       hash = "sha256-ZGzcH3gKD9nj8oDLV1+o6ice6kMHZRXkNx24cfyPkRs=";
     };
   });
-
   hyprutils = prev.hyprutils.overrideAttrs (oldAttrs: rec {
     version = "0.12.0";
 
@@ -29,7 +28,6 @@ final: prev: {
       hash = "sha256-c4YVwO33Mmw+FIV8E0u3atJZagHvGTJ9Jai6RtiB8rE=";
     };
   });
-
   hyprwayland-scanner = prev.hyprwayland-scanner.overrideAttrs (oldAttrs: rec {
     version = "0.4.5";
 
@@ -40,18 +38,16 @@ final: prev: {
       hash = "sha256-FnhBENxihITZldThvbO7883PdXC/2dzW4eiNvtoV5Ao=";
     };
   });
-
   hyprwire = prev.hyprwire.overrideAttrs (oldAttrs: rec {
-    version = "0.3.0";
+    version = "0.3.1";
 
     src = final.pkgs.fetchFromGitHub {
       owner = "hyprwm";
       repo = "hyprwire";
       tag = "v${version}";
-      hash = "sha256-PR/KER+yiHabFC/h1Wjb+9fR2Uy0lWM3Qld7jPVaWkk=";
+      hash = "sha256-AKPaKeLDy0QXRBk/XzR7RktX7CV63ejYsTUgsPdXKvg=";
     };
   });
-
   hyprgraphics = prev.hyprgraphics.overrideAttrs (oldAttrs: rec {
     version = "0.5.0";
 
@@ -62,7 +58,6 @@ final: prev: {
       hash = "sha256-MRD+Jr2bY11MzNDfenENhiK6pvN+nHygxdHoHbZ1HtE=";
     };
   });
-
   hyprland-qtutils = prev.hyprland-qtutils.overrideAttrs (oldAttrs: rec {
     version = "0.1.5";
 
@@ -73,7 +68,6 @@ final: prev: {
       hash = "sha256-bTYedtQFqqVBAh42scgX7+S3O6XKLnT6FTC6rpmyCCc=";
     };
   });
-
   hyprcursor = prev.hyprcursor.overrideAttrs (oldAttrs: rec {
     version = "0.1.13";
 
@@ -84,7 +78,6 @@ final: prev: {
       hash = "sha256-lIqabfBY7z/OANxHoPeIrDJrFyYy9jAM4GQLzZ2feCM=";
     };
   });
-
   hyprland = prev.hyprland.overrideAttrs (oldAttrs: rec {
     version = "0.54.3";
 
@@ -95,6 +88,8 @@ final: prev: {
       tag = "v${version}";
       hash = "sha256-e+mVjQL3V+xoaH1c3YqAzRq9wwiuEYQTOgZlK0LwfYA=";
     };
+
+    buildInputs = oldAttrs.buildInputs ++ [ final.hyprwire ];
 
     postPatch = ''
       # Fix hardcoded paths to /usr installation
