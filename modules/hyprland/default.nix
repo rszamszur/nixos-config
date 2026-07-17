@@ -84,17 +84,35 @@ in
       pkgs.bibata-cursors
       pkgs.xdg-desktop-portal-hyprland
     ];
-    fonts.packages = [
-      pkgs.font-awesome
-      # Not sure which are needed for hyprland
-      pkgs.nerd-fonts._0xproto
-      pkgs.nerd-fonts.droid-sans-mono
-      pkgs.nerd-fonts.noto
-      pkgs.nerd-fonts.symbols-only
-      pkgs.nerd-fonts.jetbrains-mono
-      pkgs.nerd-fonts.roboto-mono
-      pkgs.nerd-fonts.dejavu-sans-mono
-    ];
+    fonts = {
+      packages = [
+        pkgs.font-awesome
+        # Not sure which are needed for hyprland
+        pkgs.nerd-fonts._0xproto
+        pkgs.nerd-fonts.droid-sans-mono
+        pkgs.nerd-fonts.noto
+        pkgs.nerd-fonts.symbols-only
+        pkgs.nerd-fonts.jetbrains-mono
+        pkgs.nerd-fonts.roboto-mono
+        pkgs.nerd-fonts.dejavu-sans-mono
+      ];
+      fontDir.enable = true;
+      enableDefaultPackages = true;
+      fontconfig.defaultFonts = {
+        monospace = [
+          "Berkeley Mono"
+        ];
+        sansSerif = [
+          "Berkeley Mono"
+        ];
+        serif = [
+          "Berkeley Mono"
+        ];
+        emoji = [
+          "Noto Color Emoji"
+        ];
+      };
+    };
 
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
