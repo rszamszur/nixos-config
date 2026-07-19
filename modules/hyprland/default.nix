@@ -98,19 +98,24 @@ in
       ];
       fontDir.enable = true;
       enableDefaultPackages = true;
-      fontconfig.defaultFonts = {
-        monospace = [
-          "Berkeley Mono"
-        ];
-        sansSerif = [
-          "Berkeley Mono"
-        ];
-        serif = [
-          "Berkeley Mono"
-        ];
-        emoji = [
-          "Noto Color Emoji"
-        ];
+      fontconfig = {
+        useEmbeddedBitmaps = true;
+        defaultFonts = {
+          monospace = [
+            "Berkeley Mono"
+          ];
+          sansSerif = [
+            "Berkeley Mono"
+            "DejaVu Sans"
+          ];
+          serif = [
+            "Berkeley Mono"
+            "DejaVu Serif"
+          ];
+          emoji = [
+            "Noto Color Emoji"
+          ];
+        };
       };
     };
 
