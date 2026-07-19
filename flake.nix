@@ -186,6 +186,7 @@
               self.nixosModules.nas
               self.nixosModules.dns
               self.nixosModules.gaming
+              self.nixosModules.zen-browser
             ];
           };
           nixgard = inputs.nixpkgs.lib.nixosSystem {
