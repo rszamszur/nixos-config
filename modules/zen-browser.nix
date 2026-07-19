@@ -50,11 +50,11 @@ in
               ExtensionSettings = builtins.listToAttrs extensions;
 
               SearchEngines = {
-                Default = "@sp";
+                Default = "sp";
                 Add = [
                   {
                     Name = "Startpage";
-                    URLTemplate = "https://www.startpage.com/sp/search?query=%s&cat=web&pl=opensearch&language=english";
+                    URLTemplate = "https://www.startpage.com/sp/search?query={searchTerms}&cat=web&pl=opensearch&language=english";
                     IconURL = "https://startpage.com/favicon.ico";
                     Alias = "@sp";
                   }
