@@ -525,7 +525,8 @@
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "rcu": "rcu",
-        "sops-nix": "sops-nix"
+        "sops-nix": "sops-nix",
+        "zen-browser": "zen-browser"
       }
     },
     "rust-analyzer-src": {
@@ -607,6 +608,26 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "zen-browser": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1784354557,
+        "narHash": "sha256-z2XthIV/68GNghbqmaPVrShPIfMPwpZKTA47REKC5bA=",
+        "owner": "youwen5",
+        "repo": "zen-browser-flake",
+        "rev": "239dc504b56eabcfc1dce945e7e22ca99694be89",
+        "type": "github"
+      },
+      "original": {
+        "owner": "youwen5",
+        "repo": "zen-browser-flake",
         "type": "github"
       }
     }

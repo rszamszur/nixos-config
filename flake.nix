@@ -27,6 +27,10 @@
       url = "github:nlewo/comin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    zen-browser = {
+      url = "github:youwen5/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     flake-parts.url = "github:hercules-ci/flake-parts";
     rcu.url = "github:rszamszur/pkg-rcu";
     b3.url = "github:rszamszur/b3-flake";
@@ -42,6 +46,7 @@
       home-manager-unstable,
       sops-nix,
       comin,
+      zen-browser,
       flake-parts,
       rcu,
       b3,
@@ -73,6 +78,8 @@
           overlayAttrs = {
             inherit (config.packages) rcu b3;
             nix-utils = nix-utils.lib;
+            zen-browser = zen-browser.packages.${system}.default;
+            zen-browser-unwrapped = zen-browser.packages.${system}.zen-browser-unwrapped;
           };
           checks = {
             treefmt = pkgs.runCommand "treefmt" { } ''
