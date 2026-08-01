@@ -18,7 +18,7 @@ jobs:
       should_skip: ${{ steps.skip_check.outputs.should_skip }}
       build: ${{ steps.filter.outputs.build }}
     steps:
-      - uses: actions/checkout@1cce3390c2bfda521930d01229c073c7ff920824
+      - uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a
       - id: skip_check
         uses: fkirc/skip-duplicate-actions@04a1aebece824b56e6ad6a401d015479cd1c50b3
         with:
@@ -42,6 +42,6 @@ jobs:
     runs-on: nixos
 
     steps:
-    - uses: actions/checkout@1cce3390c2bfda521930d01229c073c7ff920824
+    - uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a
     - name: Build nixgard
       run: nix build .#nixosConfigurations.nixgard.config.system.build.toplevel -L --accept-flake-config
