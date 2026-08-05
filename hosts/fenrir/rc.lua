@@ -114,7 +114,7 @@
             {"open terminal", terminal},
             {"Firefox", "firefox"},
             {"Chrome", "chromium"},
-            {"PyCharm", "pycharm-oss"},
+            {"PyCharm", "pycharm"},
             {"KeePass", "keepassxc"},
             {"VSCode", "code"},
             {"Spotify", "spotify"},
