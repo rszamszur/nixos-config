@@ -96,6 +96,7 @@ in
                 defaultBranch = "master";
               };
               core = {
+                commentchar = "$";
                 editor = "vim";
               };
             };
