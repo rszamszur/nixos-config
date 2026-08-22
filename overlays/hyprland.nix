@@ -91,10 +91,6 @@ final: prev: {
 
     buildInputs = oldAttrs.buildInputs ++ [ final.hyprwire ];
 
-    # patches = [
-    #   ./hyprland-glaze.patch
-    # ];
-
     postPatch = ''
       # Fix hardcoded paths to /usr installation
       substituteInPlace src/render/OpenGL.cpp \
