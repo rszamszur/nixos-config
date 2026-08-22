@@ -91,6 +91,10 @@ final: prev: {
 
     buildInputs = oldAttrs.buildInputs ++ [ final.hyprwire ];
 
+    # patches = [
+    #   ./hyprland-glaze.patch
+    # ];
+
     postPatch = ''
       # Fix hardcoded paths to /usr installation
       substituteInPlace src/render/OpenGL.cpp \
@@ -117,6 +121,16 @@ final: prev: {
       GIT_COMMIT_HASH = "521ece463c4a9d3d128670688a34756805a4328f";
       GIT_COMMIT_MESSAGE = "version: bump to 0.54.3";
       GIT_TAG = "v0.54.3";
+    };
+  });
+  glaze = prev.glaze.overrideAttrs (oldAttrs: rec {
+    version = "7.0.0";
+
+    src = final.pkgs.fetchFromGitHub {
+      owner = "stephenberry";
+      repo = "glaze";
+      tag = "v${version}";
+      hash = "sha256-bYXXQmrVnrBTW/r+fgRBPYfKGPtHvEDw0Sk6BYTMm/4=";
     };
   });
 }
