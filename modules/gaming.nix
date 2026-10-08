@@ -38,7 +38,6 @@ in
 
     programs.steam = {
       enable = true;
-      package = pkgs.steam;
       remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
       dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
       gamescopeSession.enable = true;
@@ -47,7 +46,11 @@ in
     programs.gamemode.enable = true;
 
     environment.systemPackages = [
-      pkgs.pkgs.moonlight-qt
+      pkgs.moonlight-qt
+      (pkgs.writeShellScriptBin "steam-fixed" ''
+        exec ${pkgs.util-linux}/bin/setpriv --inh-caps=-all --ambient-caps=-all \
+          steam "$@"
+      '')
     ];
 
     ###########################
