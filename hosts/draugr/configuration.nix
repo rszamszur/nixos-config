@@ -122,49 +122,49 @@
       "nix-rbe" = {
         addToBuildMachines = false;
         host = "nix-rbe.szamszur.cloud";
-        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINPJxUM+oH9gsolZOtRZK17UCRm+A+Ne/BaJ5ANRYA2O";
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINYdc97MhxZ7v7A7QZhKMeAJeUbTpJ4QjZ6A9QrjY8tD";
         privateKeyPath = config.sops.secrets.nixremote.path;
         speedFactor = 2;
         maxJobs = 8;
       };
       "pve-nixos-tyr1" = {
         host = "192.168.20.61";
-        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINPJxUM+oH9gsolZOtRZK17UCRm+A+Ne/BaJ5ANRYA2O";
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINYdc97MhxZ7v7A7QZhKMeAJeUbTpJ4QjZ6A9QrjY8tD";
         privateKeyPath = config.sops.secrets.nixremote.path;
         speedFactor = 2;
         maxJobs = 8;
       };
       "pve-nixos-tyr2" = {
         host = "192.168.20.62";
-        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINPJxUM+oH9gsolZOtRZK17UCRm+A+Ne/BaJ5ANRYA2O";
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINYdc97MhxZ7v7A7QZhKMeAJeUbTpJ4QjZ6A9QrjY8tD";
         privateKeyPath = config.sops.secrets.nixremote.path;
         speedFactor = 2;
         maxJobs = 8;
       };
       "pve-nixos-tyr3" = {
         host = "192.168.20.63";
-        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINPJxUM+oH9gsolZOtRZK17UCRm+A+Ne/BaJ5ANRYA2O";
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINYdc97MhxZ7v7A7QZhKMeAJeUbTpJ4QjZ6A9QrjY8tD";
         privateKeyPath = config.sops.secrets.nixremote.path;
         speedFactor = 2;
         maxJobs = 8;
       };
       "pve-nixos-tyr4" = {
         host = "192.168.20.64";
-        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINPJxUM+oH9gsolZOtRZK17UCRm+A+Ne/BaJ5ANRYA2O";
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINYdc97MhxZ7v7A7QZhKMeAJeUbTpJ4QjZ6A9QrjY8tD";
         privateKeyPath = config.sops.secrets.nixremote.path;
         speedFactor = 2;
         maxJobs = 8;
       };
       "pve-nixos-tyr5" = {
         host = "192.168.20.65";
-        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINPJxUM+oH9gsolZOtRZK17UCRm+A+Ne/BaJ5ANRYA2O";
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINYdc97MhxZ7v7A7QZhKMeAJeUbTpJ4QjZ6A9QrjY8tD";
         privateKeyPath = config.sops.secrets.nixremote.path;
         speedFactor = 2;
         maxJobs = 8;
       };
       "pve-nixos-tyr6" = {
         host = "192.168.20.66";
-        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINPJxUM+oH9gsolZOtRZK17UCRm+A+Ne/BaJ5ANRYA2O";
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINYdc97MhxZ7v7A7QZhKMeAJeUbTpJ4QjZ6A9QrjY8tD";
         privateKeyPath = config.sops.secrets.nixremote.path;
         speedFactor = 2;
         maxJobs = 8;

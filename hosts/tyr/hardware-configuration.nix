@@ -23,16 +23,16 @@
     "sr_mod"
   ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/9f2ae8f4-215e-4798-bd09-dc5482f18210";
+    device = "/dev/disk/by-uuid/42cd9b70-f0b8-4044-8a34-bcc4185d3edf";
     fsType = "ext4";
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/229E-D8C1";
+    device = "/dev/disk/by-uuid/13B6-5773";
     fsType = "vfat";
     options = [
       "fmask=0022"
