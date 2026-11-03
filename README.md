@@ -207,7 +207,6 @@ Add the following entry to a `boot.nix` or `hardware-configuration.nix` file:
   boot.initrd.luks.devices = {
     root = {
       device = "/dev/disk/by-uuid/<the uuid of the root partition from above>";
-      preLVM = true;
       allowDiscards = true;
     };
   };
