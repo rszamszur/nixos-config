@@ -68,6 +68,7 @@ in
             pkgs.kubectx
             pkgs.kubernetes-helm
             pkgs.manix
+            pkgs.taskwarrior3
           ]
           ++ cfg.homepkgs
           ++ lib.optionals cfg.comma [ comma ];

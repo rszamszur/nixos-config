@@ -19,6 +19,7 @@
       pkgs.kubernetes-helm
       pkgs.k9s
       pkgs.manix
+      pkgs.taskwarrior3
     ];
     sessionVariables = {
       # https://github.com/alacritty/alacritty/issues/3360
