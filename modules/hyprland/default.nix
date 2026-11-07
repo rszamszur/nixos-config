@@ -63,6 +63,7 @@ in
       pkgs.hypridle
       pkgs.hyprshot
       pkgs.hyprcursor
+      pkgs.hyprmoncfg
       pkgs.swaybg # or hyprpaper?
       pkgs.wlogout # not sure if used?
       pkgs.mako
@@ -72,7 +73,6 @@ in
       pkgs.rofi
 
       # Utils used by hyprland
-      pkgs.nwg-displays
       pkgs.brightnessctl
       pkgs.playerctl
       pkgs.ranger
